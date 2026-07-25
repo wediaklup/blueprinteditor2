@@ -1,0 +1,5 @@
+/root/bpe/obj/Debug/net40/BlueprintEditor2.csproj.AssemblyReference.cache
+/root/bpe/obj/Debug/net40/S9BEditor.Properties.Resources.resources
+/root/bpe/obj/Debug/net40/BlueprintEditor2.csproj.GenerateResource.cache
+/root/bpe/obj/Debug/net40/BlueprintEditor2.GeneratedMSBuildEditorConfig.editorconfig
+/root/bpe/obj/Debug/net40/BlueprintEditor2.csproj.CoreCompileInputs.cache

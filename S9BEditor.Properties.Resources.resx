@@ -1,0 +1,43 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+<resheader name="resmimetype"><value>text/microsoft-resx</value></resheader><resheader name="version"><value>1.3</value></resheader><resheader name="reader"><value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader><resheader name="writer"><value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader><data name="LuaXML" xml:space="preserve"><value>&lt;?xml version="1.0" encoding="utf-8" ?&gt;
+&lt;ScintillaNET&gt;
+  &lt;Language Name="lua"&gt;
+    &lt;Indentation TabWidth="4" UseTabs="true" SmartIndentType="Simple" ShowGuides="true"/&gt;
+    &lt;Lexer StreamCommentPrefix="--[[" StreamCommentSuffix="]]" LineCommentPrefix="--"&gt;
+      &lt;Keywords List="0"&gt;and break do end else elseif for function if local nil not repeat or return then until while&lt;/Keywords&gt;
+      &lt;Keywords List="1"&gt;Call SysCall Print&lt;/Keywords&gt; &lt;!-- Railworks specific calls --&gt;
+    &lt;/Lexer&gt;
+    &lt;Styles&gt;
+      &lt;Style Name="CHARACTER" ForeColor="Black" BackColor="White"/&gt;
+    &lt;/Styles&gt;
+  &lt;/Language&gt;
+&lt;/ScintillaNET&gt;</value></data>
+  </root>
