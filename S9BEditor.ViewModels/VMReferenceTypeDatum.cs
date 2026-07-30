@@ -194,7 +194,7 @@ namespace S9BEditor.ViewModels
 			{
 				foreach (VMProperty property in group.Properties)
 				{
-					if (property.PropertyContent is VMIndexedTypeDatum { Datum: var datum } vMIndexedTypeDatum2 && datum == refTargetDatum)
+					if (property.PropertyContent is VMIndexedTypeDatum vMIndexedTypeDatum2 && vMIndexedTypeDatum2.Datum == refTargetDatum)
 					{
 						return vMIndexedTypeDatum2;
 					}

@@ -11,7 +11,7 @@ namespace S9BEditor
 		{
 			if (item is VMProperty vmProperty)
 			{
-				var propertyContent = vmProperty.PropertyContent
+				var propertyContent = vmProperty.PropertyContent;
 				if (propertyContent is VMClassTypeDatum || propertyContent is VMIndexedTypeDatum)
 				{
 					object obj = Application.Current.Resources[(object)"propertyHeaderedTemplate"];

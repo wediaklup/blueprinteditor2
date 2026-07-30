@@ -908,7 +908,7 @@ namespace S9BEditor
 
 		private void cut_CanExecute(object sender, CanExecuteRoutedEventArgs e)
 		{
-			if (mSelectedTreeViewItem.Target is DirectoryTreeViewItem { CanCut: not false })
+			if (mSelectedTreeViewItem.Target is DirectoryTreeViewItem directoryTreeViewItem && directoryTreeViewItem.CanCut)
 			{
 				e.CanExecute = true;
 				((RoutedEventArgs)e).Handled = true;
@@ -941,7 +941,7 @@ namespace S9BEditor
 
 		private void copy_CanExecute(object sender, CanExecuteRoutedEventArgs e)
 		{
-			if (mSelectedTreeViewItem.Target is DirectoryTreeViewItem { CanCopy: not false })
+			if (mSelectedTreeViewItem.Target is DirectoryTreeViewItem directoryTreeViewItem && directoryTreeViewItem.CanCopy)
 			{
 				e.CanExecute = true;
 				((RoutedEventArgs)e).Handled = true;
@@ -1001,7 +1001,7 @@ namespace S9BEditor
 
 		private void paste_CanExecute(object sender, CanExecuteRoutedEventArgs e)
 		{
-			if (mSelectedTreeViewItem.Target is DirectoryTreeViewItem { CanPaste: not false } && Clipboard.ContainsData(DataFormats.FileDrop) && ((TreeView)directoryTreeView).SelectedItem is DirectoryTreeViewItem)
+			if (mSelectedTreeViewItem.Target is DirectoryTreeViewItem directoryTreeViewItem && directoryTreeViewItem.CanPaste && Clipboard.ContainsData(DataFormats.FileDrop) && ((TreeView)directoryTreeView).SelectedItem is DirectoryTreeViewItem)
 			{
 				e.CanExecute = true;
 				((RoutedEventArgs)e).Handled = true;
@@ -1112,7 +1112,7 @@ namespace S9BEditor
 
 		private void delete_CanExecute(object sender, CanExecuteRoutedEventArgs e)
 		{
-			if (mSelectedTreeViewItem.Target is DirectoryTreeViewItem { CanDelete: not false })
+			if (mSelectedTreeViewItem.Target is DirectoryTreeViewItem directoryTreeViewItem && directoryTreeViewItem.CanDelete)
 			{
 				e.CanExecute = true;
 				((RoutedEventArgs)e).Handled = true;
@@ -1143,7 +1143,7 @@ namespace S9BEditor
 
 		private void open_CanExecute(object sender, CanExecuteRoutedEventArgs e)
 		{
-			if (mSelectedTreeViewItem.Target is DirectoryTreeViewItem { CanOpen: not false })
+			if (mSelectedTreeViewItem.Target is DirectoryTreeViewItem directoryTreeViewItem && directoryTreeViewItem.CanOpen)
 			{
 				e.CanExecute = true;
 				((RoutedEventArgs)e).Handled = true;
@@ -1157,7 +1157,7 @@ namespace S9BEditor
 
 		private void properties_CanExecute(object sender, CanExecuteRoutedEventArgs e)
 		{
-			if (mSelectedTreeViewItem.Target is DirectoryTreeViewItem { IsValid: not false })
+			if (mSelectedTreeViewItem.Target is DirectoryTreeViewItem directoryTreeViewItem && directoryTreeViewItem.IsValid)
 			{
 				e.CanExecute = true;
 				((RoutedEventArgs)e).Handled = true;
@@ -1166,7 +1166,7 @@ namespace S9BEditor
 
 		private void properties_Executed(object sender, ExecutedRoutedEventArgs e)
 		{
-			if (mSelectedTreeViewItem.Target is DirectoryTreeViewItem { IsValid: not false } directoryTreeViewItem)
+			if (mSelectedTreeViewItem.Target is DirectoryTreeViewItem directoryTreeViewItem && directoryTreeViewItem.IsValid)
 			{
 				try
 				{
@@ -1181,7 +1181,7 @@ namespace S9BEditor
 
 		private void addItem_CanExecute(object sender, CanExecuteRoutedEventArgs e)
 		{
-			if (!(mSelectedTreeViewItem.Target is DirectoryTreeViewItem { CanAdd: not false, IsDirectory: not false } directoryTreeViewItem))
+			if (!(mSelectedTreeViewItem.Target is DirectoryTreeViewItem directoryTreeViewItem && directoryTreeViewItem.CanAdd && directoryTreeViewItem.IsDirectory))
 			{
 				return;
 			}
@@ -1211,7 +1211,7 @@ namespace S9BEditor
 
 		private void addItem_Executed(object sender, ExecutedRoutedEventArgs e)
 		{
-			if (!(mSelectedTreeViewItem.Target is DirectoryTreeViewItem { IsDirectory: not false } directoryTreeViewItem))
+			if (!(mSelectedTreeViewItem.Target is DirectoryTreeViewItem directoryTreeViewItem && directoryTreeViewItem.IsDirectory))
 			{
 				return;
 			}
@@ -1257,7 +1257,7 @@ namespace S9BEditor
 
 		private void addFolder_CanExecute(object sender, CanExecuteRoutedEventArgs e)
 		{
-			if (mSelectedTreeViewItem.Target is DirectoryTreeViewItem { CanAdd: not false, IsDirectory: not false })
+			if (mSelectedTreeViewItem.Target is DirectoryTreeViewItem directoryTreeViewItem && directoryTreeViewItem.CanAdd && directoryTreeViewItem.IsDirectory)
 			{
 				e.CanExecute = true;
 				((RoutedEventArgs)e).Handled = true;
@@ -1266,7 +1266,7 @@ namespace S9BEditor
 
 		private void addFolder_Executed(object sender, ExecutedRoutedEventArgs e)
 		{
-			if (!(mSelectedTreeViewItem.Target is DirectoryTreeViewItem { IsDirectory: not false } directoryTreeViewItem))
+			if (!(mSelectedTreeViewItem.Target is DirectoryTreeViewItem directoryTreeViewItem && directoryTreeViewItem.IsDirectory))
 			{
 				return;
 			}
@@ -1334,7 +1334,7 @@ namespace S9BEditor
 
 		private void rename_CanExecute(object sender, CanExecuteRoutedEventArgs e)
 		{
-			if (mSelectedTreeViewItem.Target is DirectoryTreeViewItem { IsEditable: not false })
+			if (mSelectedTreeViewItem.Target is DirectoryTreeViewItem directoryTreeViewItem && directoryTreeViewItem.IsEditable)
 			{
 				e.CanExecute = true;
 				((RoutedEventArgs)e).Handled = true;
@@ -1343,7 +1343,7 @@ namespace S9BEditor
 
 		private void rename_Executed(object sender, ExecutedRoutedEventArgs e)
 		{
-			if (mSelectedTreeViewItem.Target is DirectoryTreeViewItem { IsEditable: not false } directoryTreeViewItem)
+			if (mSelectedTreeViewItem.Target is DirectoryTreeViewItem directoryTreeViewItem && directoryTreeViewItem.IsEditable)
 			{
 				directoryTreeViewItem.IsEditing = true;
 			}

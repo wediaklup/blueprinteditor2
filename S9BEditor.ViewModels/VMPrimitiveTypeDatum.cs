@@ -38,8 +38,9 @@ namespace S9BEditor.ViewModels
 			get
 			{
 				string text = string.Empty;
-				if (base.Owner is VMProperty { Property: var property })
+				if (base.Owner is VMProperty vmProperty)
 				{
+					var property = vmProperty.Property;
 					IEditHint editHint = property.Descriptor.GetEditHint("Units");
 					if (editHint != null)
 					{
