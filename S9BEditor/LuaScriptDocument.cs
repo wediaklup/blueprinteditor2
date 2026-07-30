@@ -5,128 +5,129 @@ using System.Text;
 using S9BEditor.ViewModels;
 using TypeEdit.Interfaces.Editing;
 
-namespace S9BEditor;
-
-internal class LuaScriptDocument : IDocument, IDisposable
+namespace S9BEditor
 {
-	private VMLuaDocument mLuaDocument;
-
-	public bool Modified
+	internal class LuaScriptDocument : IDocument, IDisposable
 	{
-		get
+		private VMLuaDocument mLuaDocument;
+
+		public bool Modified
 		{
-			return mLuaDocument.Modified;
-		}
-		private set
-		{
-			mLuaDocument.Modified = value;
-		}
-	}
-
-	public object Content => mLuaDocument;
-
-	public bool CanSave => true;
-
-	public string FileName { get; private set; }
-
-	public bool CanCut
-	{
-		get
-		{
-			if (mLuaDocument.CanCopy)
+			get
 			{
-				return mLuaDocument.CanDelete;
+				return mLuaDocument.Modified;
 			}
-			return false;
-		}
-	}
-
-	public bool CanCopy => mLuaDocument.CanCopy;
-
-	public bool CanDelete => mLuaDocument.CanDelete;
-
-	public bool CanPaste => mLuaDocument.CanPaste;
-
-	public event EventHandler ModifiedChanged;
-
-	public LuaScriptDocument()
-	{
-		mLuaDocument = new VMLuaDocument();
-		mLuaDocument.PropertyChanged += mLuaDocument_PropertyChanged;
-	}
-
-	private void mLuaDocument_PropertyChanged(object sender, PropertyChangedEventArgs e)
-	{
-		if (e.PropertyName == "Modified")
-		{
-			ModifiedChanged?.Invoke(this, e);
-		}
-	}
-
-	public bool Initialise(IDocumentHost host)
-	{
-		return true;
-	}
-
-	public bool Save()
-	{
-		try
-		{
-			using (FileStream stream = new FileStream(FileName, FileMode.Create, FileAccess.Write))
+			private set
 			{
-				using StreamWriter streamWriter = new StreamWriter(stream, Encoding.ASCII);
-				streamWriter.Write(mLuaDocument.Text);
+				mLuaDocument.Modified = value;
 			}
-			mLuaDocument.Modified = false;
 		}
-		catch (Exception e)
+
+		public object Content => mLuaDocument;
+
+		public bool CanSave => true;
+
+		public string FileName { get; private set; }
+
+		public bool CanCut
 		{
-			AppServices.ErrorManager.ErrorMessage("Failed to save " + Path.GetFileName(FileName) + ".", e);
+			get
+			{
+				if (mLuaDocument.CanCopy)
+				{
+					return mLuaDocument.CanDelete;
+				}
+				return false;
+			}
 		}
-		return true;
-	}
 
-	public bool LoadFrom(string fileName)
-	{
-		FileName = fileName;
-		using (StreamReader streamReader = new StreamReader(fileName))
+		public bool CanCopy => mLuaDocument.CanCopy;
+
+		public bool CanDelete => mLuaDocument.CanDelete;
+
+		public bool CanPaste => mLuaDocument.CanPaste;
+
+		public event EventHandler ModifiedChanged;
+
+		public LuaScriptDocument()
 		{
-			mLuaDocument.Text = streamReader.ReadToEnd();
-			mLuaDocument.Modified = false;
+			mLuaDocument = new VMLuaDocument();
+			mLuaDocument.PropertyChanged += mLuaDocument_PropertyChanged;
 		}
-		return true;
-	}
 
-	public void Dispose()
-	{
-		if (mLuaDocument != null)
+		private void mLuaDocument_PropertyChanged(object sender, PropertyChangedEventArgs e)
 		{
-			mLuaDocument.Dispose();
+			if (e.PropertyName == "Modified")
+			{
+				ModifiedChanged?.Invoke(this, e);
+			}
 		}
-	}
 
-	public void Copy()
-	{
-		mLuaDocument.Copy();
-	}
+		public bool Initialise(IDocumentHost host)
+		{
+			return true;
+		}
 
-	public void Delete()
-	{
-		mLuaDocument.Delete();
-	}
+		public bool Save()
+		{
+			try
+			{
+				using (FileStream stream = new FileStream(FileName, FileMode.Create, FileAccess.Write))
+				{
+					using StreamWriter streamWriter = new StreamWriter(stream, Encoding.ASCII);
+					streamWriter.Write(mLuaDocument.Text);
+				}
+				mLuaDocument.Modified = false;
+			}
+			catch (Exception e)
+			{
+				AppServices.ErrorManager.ErrorMessage("Failed to save " + Path.GetFileName(FileName) + ".", e);
+			}
+			return true;
+		}
 
-	public void Cut()
-	{
-		mLuaDocument.Copy();
-		mLuaDocument.Delete();
-	}
+		public bool LoadFrom(string fileName)
+		{
+			FileName = fileName;
+			using (StreamReader streamReader = new StreamReader(fileName))
+			{
+				mLuaDocument.Text = streamReader.ReadToEnd();
+				mLuaDocument.Modified = false;
+			}
+			return true;
+		}
 
-	public void Paste()
-	{
-		mLuaDocument.Paste();
-	}
+		public void Dispose()
+		{
+			if (mLuaDocument != null)
+			{
+				mLuaDocument.Dispose();
+			}
+		}
 
-	public void SelectComponent(object component)
-	{
+		public void Copy()
+		{
+			mLuaDocument.Copy();
+		}
+
+		public void Delete()
+		{
+			mLuaDocument.Delete();
+		}
+
+		public void Cut()
+		{
+			mLuaDocument.Copy();
+			mLuaDocument.Delete();
+		}
+
+		public void Paste()
+		{
+			mLuaDocument.Paste();
+		}
+
+		public void SelectComponent(object component)
+		{
+		}
 	}
 }

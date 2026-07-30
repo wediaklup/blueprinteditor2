@@ -4,76 +4,77 @@ using System.Collections.Specialized;
 using System.Windows.Input;
 using System.Windows.Markup;
 
-namespace S9BEditor;
-
-[ContentProperty("Commands")]
-internal class AtLeastOneCommandProxy : ICommand
+namespace S9BEditor
 {
-	public ObservableCollection<ICommand> Commands { get; private set; }
-
-	public event EventHandler CanExecuteChanged
+	[ContentProperty("Commands")]
+	internal class AtLeastOneCommandProxy : ICommand
 	{
-		add
-		{
-			CommandManager.RequerySuggested += value;
-		}
-		remove
-		{
-			CommandManager.RequerySuggested -= value;
-		}
-	}
+		public ObservableCollection<ICommand> Commands { get; private set; }
 
-	public AtLeastOneCommandProxy()
-	{
-		Commands = new ObservableCollection<ICommand>();
-		Commands.CollectionChanged += Commands_CollectionChanged;
-	}
-
-	private void Commands_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
-	{
-		if (e.NewItems != null)
+		public event EventHandler CanExecuteChanged
 		{
-			foreach (ICommand newItem in e.NewItems)
+			add
 			{
-				newItem.CanExecuteChanged += command_CanExecuteChanged;
+				CommandManager.RequerySuggested += value;
+			}
+			remove
+			{
+				CommandManager.RequerySuggested -= value;
 			}
 		}
-		if (e.OldItems != null)
+
+		public AtLeastOneCommandProxy()
 		{
-			foreach (ICommand oldItem in e.OldItems)
-			{
-				oldItem.CanExecuteChanged -= command_CanExecuteChanged;
-			}
+			Commands = new ObservableCollection<ICommand>();
+			Commands.CollectionChanged += Commands_CollectionChanged;
 		}
-		OnCanExecuteChanged(EventArgs.Empty);
-	}
 
-	private void command_CanExecuteChanged(object sender, EventArgs e)
-	{
-		OnCanExecuteChanged(EventArgs.Empty);
-	}
-
-	protected virtual void OnCanExecuteChanged(EventArgs eventArgs)
-	{
-		CommandManager.InvalidateRequerySuggested();
-	}
-
-	public bool CanExecute(object parameter)
-	{
-		if (Commands != null)
+		private void Commands_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
 		{
-			foreach (ICommand command in Commands)
+			if (e.NewItems != null)
 			{
-				if (command.CanExecute(parameter))
+				foreach (ICommand newItem in e.NewItems)
 				{
-					return true;
+					newItem.CanExecuteChanged += command_CanExecuteChanged;
 				}
 			}
+			if (e.OldItems != null)
+			{
+				foreach (ICommand oldItem in e.OldItems)
+				{
+					oldItem.CanExecuteChanged -= command_CanExecuteChanged;
+				}
+			}
+			OnCanExecuteChanged(EventArgs.Empty);
 		}
-		return false;
-	}
 
-	public void Execute(object parameter)
-	{
+		private void command_CanExecuteChanged(object sender, EventArgs e)
+		{
+			OnCanExecuteChanged(EventArgs.Empty);
+		}
+
+		protected virtual void OnCanExecuteChanged(EventArgs eventArgs)
+		{
+			CommandManager.InvalidateRequerySuggested();
+		}
+
+		public bool CanExecute(object parameter)
+		{
+			if (Commands != null)
+			{
+				foreach (ICommand command in Commands)
+				{
+					if (command.CanExecute(parameter))
+					{
+						return true;
+					}
+				}
+			}
+			return false;
+		}
+
+		public void Execute(object parameter)
+		{
+		}
 	}
 }

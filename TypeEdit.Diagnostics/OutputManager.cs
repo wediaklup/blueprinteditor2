@@ -6,136 +6,137 @@ using TypeEdit.Interfaces;
 using TypeEdit.Interfaces.Diagnostics;
 using TypeEdit.Interfaces.Editing;
 
-namespace TypeEdit.Diagnostics;
-
-public class OutputManager : IOutputManager
+namespace TypeEdit.Diagnostics
 {
-	private SynchronizationContext mContext;
-
-	public bool ConsoleOutputEnabled { get; set; }
-
-	public event EventHandler<ErrorReportedEventArgs> ErrorReported;
-
-	public event EventHandler<ErrorsClearedEventArgs> NotifyClearErrors;
-
-	public event EventHandler<OutputReportedEventArgs> OutputWritten;
-
-	public event EventHandler<OutputClearedEventArgs> NotifyClearOutput;
-
-	public event EventHandler<OutputShowEventArgs> NotifyShowOutput;
-
-	public OutputManager()
+	public class OutputManager : IOutputManager
 	{
-		//IL_0029: Unknown result type (might be due to invalid IL or missing references)
-		base._002Ector();
-		mContext = SynchronizationContext.Current;
-		if (mContext == null)
+		private SynchronizationContext mContext;
+
+		public bool ConsoleOutputEnabled { get; set; }
+
+		public event EventHandler<ErrorReportedEventArgs> ErrorReported;
+
+		public event EventHandler<ErrorsClearedEventArgs> NotifyClearErrors;
+
+		public event EventHandler<OutputReportedEventArgs> OutputWritten;
+
+		public event EventHandler<OutputClearedEventArgs> NotifyClearOutput;
+
+		public event EventHandler<OutputShowEventArgs> NotifyShowOutput;
+
+		public OutputManager()
 		{
-			mContext = new SynchronizationContext();
-			MessageBox.Show("Output Manager has no Synchronization Context. Was this set?");
-		}
-		ConsoleOutputEnabled = false;
-	}
-
-	protected virtual void OnErrorReported(ErrorReportedEventArgs outputEventArgs)
-	{
-		ErrorReported?.Invoke(this, outputEventArgs);
-	}
-
-	protected virtual void OnNotifyClearErrors(ErrorsClearedEventArgs outputEventArgs)
-	{
-		NotifyClearErrors?.Invoke(this, outputEventArgs);
-	}
-
-	protected virtual void OnNotifyClearOutput(OutputClearedEventArgs outputEventArgs)
-	{
-		NotifyClearOutput?.Invoke(this, outputEventArgs);
-	}
-
-	protected virtual void OnNotifyShowOutput(OutputShowEventArgs outputEventArgs)
-	{
-		NotifyShowOutput?.Invoke(this, outputEventArgs);
-	}
-
-	public IErrorItem ReportError(string outputFilter, OutputMessageTarget target, ErrorMessageType messageType, string message, object errorSource = null)
-	{
-		ErrorItem errorItem = new ErrorItem(outputFilter, DateTime.Now, target, messageType, message, errorSource);
-		mContext.Post(delegate(object o)
-		{
-			if (o is ErrorReportedEventArgs e)
+			//IL_0029: Unknown result type (might be due to invalid IL or missing references)
+			base._002Ector();
+			mContext = SynchronizationContext.Current;
+			if (mContext == null)
 			{
-				ErrorReportedEventArgs e2 = new ErrorReportedEventArgs(e.ErrorItem);
-				OnErrorReported(e2);
-				if (ConsoleOutputEnabled)
+				mContext = new SynchronizationContext();
+				MessageBox.Show("Output Manager has no Synchronization Context. Was this set?");
+			}
+			ConsoleOutputEnabled = false;
+		}
+
+		protected virtual void OnErrorReported(ErrorReportedEventArgs outputEventArgs)
+		{
+			ErrorReported?.Invoke(this, outputEventArgs);
+		}
+
+		protected virtual void OnNotifyClearErrors(ErrorsClearedEventArgs outputEventArgs)
+		{
+			NotifyClearErrors?.Invoke(this, outputEventArgs);
+		}
+
+		protected virtual void OnNotifyClearOutput(OutputClearedEventArgs outputEventArgs)
+		{
+			NotifyClearOutput?.Invoke(this, outputEventArgs);
+		}
+
+		protected virtual void OnNotifyShowOutput(OutputShowEventArgs outputEventArgs)
+		{
+			NotifyShowOutput?.Invoke(this, outputEventArgs);
+		}
+
+		public IErrorItem ReportError(string outputFilter, OutputMessageTarget target, ErrorMessageType messageType, string message, object errorSource = null)
+		{
+			ErrorItem errorItem = new ErrorItem(outputFilter, DateTime.Now, target, messageType, message, errorSource);
+			mContext.Post(delegate(object o)
+			{
+				if (o is ErrorReportedEventArgs e)
 				{
-					Console.WriteLine(string.Concat(new object[5]
+					ErrorReportedEventArgs e2 = new ErrorReportedEventArgs(e.ErrorItem);
+					OnErrorReported(e2);
+					if (ConsoleOutputEnabled)
 					{
-						e2.ErrorItem.Time,
-						" ",
-						e2.ErrorItem.MessageType,
-						": ",
-						e2.ErrorItem.Message
-					}));
+						Console.WriteLine(string.Concat(new object[5]
+						{
+							e2.ErrorItem.Time,
+							" ",
+							e2.ErrorItem.MessageType,
+							": ",
+							e2.ErrorItem.Message
+						}));
+					}
 				}
-			}
-		}, new ErrorReportedEventArgs(errorItem));
-		return errorItem;
-	}
-
-	public void ClearErrors(string outputFilter, OutputMessageTarget target, IDocument document = null)
-	{
-		mContext.Post(delegate(object o)
-		{
-			if (o is ErrorsClearedEventArgs e)
-			{
-				ErrorsClearedEventArgs outputEventArgs = new ErrorsClearedEventArgs(e.Filter, e.Target, e.Document);
-				OnNotifyClearErrors(outputEventArgs);
-			}
-		}, new ErrorsClearedEventArgs(outputFilter, target, document));
-	}
-
-	public void WriteOutput(string outputFilter, string debugText)
-	{
-		if (ConsoleOutputEnabled)
-		{
-			Console.WriteLine(outputFilter + ": " + debugText);
+			}, new ErrorReportedEventArgs(errorItem));
+			return errorItem;
 		}
-		mContext.Post(delegate(object o)
-		{
-			if (o is OutputReportedEventArgs e)
-			{
-				OutputReportedEventArgs outputEventArgs = new OutputReportedEventArgs(e.Filter, e.Line);
-				OnOutputWritten(outputEventArgs);
-			}
-		}, new OutputReportedEventArgs(outputFilter, debugText));
-	}
 
-	public void ClearOutput(string outputFilter)
-	{
-		mContext.Post(delegate(object o)
+		public void ClearErrors(string outputFilter, OutputMessageTarget target, IDocument document = null)
 		{
-			if (o is OutputClearedEventArgs e)
+			mContext.Post(delegate(object o)
 			{
-				OutputClearedEventArgs outputEventArgs = new OutputClearedEventArgs(e.Filter);
-				OnNotifyClearOutput(outputEventArgs);
-			}
-		}, new OutputClearedEventArgs(outputFilter));
-	}
+				if (o is ErrorsClearedEventArgs e)
+				{
+					ErrorsClearedEventArgs outputEventArgs = new ErrorsClearedEventArgs(e.Filter, e.Target, e.Document);
+					OnNotifyClearErrors(outputEventArgs);
+				}
+			}, new ErrorsClearedEventArgs(outputFilter, target, document));
+		}
 
-	protected virtual void OnOutputWritten(OutputReportedEventArgs outputEventArgs)
-	{
-		OutputWritten?.Invoke(this, outputEventArgs);
-	}
-
-	public void ShowOutput(string outputFilter)
-	{
-		mContext.Post(delegate(object o)
+		public void WriteOutput(string outputFilter, string debugText)
 		{
-			if (o is OutputShowEventArgs e)
+			if (ConsoleOutputEnabled)
 			{
-				OutputShowEventArgs outputEventArgs = new OutputShowEventArgs(e.Filter);
-				OnNotifyShowOutput(outputEventArgs);
+				Console.WriteLine(outputFilter + ": " + debugText);
 			}
-		}, new OutputShowEventArgs(outputFilter));
+			mContext.Post(delegate(object o)
+			{
+				if (o is OutputReportedEventArgs e)
+				{
+					OutputReportedEventArgs outputEventArgs = new OutputReportedEventArgs(e.Filter, e.Line);
+					OnOutputWritten(outputEventArgs);
+				}
+			}, new OutputReportedEventArgs(outputFilter, debugText));
+		}
+
+		public void ClearOutput(string outputFilter)
+		{
+			mContext.Post(delegate(object o)
+			{
+				if (o is OutputClearedEventArgs e)
+				{
+					OutputClearedEventArgs outputEventArgs = new OutputClearedEventArgs(e.Filter);
+					OnNotifyClearOutput(outputEventArgs);
+				}
+			}, new OutputClearedEventArgs(outputFilter));
+		}
+
+		protected virtual void OnOutputWritten(OutputReportedEventArgs outputEventArgs)
+		{
+			OutputWritten?.Invoke(this, outputEventArgs);
+		}
+
+		public void ShowOutput(string outputFilter)
+		{
+			mContext.Post(delegate(object o)
+			{
+				if (o is OutputShowEventArgs e)
+				{
+					OutputShowEventArgs outputEventArgs = new OutputShowEventArgs(e.Filter);
+					OnNotifyShowOutput(outputEventArgs);
+				}
+			}, new OutputShowEventArgs(outputFilter));
+		}
 	}
 }

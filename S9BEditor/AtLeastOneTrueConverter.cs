@@ -3,41 +3,42 @@ using System.Collections;
 using System.Globalization;
 using System.Windows.Data;
 
-namespace S9BEditor;
-
-internal class AtLeastOneTrueConverter : IMultiValueConverter
+namespace S9BEditor
 {
-	public static AtLeastOneTrueConverter Instance { get; private set; }
-
-	static AtLeastOneTrueConverter()
+	internal class AtLeastOneTrueConverter : IMultiValueConverter
 	{
-		Instance = new AtLeastOneTrueConverter();
-	}
+		public static AtLeastOneTrueConverter Instance { get; private set; }
 
-	public object Convert(object[] values, Type targetType, object parameter, CultureInfo culture)
-	{
-		bool flag = false;
-		for (int i = 0; i < values.Length; i++)
+		static AtLeastOneTrueConverter()
 		{
-			if ((bool)values[i])
-			{
-				flag = true;
-				break;
-			}
+			Instance = new AtLeastOneTrueConverter();
 		}
-		if (parameter != null)
-		{
-			if (parameter is IList { Count: 2 } list)
-			{
-				return list[(!flag) ? 1 : 0];
-			}
-			return null;
-		}
-		return flag;
-	}
 
-	public object[] ConvertBack(object value, Type[] targetTypes, object parameter, CultureInfo culture)
-	{
-		throw new NotImplementedException();
+		public object Convert(object[] values, Type targetType, object parameter, CultureInfo culture)
+		{
+			bool flag = false;
+			for (int i = 0; i < values.Length; i++)
+			{
+				if ((bool)values[i])
+				{
+					flag = true;
+					break;
+				}
+			}
+			if (parameter != null)
+			{
+				if (parameter is IList list && list.Count == 2)
+				{
+					return list[(!flag) ? 1 : 0];
+				}
+				return null;
+			}
+			return flag;
+		}
+
+		public object[] ConvertBack(object value, Type[] targetTypes, object parameter, CultureInfo culture)
+		{
+			throw new NotImplementedException();
+		}
 	}
 }

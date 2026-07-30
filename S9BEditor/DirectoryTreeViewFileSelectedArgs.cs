@@ -1,13 +1,14 @@
 using System;
 
-namespace S9BEditor;
-
-internal class DirectoryTreeViewFileSelectedArgs : EventArgs
+namespace S9BEditor
 {
-	public string FileName { get; private set; }
-
-	public DirectoryTreeViewFileSelectedArgs(string fileName)
+	internal class DirectoryTreeViewFileSelectedArgs : EventArgs
 	{
-		FileName = fileName;
+		public string FileName { get; private set; }
+
+		public DirectoryTreeViewFileSelectedArgs(string fileName)
+		{
+			FileName = fileName;
+		}
 	}
 }

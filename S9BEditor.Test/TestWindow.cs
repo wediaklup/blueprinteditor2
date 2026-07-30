@@ -5,41 +5,42 @@ using System.Diagnostics;
 using System.Windows;
 using System.Windows.Markup;
 
-namespace S9BEditor.Test;
-
-public class TestWindow : Window, IComponentConnector
+namespace S9BEditor.Test
 {
-	private bool _contentLoaded;
-
-	public TestWindow()
+	public class TestWindow : Window, IComponentConnector
 	{
-		InitializeComponent();
-	}
+		private bool _contentLoaded;
 
-	[DebuggerNonUserCode]
-	[GeneratedCode("PresentationBuildTasks", "4.0.0.0")]
-	public void InitializeComponent()
-	{
-		if (!_contentLoaded)
+		public TestWindow()
+		{
+			InitializeComponent();
+		}
+
+		[DebuggerNonUserCode]
+		[GeneratedCode("PresentationBuildTasks", "4.0.0.0")]
+		public void InitializeComponent()
+		{
+			if (!_contentLoaded)
+			{
+				_contentLoaded = true;
+				Uri uri = new Uri("/BlueprintEditor2;component/test/testwindow.xaml", UriKind.Relative);
+				Application.LoadComponent((object)this, uri);
+			}
+		}
+
+		[GeneratedCode("PresentationBuildTasks", "4.0.0.0")]
+		[DebuggerNonUserCode]
+		internal Delegate _CreateDelegate(Type delegateType, string handler)
+		{
+			return Delegate.CreateDelegate(delegateType, this, handler);
+		}
+
+		[EditorBrowsable(EditorBrowsableState.Never)]
+		[GeneratedCode("PresentationBuildTasks", "4.0.0.0")]
+		[DebuggerNonUserCode]
+		void IComponentConnector.Connect(int connectionId, object target)
 		{
 			_contentLoaded = true;
-			Uri uri = new Uri("/BlueprintEditor2;component/test/testwindow.xaml", UriKind.Relative);
-			Application.LoadComponent((object)this, uri);
 		}
-	}
-
-	[GeneratedCode("PresentationBuildTasks", "4.0.0.0")]
-	[DebuggerNonUserCode]
-	internal Delegate _CreateDelegate(Type delegateType, string handler)
-	{
-		return Delegate.CreateDelegate(delegateType, this, handler);
-	}
-
-	[EditorBrowsable(EditorBrowsableState.Never)]
-	[GeneratedCode("PresentationBuildTasks", "4.0.0.0")]
-	[DebuggerNonUserCode]
-	void IComponentConnector.Connect(int connectionId, object target)
-	{
-		_contentLoaded = true;
 	}
 }

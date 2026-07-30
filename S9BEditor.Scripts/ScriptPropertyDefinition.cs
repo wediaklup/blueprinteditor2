@@ -1,16 +1,17 @@
 using System.Reflection;
 
-namespace S9BEditor.Scripts;
-
-internal class ScriptPropertyDefinition
+namespace S9BEditor.Scripts
 {
-	public PropertyInfo PropertyInfo { get; private set; }
-
-	public string Value { get; set; }
-
-	public ScriptPropertyDefinition(PropertyInfo pi, string initialValue)
+	internal class ScriptPropertyDefinition
 	{
-		PropertyInfo = pi;
-		Value = initialValue;
+		public PropertyInfo PropertyInfo { get; private set; }
+
+		public string Value { get; set; }
+
+		public ScriptPropertyDefinition(PropertyInfo pi, string initialValue)
+		{
+			PropertyInfo = pi;
+			Value = initialValue;
+		}
 	}
 }

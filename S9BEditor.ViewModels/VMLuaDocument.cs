@@ -1,48 +1,49 @@
 using TypeEdit.Base;
 
-namespace S9BEditor.ViewModels;
-
-internal class VMLuaDocument : ViewModelBase
+namespace S9BEditor.ViewModels
 {
-	private bool mModified;
-
-	private string mText;
-
-	public bool Modified
+	internal class VMLuaDocument : ViewModelBase
 	{
-		get
+		private bool mModified;
+
+		private string mText;
+
+		public bool Modified
 		{
-			return mModified;
-		}
-		set
-		{
-			if (mModified != value)
+			get
 			{
-				mModified = value;
-				RaisePropertyChanged("Modified");
+				return mModified;
+			}
+			set
+			{
+				if (mModified != value)
+				{
+					mModified = value;
+					RaisePropertyChanged("Modified");
+				}
 			}
 		}
-	}
 
-	public string Text
-	{
-		get
+		public string Text
 		{
-			return mText;
-		}
-		set
-		{
-			if (mText != value)
+			get
 			{
-				mText = value;
-				RaisePropertyChanged("Text");
-				Modified = true;
+				return mText;
+			}
+			set
+			{
+				if (mText != value)
+				{
+					mText = value;
+					RaisePropertyChanged("Text");
+					Modified = true;
+				}
 			}
 		}
-	}
 
-	public VMLuaDocument()
-		: base(null)
-	{
+		public VMLuaDocument()
+			: base(null)
+		{
+		}
 	}
 }

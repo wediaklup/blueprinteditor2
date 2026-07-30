@@ -1,13 +1,14 @@
 using System;
 
-namespace TypeEdit.Interfaces.Diagnostics;
-
-public class ErrorReportedEventArgs : EventArgs
+namespace TypeEdit.Interfaces.Diagnostics
 {
-	public IErrorItem ErrorItem { get; private set; }
-
-	public ErrorReportedEventArgs(IErrorItem errorItem)
+	public class ErrorReportedEventArgs : EventArgs
 	{
-		ErrorItem = errorItem;
+		public IErrorItem ErrorItem { get; private set; }
+
+		public ErrorReportedEventArgs(IErrorItem errorItem)
+		{
+			ErrorItem = errorItem;
+		}
 	}
 }

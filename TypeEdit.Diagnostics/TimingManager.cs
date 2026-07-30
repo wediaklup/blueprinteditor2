@@ -7,223 +7,224 @@ using System.Threading;
 using System.Windows.Forms;
 using TypeEdit.Interfaces.Diagnostics;
 
-namespace TypeEdit.Diagnostics;
-
-public class TimingManager : ITimingManager
+namespace TypeEdit.Diagnostics
 {
-	private class TimingSectionHandle : ITimingSection, IDisposable
+	public class TimingManager : ITimingManager
 	{
-		public TimingManager Manager;
-
-		public ITimingInfo TimingInfo;
-
-		public void Dispose()
+		private class TimingSectionHandle : ITimingSection, IDisposable
 		{
-			EndTiming();
-		}
+			public TimingManager Manager;
 
-		public ITimingInfo EndTiming()
-		{
-			if (Manager != null)
+			public ITimingInfo TimingInfo;
+
+			public void Dispose()
 			{
-				Manager.EndTiming(this);
-				Manager = null;
+				EndTiming();
 			}
-			return TimingInfo;
-		}
-	}
 
-	private Dictionary<Thread, TimingInfo> mCurrentThreadedTimingInfos;
-
-	private List<Thread> mActiveThreads;
-
-	private TimingDialog mTimingDialog;
-
-	[DebuggerHidden]
-	public ITimingSection StartDebugTiming(string name)
-	{
-		return null;
-	}
-
-	[DebuggerHidden]
-	internal ITimingInfo EndDebugTiming(ITimingSection section)
-	{
-		return null;
-	}
-
-	private ITimingSection startTiming(string name)
-	{
-		TimingInfo value;
-		lock (mCurrentThreadedTimingInfos)
-		{
-			if (!mCurrentThreadedTimingInfos.TryGetValue(Thread.CurrentThread, out value))
+			public ITimingInfo EndTiming()
 			{
-				value = new TimingInfo("Thread " + Thread.CurrentThread.ManagedThreadId, null, 0);
-				value.Start();
-				mCurrentThreadedTimingInfos.Add(Thread.CurrentThread, value);
-				mActiveThreads.Add(Thread.CurrentThread);
+				if (Manager != null)
+				{
+					Manager.EndTiming(this);
+					Manager = null;
+				}
+				return TimingInfo;
 			}
 		}
-		if (name == null || name.Length == 0)
+
+		private Dictionary<Thread, TimingInfo> mCurrentThreadedTimingInfos;
+
+		private List<Thread> mActiveThreads;
+
+		private TimingDialog mTimingDialog;
+
+		[DebuggerHidden]
+		public ITimingSection StartDebugTiming(string name)
 		{
-			throw new InvalidOperationException("name cannot be null or empty!");
+			return null;
 		}
-		StackFrame stackFrame = new StackFrame(2, needFileInfo: false);
-		int uid = stackFrame.GetNativeOffset();
-		TimingInfo timingInfo = value;
-		if (timingInfo.UID != uid)
+
+		[DebuggerHidden]
+		internal ITimingInfo EndDebugTiming(ITimingSection section)
 		{
-			timingInfo = value.Children.Find((TimingInfo ti) => ti.UID == uid);
-			if (timingInfo == null)
-			{
-				timingInfo = new TimingInfo(name, value, uid);
-				value.Children.Add(timingInfo);
-			}
+			return null;
+		}
+
+		private ITimingSection startTiming(string name)
+		{
+			TimingInfo value;
 			lock (mCurrentThreadedTimingInfos)
 			{
-				mCurrentThreadedTimingInfos[Thread.CurrentThread] = timingInfo;
+				if (!mCurrentThreadedTimingInfos.TryGetValue(Thread.CurrentThread, out value))
+				{
+					value = new TimingInfo("Thread " + Thread.CurrentThread.ManagedThreadId, null, 0);
+					value.Start();
+					mCurrentThreadedTimingInfos.Add(Thread.CurrentThread, value);
+					mActiveThreads.Add(Thread.CurrentThread);
+				}
 			}
-		}
-		timingInfo.Start();
-		TimingSectionHandle timingSectionHandle = new TimingSectionHandle();
-		timingSectionHandle.Manager = this;
-		timingSectionHandle.TimingInfo = timingInfo;
-		return timingSectionHandle;
-	}
-
-	public ITimingSection StartTiming(string name)
-	{
-		return startTiming(name);
-	}
-
-	internal ITimingInfo EndTiming(ITimingSection section)
-	{
-		if (!(section is TimingSectionHandle timingSectionHandle))
-		{
-			throw new InvalidOperationException("Section handle not recognised!");
-		}
-		TimingInfo value;
-		lock (mCurrentThreadedTimingInfos)
-		{
-			if (!mCurrentThreadedTimingInfos.TryGetValue(Thread.CurrentThread, out value))
+			if (name == null || name.Length == 0)
 			{
-				throw new InvalidOperationException("Timer not found on current thread!");
+				throw new InvalidOperationException("name cannot be null or empty!");
 			}
-		}
-		if (timingSectionHandle.TimingInfo == value)
-		{
-			if (value.Stop() == 0)
+			StackFrame stackFrame = new StackFrame(2, needFileInfo: false);
+			int uid = stackFrame.GetNativeOffset();
+			TimingInfo timingInfo = value;
+			if (timingInfo.UID != uid)
 			{
+				timingInfo = value.Children.Find((TimingInfo ti) => ti.UID == uid);
+				if (timingInfo == null)
+				{
+					timingInfo = new TimingInfo(name, value, uid);
+					value.Children.Add(timingInfo);
+				}
 				lock (mCurrentThreadedTimingInfos)
 				{
-					mCurrentThreadedTimingInfos[Thread.CurrentThread] = value.Parent;
+					mCurrentThreadedTimingInfos[Thread.CurrentThread] = timingInfo;
 				}
 			}
-			return value;
+			timingInfo.Start();
+			TimingSectionHandle timingSectionHandle = new TimingSectionHandle();
+			timingSectionHandle.Manager = this;
+			timingSectionHandle.TimingInfo = timingInfo;
+			return timingSectionHandle;
 		}
-		throw new InvalidOperationException("Wrong timer ended. Expected " + value.Name + " but got " + timingSectionHandle.TimingInfo.Name);
-	}
 
-	private void showTimingDialog()
-	{
-		//IL_001a: Unknown result type (might be due to invalid IL or missing references)
-		if (mTimingDialog == null)
+		public ITimingSection StartTiming(string name)
 		{
-			mTimingDialog = new TimingDialog(this);
+			return startTiming(name);
 		}
-		((Form)mTimingDialog).ShowDialog();
-		((Component)(object)mTimingDialog).Disposed += mTimingDialog_Disposed;
-	}
 
-	private void mTimingDialog_Disposed(object sender, EventArgs e)
-	{
-		mTimingDialog = null;
-	}
-
-	public TimingManager()
-	{
-		Thread thread = new Thread(threadCheck);
-		thread.IsBackground = true;
-		thread.Start();
-		mCurrentThreadedTimingInfos = new Dictionary<Thread, TimingInfo>();
-		mActiveThreads = new List<Thread>();
-	}
-
-	private void threadCheck()
-	{
-		while (true)
+		internal ITimingInfo EndTiming(ITimingSection section)
 		{
-			Thread.Sleep(100);
-			foreach (Thread mActiveThread in mActiveThreads)
+			if (!(section is TimingSectionHandle timingSectionHandle))
 			{
-				TimingInfo timingInfo = mCurrentThreadedTimingInfos[mActiveThread];
-				if (!mActiveThread.IsAlive && timingInfo != null)
+				throw new InvalidOperationException("Section handle not recognised!");
+			}
+			TimingInfo value;
+			lock (mCurrentThreadedTimingInfos)
+			{
+				if (!mCurrentThreadedTimingInfos.TryGetValue(Thread.CurrentThread, out value))
 				{
-					while (timingInfo.Parent != null)
+					throw new InvalidOperationException("Timer not found on current thread!");
+				}
+			}
+			if (timingSectionHandle.TimingInfo == value)
+			{
+				if (value.Stop() == 0)
+				{
+					lock (mCurrentThreadedTimingInfos)
 					{
-						timingInfo = timingInfo.Parent;
-					}
-					while (timingInfo.Stop() > 0)
-					{
+						mCurrentThreadedTimingInfos[Thread.CurrentThread] = value.Parent;
 					}
 				}
+				return value;
 			}
-			mActiveThreads.RemoveAll((Thread t) => !t.IsAlive);
+			throw new InvalidOperationException("Wrong timer ended. Expected " + value.Name + " but got " + timingSectionHandle.TimingInfo.Name);
 		}
-	}
 
-	public override string ToString()
-	{
-		StringBuilder stringBuilder = new StringBuilder();
-		lock (mCurrentThreadedTimingInfos)
+		private void showTimingDialog()
 		{
-			foreach (KeyValuePair<Thread, TimingInfo> mCurrentThreadedTimingInfo in mCurrentThreadedTimingInfos)
+			//IL_001a: Unknown result type (might be due to invalid IL or missing references)
+			if (mTimingDialog == null)
 			{
-				mCurrentThreadedTimingInfo.Value.ToStringIndent(0, stringBuilder);
+				mTimingDialog = new TimingDialog(this);
 			}
+			((Form)mTimingDialog).ShowDialog();
+			((Component)(object)mTimingDialog).Disposed += mTimingDialog_Disposed;
 		}
-		return stringBuilder.ToString();
-	}
 
-	public void ClearDeadThreads()
-	{
-		lock (mCurrentThreadedTimingInfos)
+		private void mTimingDialog_Disposed(object sender, EventArgs e)
 		{
-			List<Thread> list = new List<Thread>();
-			foreach (KeyValuePair<Thread, TimingInfo> mCurrentThreadedTimingInfo in mCurrentThreadedTimingInfos)
+			mTimingDialog = null;
+		}
+
+		public TimingManager()
+		{
+			Thread thread = new Thread(threadCheck);
+			thread.IsBackground = true;
+			thread.Start();
+			mCurrentThreadedTimingInfos = new Dictionary<Thread, TimingInfo>();
+			mActiveThreads = new List<Thread>();
+		}
+
+		private void threadCheck()
+		{
+			while (true)
 			{
-				if (!mCurrentThreadedTimingInfo.Key.IsAlive)
+				Thread.Sleep(100);
+				foreach (Thread mActiveThread in mActiveThreads)
 				{
-					list.Add(mCurrentThreadedTimingInfo.Key);
+					TimingInfo timingInfo = mCurrentThreadedTimingInfos[mActiveThread];
+					if (!mActiveThread.IsAlive && timingInfo != null)
+					{
+						while (timingInfo.Parent != null)
+						{
+							timingInfo = timingInfo.Parent;
+						}
+						while (timingInfo.Stop() > 0)
+						{
+						}
+					}
+				}
+				mActiveThreads.RemoveAll((Thread t) => !t.IsAlive);
+			}
+		}
+
+		public override string ToString()
+		{
+			StringBuilder stringBuilder = new StringBuilder();
+			lock (mCurrentThreadedTimingInfos)
+			{
+				foreach (KeyValuePair<Thread, TimingInfo> mCurrentThreadedTimingInfo in mCurrentThreadedTimingInfos)
+				{
+					mCurrentThreadedTimingInfo.Value.ToStringIndent(0, stringBuilder);
 				}
 			}
-			foreach (Thread item in list)
-			{
-				mCurrentThreadedTimingInfos.Remove(item);
-			}
+			return stringBuilder.ToString();
 		}
-	}
 
-	public void ResetIterations()
-	{
-		lock (mCurrentThreadedTimingInfos)
+		public void ClearDeadThreads()
 		{
-			foreach (KeyValuePair<Thread, TimingInfo> mCurrentThreadedTimingInfo in mCurrentThreadedTimingInfos)
+			lock (mCurrentThreadedTimingInfos)
 			{
-				mCurrentThreadedTimingInfo.Value.FrameReset();
+				List<Thread> list = new List<Thread>();
+				foreach (KeyValuePair<Thread, TimingInfo> mCurrentThreadedTimingInfo in mCurrentThreadedTimingInfos)
+				{
+					if (!mCurrentThreadedTimingInfo.Key.IsAlive)
+					{
+						list.Add(mCurrentThreadedTimingInfo.Key);
+					}
+				}
+				foreach (Thread item in list)
+				{
+					mCurrentThreadedTimingInfos.Remove(item);
+				}
 			}
 		}
-	}
 
-	public void ResetAll()
-	{
-		lock (mCurrentThreadedTimingInfos)
+		public void ResetIterations()
 		{
-			foreach (KeyValuePair<Thread, TimingInfo> mCurrentThreadedTimingInfo in mCurrentThreadedTimingInfos)
+			lock (mCurrentThreadedTimingInfos)
 			{
-				mCurrentThreadedTimingInfo.Value.FullReset();
+				foreach (KeyValuePair<Thread, TimingInfo> mCurrentThreadedTimingInfo in mCurrentThreadedTimingInfos)
+				{
+					mCurrentThreadedTimingInfo.Value.FrameReset();
+				}
 			}
 		}
-		ClearDeadThreads();
+
+		public void ResetAll()
+		{
+			lock (mCurrentThreadedTimingInfos)
+			{
+				foreach (KeyValuePair<Thread, TimingInfo> mCurrentThreadedTimingInfo in mCurrentThreadedTimingInfos)
+				{
+					mCurrentThreadedTimingInfo.Value.FullReset();
+				}
+			}
+			ClearDeadThreads();
+		}
 	}
 }

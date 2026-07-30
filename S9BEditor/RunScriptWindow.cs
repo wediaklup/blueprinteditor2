@@ -12,153 +12,154 @@ using S9BEditor.Scripts;
 using S9BEditor.ViewModels;
 using TypeEdit.Interfaces;
 
-namespace S9BEditor;
-
-public class RunScriptWindow : CustomWindow, IComponentConnector
+namespace S9BEditor
 {
-	public static readonly DependencyProperty ScriptsProperty;
-
-	internal ListBox scriptsListBox;
-
-	private bool _contentLoaded;
-
-	internal ObservableCollection<VMScript> Scripts
+	public class RunScriptWindow : CustomWindow, IComponentConnector
 	{
-		get
-		{
-			return (ObservableCollection<VMScript>)((DependencyObject)this).GetValue(ScriptsProperty);
-		}
-		private set
-		{
-			((DependencyObject)this).SetValue(ScriptsProperty, (object)value);
-		}
-	}
+		public static readonly DependencyProperty ScriptsProperty;
 
-	public RunScriptWindow()
-	{
-		InitializeComponent();
-	}
+		internal ListBox scriptsListBox;
 
-	protected override void OnSourceInitialized(EventArgs e)
-	{
-		RefreshScripts();
-		base.OnSourceInitialized(e);
-	}
+		private bool _contentLoaded;
 
-	private void RefreshScripts()
-	{
-		Scripts = new ObservableCollection<VMScript>();
-		if (!Directory.Exists(AppServices.ResourceManager.ScriptsPath))
+		internal ObservableCollection<VMScript> Scripts
 		{
-			return;
-		}
-		string[] files = Directory.GetFiles(AppServices.ResourceManager.ScriptsPath, "*.*", SearchOption.AllDirectories);
-		string[] array = files;
-		foreach (string text in array)
-		{
-			if (text.EndsWith(".bpes.cs", StringComparison.OrdinalIgnoreCase) || text.EndsWith(".bpes.vb", StringComparison.OrdinalIgnoreCase))
+			get
 			{
-				ScriptDefinition scriptDefinition = ScriptDefinition.FromFile(text);
-				if (scriptDefinition != null)
+				return (ObservableCollection<VMScript>)((DependencyObject)this).GetValue(ScriptsProperty);
+			}
+			private set
+			{
+				((DependencyObject)this).SetValue(ScriptsProperty, (object)value);
+			}
+		}
+
+		public RunScriptWindow()
+		{
+			InitializeComponent();
+		}
+
+		protected override void OnSourceInitialized(EventArgs e)
+		{
+			RefreshScripts();
+			base.OnSourceInitialized(e);
+		}
+
+		private void RefreshScripts()
+		{
+			Scripts = new ObservableCollection<VMScript>();
+			if (!Directory.Exists(AppServices.ResourceManager.ScriptsPath))
+			{
+				return;
+			}
+			string[] files = Directory.GetFiles(AppServices.ResourceManager.ScriptsPath, "*.*", SearchOption.AllDirectories);
+			string[] array = files;
+			foreach (string text in array)
+			{
+				if (text.EndsWith(".bpes.cs", StringComparison.OrdinalIgnoreCase) || text.EndsWith(".bpes.vb", StringComparison.OrdinalIgnoreCase))
 				{
-					VMScript item = new VMScript(scriptDefinition);
-					Scripts.Add(item);
+					ScriptDefinition scriptDefinition = ScriptDefinition.FromFile(text);
+					if (scriptDefinition != null)
+					{
+						VMScript item = new VMScript(scriptDefinition);
+						Scripts.Add(item);
+					}
 				}
 			}
 		}
-	}
 
-	private void Run_Click(object sender, RoutedEventArgs e)
-	{
-		//IL_00a6: Unknown result type (might be due to invalid IL or missing references)
-		if (((Selector)scriptsListBox).SelectedItem is VMScript vMScript)
+		private void Run_Click(object sender, RoutedEventArgs e)
 		{
-			try
+			//IL_00a6: Unknown result type (might be due to invalid IL or missing references)
+			if (((Selector)scriptsListBox).SelectedItem is VMScript vMScript)
 			{
-				AppServices.OutputManager.ClearErrors("Script", OutputMessageTarget.Build);
-				AppServices.OutputManager.ClearOutput("Script");
-				AppServices.OutputManager.ShowOutput("Script");
-				IScript script = vMScript.ScriptDefinition.CreateScript();
-				ScriptContext context = new ScriptContext();
-				script.Run(context);
-				AppServices.OutputManager.WriteOutput("Script", "Script \"" + vMScript.ScriptDefinition.Name + "\" completed!");
+				try
+				{
+					AppServices.OutputManager.ClearErrors("Script", OutputMessageTarget.Build);
+					AppServices.OutputManager.ClearOutput("Script");
+					AppServices.OutputManager.ShowOutput("Script");
+					IScript script = vMScript.ScriptDefinition.CreateScript();
+					ScriptContext context = new ScriptContext();
+					script.Run(context);
+					AppServices.OutputManager.WriteOutput("Script", "Script \"" + vMScript.ScriptDefinition.Name + "\" completed!");
+				}
+				catch (Exception ex)
+				{
+					MessageBox.Show("Script threw an exception: " + ex.Message + Environment.NewLine + ex.StackTrace);
+				}
 			}
-			catch (Exception ex)
+		}
+
+		private void Reload_Click(object sender, RoutedEventArgs e)
+		{
+			RefreshScripts();
+		}
+
+		private void Cancel_Click(object sender, RoutedEventArgs e)
+		{
+			((Window)this).Close();
+		}
+
+		[DebuggerNonUserCode]
+		[GeneratedCode("PresentationBuildTasks", "4.0.0.0")]
+		public void InitializeComponent()
+		{
+			if (!_contentLoaded)
 			{
-				MessageBox.Show("Script threw an exception: " + ex.Message + Environment.NewLine + ex.StackTrace);
+				_contentLoaded = true;
+				Uri uri = new Uri("/BlueprintEditor2;component/runscriptwindow.xaml", UriKind.Relative);
+				Application.LoadComponent((object)this, uri);
 			}
 		}
-	}
 
-	private void Reload_Click(object sender, RoutedEventArgs e)
-	{
-		RefreshScripts();
-	}
-
-	private void Cancel_Click(object sender, RoutedEventArgs e)
-	{
-		((Window)this).Close();
-	}
-
-	[DebuggerNonUserCode]
-	[GeneratedCode("PresentationBuildTasks", "4.0.0.0")]
-	public void InitializeComponent()
-	{
-		if (!_contentLoaded)
+		[GeneratedCode("PresentationBuildTasks", "4.0.0.0")]
+		[DebuggerNonUserCode]
+		internal Delegate _CreateDelegate(Type delegateType, string handler)
 		{
-			_contentLoaded = true;
-			Uri uri = new Uri("/BlueprintEditor2;component/runscriptwindow.xaml", UriKind.Relative);
-			Application.LoadComponent((object)this, uri);
+			return Delegate.CreateDelegate(delegateType, this, handler);
 		}
-	}
 
-	[GeneratedCode("PresentationBuildTasks", "4.0.0.0")]
-	[DebuggerNonUserCode]
-	internal Delegate _CreateDelegate(Type delegateType, string handler)
-	{
-		return Delegate.CreateDelegate(delegateType, this, handler);
-	}
-
-	[GeneratedCode("PresentationBuildTasks", "4.0.0.0")]
-	[DebuggerNonUserCode]
-	[EditorBrowsable(EditorBrowsableState.Never)]
-	void IComponentConnector.Connect(int connectionId, object target)
-	{
-		//IL_001e: Unknown result type (might be due to invalid IL or missing references)
-		//IL_0028: Expected O, but got Unknown
-		//IL_002a: Unknown result type (might be due to invalid IL or missing references)
-		//IL_0036: Unknown result type (might be due to invalid IL or missing references)
-		//IL_0040: Expected O, but got Unknown
-		//IL_0042: Unknown result type (might be due to invalid IL or missing references)
-		//IL_004e: Unknown result type (might be due to invalid IL or missing references)
-		//IL_0058: Expected O, but got Unknown
-		//IL_005a: Unknown result type (might be due to invalid IL or missing references)
-		//IL_0066: Unknown result type (might be due to invalid IL or missing references)
-		//IL_0070: Expected O, but got Unknown
-		switch (connectionId)
+		[GeneratedCode("PresentationBuildTasks", "4.0.0.0")]
+		[DebuggerNonUserCode]
+		[EditorBrowsable(EditorBrowsableState.Never)]
+		void IComponentConnector.Connect(int connectionId, object target)
 		{
-		case 1:
-			scriptsListBox = (ListBox)target;
-			break;
-		case 2:
-			((ButtonBase)(Button)target).Click += new RoutedEventHandler(Reload_Click);
-			break;
-		case 3:
-			((ButtonBase)(Button)target).Click += new RoutedEventHandler(Run_Click);
-			break;
-		case 4:
-			((ButtonBase)(Button)target).Click += new RoutedEventHandler(Cancel_Click);
-			break;
-		default:
-			_contentLoaded = true;
-			break;
+			//IL_001e: Unknown result type (might be due to invalid IL or missing references)
+			//IL_0028: Expected O, but got Unknown
+			//IL_002a: Unknown result type (might be due to invalid IL or missing references)
+			//IL_0036: Unknown result type (might be due to invalid IL or missing references)
+			//IL_0040: Expected O, but got Unknown
+			//IL_0042: Unknown result type (might be due to invalid IL or missing references)
+			//IL_004e: Unknown result type (might be due to invalid IL or missing references)
+			//IL_0058: Expected O, but got Unknown
+			//IL_005a: Unknown result type (might be due to invalid IL or missing references)
+			//IL_0066: Unknown result type (might be due to invalid IL or missing references)
+			//IL_0070: Expected O, but got Unknown
+			switch (connectionId)
+			{
+				case 1:
+					scriptsListBox = (ListBox)target;
+					break;
+				case 2:
+					((ButtonBase)(Button)target).Click += new RoutedEventHandler(Reload_Click);
+					break;
+				case 3:
+					((ButtonBase)(Button)target).Click += new RoutedEventHandler(Run_Click);
+					break;
+				case 4:
+					((ButtonBase)(Button)target).Click += new RoutedEventHandler(Cancel_Click);
+					break;
+				default:
+					_contentLoaded = true;
+					break;
+			}
 		}
-	}
 
-	static RunScriptWindow()
-	{
-		//IL_001a: Unknown result type (might be due to invalid IL or missing references)
-		//IL_0024: Expected O, but got Unknown
-		ScriptsProperty = DependencyProperty.Register("Scripts", typeof(ObservableCollection<VMScript>), typeof(RunScriptWindow), (PropertyMetadata)new UIPropertyMetadata((PropertyChangedCallback)null));
+		static RunScriptWindow()
+		{
+			//IL_001a: Unknown result type (might be due to invalid IL or missing references)
+			//IL_0024: Expected O, but got Unknown
+			ScriptsProperty = DependencyProperty.Register("Scripts", typeof(ObservableCollection<VMScript>), typeof(RunScriptWindow), (PropertyMetadata)new UIPropertyMetadata((PropertyChangedCallback)null));
+		}
 	}
 }

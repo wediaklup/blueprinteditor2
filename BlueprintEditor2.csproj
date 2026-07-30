@@ -1,184 +1,97 @@
-<Project Sdk="Microsoft.NET.Sdk.WindowsDesktop">
+<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" DefaultTargets="Build"
+         xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props"
+          Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+
   <PropertyGroup>
-    <AssemblyName>BlueprintEditor2</AssemblyName>
-    <GenerateAssemblyInfo>False</GenerateAssemblyInfo>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+
+    <ProjectGuid>{A3B55D48-98AA-4F3F-BE6B-010203040506}</ProjectGuid>
+
     <OutputType>WinExe</OutputType>
-    <UseWPF>True</UseWPF>
-    <TargetFramework>net40</TargetFramework>
-    <LangVersion>7.3</LangVersion>
-    <PlatformTarget>x86</PlatformTarget>
-  </PropertyGroup>
-  <PropertyGroup>
-    <LangVersion>14.0</LangVersion>
-    <AllowUnsafeBlocks>True</AllowUnsafeBlocks>
-    <CheckForOverflowUnderflow>False</CheckForOverflowUnderflow>
-  </PropertyGroup>
-  <PropertyGroup>
+    <RootNamespace>BlueprintEditor2</RootNamespace>
+    <AssemblyName>BlueprintEditor2</AssemblyName>
+
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+
+    <FileAlignment>512</FileAlignment>
+
+    <WarningLevel>4</WarningLevel>
+
+    <AutoGenerateBindingRedirects>false</AutoGenerateBindingRedirects>
+
     <ApplicationIcon>app.ico</ApplicationIcon>
-    <RootNamespace />
+
+    <UseHostCompilerIfAvailable>true</UseHostCompilerIfAvailable>
+    
+    <LangVersion>7.3</LangVersion>
   </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <Optimize>false</Optimize>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+  </PropertyGroup>
+
+  <!-- .NET Framework -->
+
   <ItemGroup>
-    <None Remove="resources/shape_blueprint.ico" />
-    <None Remove="resources/generic.ico" />
-    <None Remove="resources/findhs.png" />
-    <None Remove="resources/dir_cameras.ico" />
-    <None Remove="resources/copyhs.png" />
-    <None Remove="resources/dir_timeofday.ico" />
-    <None Remove="test/testwindow.baml" />
-    <None Remove="resources/openhs.png" />
-    <None Remove="resources/dir_environment.ico" />
-    <None Remove="resources/icon.ico" />
-    <None Remove="resources/dir_weather.ico" />
-    <None Remove="resources/dir_routemarkers.ico" />
-    <None Remove="resources/pastehs.png" />
-    <None Remove="resourcedictionaries/overflowtabcontrol.baml" />
-    <None Remove="resourcedictionaries/documenttemplates.baml" />
-    <None Remove="resources/dir_railnetwork.ico" />
-    <None Remove="resources/animation.ico" />
-    <None Remove="resources/edit_undohs.png" />
-    <None Remove="resourcedictionaries/icons.baml" />
-    <None Remove="resources/luafile.ico" />
-    <None Remove="resources/dir_railvehicles.ico" />
-    <None Remove="resourcedictionaries/generic.baml" />
-    <None Remove="resourcedictionaries/dataeditor.baml" />
-    <None Remove="aboutwindow.baml" />
-    <None Remove="resources/csvfile.ico" />
-    <None Remove="resourcedictionaries/customwindow.baml" />
-    <None Remove="resourcedictionaries/documenttabcontrol.baml" />
-    <None Remove="resources/dir_templateroutes.ico" />
-    <None Remove="optionswindow.baml" />
-    <None Remove="resourcedictionaries/directorytreeview.baml" />
-    <None Remove="resources/dir_system.ico" />
-    <None Remove="resources/blueprint.ico" />
-    <None Remove="resourcedictionaries/scriptresources.baml" />
-    <None Remove="resources/savehs.png" />
-    <None Remove="resources/dir_particles.ico" />
-    <None Remove="resources/error.png" />
-    <None Remove="resources/saveallhs.png" />
-    <None Remove="resources/109_allannotations_warning_16x16_72.png" />
-    <None Remove="resources/dir_stations.ico" />
-    <None Remove="resources/sound_blueprint.ico" />
-    <None Remove="resources/folder_open.ico" />
-    <None Remove="resources/cuths.png" />
-    <None Remove="resources/109_allannotations_info_16x16_72.png" />
-    <None Remove="savemodifiedfileswindow.baml" />
-    <None Remove="resources/exportonehs.png" />
-    <None Remove="resources/stophs.png" />
-    <None Remove="addinmanagerwindow.baml" />
-    <None Remove="mainwindow.baml" />
-    <None Remove="resources/datacontainer_newrecordhs.png" />
-    <None Remove="resources/edit_redohs.png" />
-    <None Remove="resources/exporths.png" />
-    <None Remove="resourcedictionaries/customcombobox.baml" />
-    <None Remove="runscriptwindow.baml" />
-    <None Remove="resources/109_allannotations_error_16x16_72.png" />
-    <None Remove="additemwindow.baml" />
-    <None Remove="typeselectionwindow.baml" />
-    <None Remove="resources/dir_scenery.ico" />
-    <None Remove="resources/formrunhs.png" />
-    <None Remove="resources/object.ico" />
-    <None Remove="app.baml" />
-    <None Remove="resources/deletehs.png" />
-    <None Remove="resources/dir_audio.ico" />
-    <None Remove="resources/acefile.ico" />
-    <None Remove="resources/1381_cog.ico" />
-    <None Remove="unhandledexceptiondialog.baml" />
-    <EmbeddedResource Include="resources/shape_blueprint.ico" LogicalName="resources/shape_blueprint.ico" />
-    <EmbeddedResource Include="resources/generic.ico" LogicalName="resources/generic.ico" />
-    <EmbeddedResource Include="resources/findhs.png" LogicalName="resources/findhs.png" />
-    <EmbeddedResource Include="resources/dir_cameras.ico" LogicalName="resources/dir_cameras.ico" />
-    <EmbeddedResource Include="resources/copyhs.png" LogicalName="resources/copyhs.png" />
-    <EmbeddedResource Include="resources/dir_timeofday.ico" LogicalName="resources/dir_timeofday.ico" />
-    <EmbeddedResource Include="test/testwindow.baml" LogicalName="test/testwindow.baml" />
-    <EmbeddedResource Include="resources/openhs.png" LogicalName="resources/openhs.png" />
-    <EmbeddedResource Include="resources/dir_environment.ico" LogicalName="resources/dir_environment.ico" />
-    <EmbeddedResource Include="resources/icon.ico" LogicalName="resources/icon.ico" />
-    <EmbeddedResource Include="resources/dir_weather.ico" LogicalName="resources/dir_weather.ico" />
-    <EmbeddedResource Include="resources/dir_routemarkers.ico" LogicalName="resources/dir_routemarkers.ico" />
-    <EmbeddedResource Include="resources/pastehs.png" LogicalName="resources/pastehs.png" />
-    <EmbeddedResource Include="resourcedictionaries/overflowtabcontrol.baml" LogicalName="resourcedictionaries/overflowtabcontrol.baml" />
-    <EmbeddedResource Include="resourcedictionaries/documenttemplates.baml" LogicalName="resourcedictionaries/documenttemplates.baml" />
-    <EmbeddedResource Include="resources/dir_railnetwork.ico" LogicalName="resources/dir_railnetwork.ico" />
-    <EmbeddedResource Include="resources/animation.ico" LogicalName="resources/animation.ico" />
-    <EmbeddedResource Include="resources/edit_undohs.png" LogicalName="resources/edit_undohs.png" />
-    <EmbeddedResource Include="resourcedictionaries/icons.baml" LogicalName="resourcedictionaries/icons.baml" />
-    <EmbeddedResource Include="resources/luafile.ico" LogicalName="resources/luafile.ico" />
-    <EmbeddedResource Include="resources/dir_railvehicles.ico" LogicalName="resources/dir_railvehicles.ico" />
-    <EmbeddedResource Include="resourcedictionaries/generic.baml" LogicalName="resourcedictionaries/generic.baml" />
-    <EmbeddedResource Include="resourcedictionaries/dataeditor.baml" LogicalName="resourcedictionaries/dataeditor.baml" />
-    <EmbeddedResource Include="aboutwindow.baml" LogicalName="aboutwindow.baml" />
-    <EmbeddedResource Include="resources/csvfile.ico" LogicalName="resources/csvfile.ico" />
-    <EmbeddedResource Include="resourcedictionaries/customwindow.baml" LogicalName="resourcedictionaries/customwindow.baml" />
-    <EmbeddedResource Include="resourcedictionaries/documenttabcontrol.baml" LogicalName="resourcedictionaries/documenttabcontrol.baml" />
-    <EmbeddedResource Include="resources/dir_templateroutes.ico" LogicalName="resources/dir_templateroutes.ico" />
-    <EmbeddedResource Include="optionswindow.baml" LogicalName="optionswindow.baml" />
-    <EmbeddedResource Include="resourcedictionaries/directorytreeview.baml" LogicalName="resourcedictionaries/directorytreeview.baml" />
-    <EmbeddedResource Include="resources/dir_system.ico" LogicalName="resources/dir_system.ico" />
-    <EmbeddedResource Include="resources/blueprint.ico" LogicalName="resources/blueprint.ico" />
-    <EmbeddedResource Include="resourcedictionaries/scriptresources.baml" LogicalName="resourcedictionaries/scriptresources.baml" />
-    <EmbeddedResource Include="resources/savehs.png" LogicalName="resources/savehs.png" />
-    <EmbeddedResource Include="resources/dir_particles.ico" LogicalName="resources/dir_particles.ico" />
-    <EmbeddedResource Include="resources/error.png" LogicalName="resources/error.png" />
-    <EmbeddedResource Include="resources/saveallhs.png" LogicalName="resources/saveallhs.png" />
-    <EmbeddedResource Include="resources/109_allannotations_warning_16x16_72.png" LogicalName="resources/109_allannotations_warning_16x16_72.png" />
-    <EmbeddedResource Include="resources/dir_stations.ico" LogicalName="resources/dir_stations.ico" />
-    <EmbeddedResource Include="resources/sound_blueprint.ico" LogicalName="resources/sound_blueprint.ico" />
-    <EmbeddedResource Include="resources/folder_open.ico" LogicalName="resources/folder_open.ico" />
-    <EmbeddedResource Include="resources/cuths.png" LogicalName="resources/cuths.png" />
-    <EmbeddedResource Include="resources/109_allannotations_info_16x16_72.png" LogicalName="resources/109_allannotations_info_16x16_72.png" />
-    <EmbeddedResource Include="savemodifiedfileswindow.baml" LogicalName="savemodifiedfileswindow.baml" />
-    <EmbeddedResource Include="resources/exportonehs.png" LogicalName="resources/exportonehs.png" />
-    <EmbeddedResource Include="resources/stophs.png" LogicalName="resources/stophs.png" />
-    <EmbeddedResource Include="addinmanagerwindow.baml" LogicalName="addinmanagerwindow.baml" />
-    <EmbeddedResource Include="mainwindow.baml" LogicalName="mainwindow.baml" />
-    <EmbeddedResource Include="resources/datacontainer_newrecordhs.png" LogicalName="resources/datacontainer_newrecordhs.png" />
-    <EmbeddedResource Include="resources/edit_redohs.png" LogicalName="resources/edit_redohs.png" />
-    <EmbeddedResource Include="resources/exporths.png" LogicalName="resources/exporths.png" />
-    <EmbeddedResource Include="resourcedictionaries/customcombobox.baml" LogicalName="resourcedictionaries/customcombobox.baml" />
-    <EmbeddedResource Include="runscriptwindow.baml" LogicalName="runscriptwindow.baml" />
-    <EmbeddedResource Include="resources/109_allannotations_error_16x16_72.png" LogicalName="resources/109_allannotations_error_16x16_72.png" />
-    <EmbeddedResource Include="additemwindow.baml" LogicalName="additemwindow.baml" />
-    <EmbeddedResource Include="typeselectionwindow.baml" LogicalName="typeselectionwindow.baml" />
-    <EmbeddedResource Include="resources/dir_scenery.ico" LogicalName="resources/dir_scenery.ico" />
-    <EmbeddedResource Include="resources/formrunhs.png" LogicalName="resources/formrunhs.png" />
-    <EmbeddedResource Include="resources/object.ico" LogicalName="resources/object.ico" />
-    <EmbeddedResource Include="app.baml" LogicalName="app.baml" />
-    <EmbeddedResource Include="resources/deletehs.png" LogicalName="resources/deletehs.png" />
-    <EmbeddedResource Include="resources/dir_audio.ico" LogicalName="resources/dir_audio.ico" />
-    <EmbeddedResource Include="resources/acefile.ico" LogicalName="resources/acefile.ico" />
-    <EmbeddedResource Include="resources/1381_cog.ico" LogicalName="resources/1381_cog.ico" />
-    <EmbeddedResource Include="unhandledexceptiondialog.baml" LogicalName="unhandledexceptiondialog.baml" />
+
+    <Reference Include="mscorlib"/>
+    <Reference Include="System"/>
+    <Reference Include="System.Core"/>
+    <Reference Include="System.Data"/>
+    <Reference Include="System.Xml"/>
+    <Reference Include="System.Xml.Linq"/>
+    <Reference Include="System.Drawing"/>
+
+    <Reference Include="PresentationCore"/>
+    <Reference Include="PresentationFramework"/>
+    <Reference Include="WindowsBase"/>
+    <Reference Include="System.Xaml"/>
+
   </ItemGroup>
+
+  <!-- C# -->
+
   <ItemGroup>
-    <Reference Include="TypeEdit.Interfaces">
-      <HintPath>../TypeEdit.Interfaces.dll</HintPath>
-    </Reference>
-    <Reference Include="TypeEdit.Base">
-      <HintPath>../TypeEdit.Base.dll</HintPath>
-    </Reference>
-    <Reference Include="PresentationCore" />
-    <Reference Include="WindowsBase">
-      <HintPath>../../../../../../../../usr/share/dotnet/shared/Microsoft.NETCore.App/10.0.10/WindowsBase.dll</HintPath>
-    </Reference>
-    <Reference Include="TypeEdit.DataHandling">
-      <HintPath>../TypeEdit.DataHandling.dll</HintPath>
-    </Reference>
-    <Reference Include="TypeEdit.Interop">
-      <HintPath>../TypeEdit.Interop.dll</HintPath>
-    </Reference>
-    <Reference Include="ScintillaNET" />
-    <Reference Include="WindowsFormsIntegration" />
-    <Reference Include="Microsoft.VisualBasic">
-      <HintPath>../../../../../../../../usr/share/dotnet/shared/Microsoft.NETCore.App/10.0.10/Microsoft.VisualBasic.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Xml">
-      <HintPath>../../../../../../../../usr/share/dotnet/shared/Microsoft.NETCore.App/10.0.10/System.Xml.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Xml">
-      <HintPath>../../../../../../../../usr/share/dotnet/shared/Microsoft.NETCore.App/10.0.10/System.Xml.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Core">
-      <HintPath>../../../../../../../../usr/share/dotnet/shared/Microsoft.NETCore.App/10.0.10/System.Core.dll</HintPath>
-    </Reference>
+    <Compile Include="Properties\AssemblyInfo.cs"/>
+
+    <Compile Include="RailWorks\**\*.cs"/>
+    <Compile Include="S9BEditor\**\*.cs"/>
+    <Compile Include="S9BEditor.Interaction\**\*.cs"/>
+    <Compile Include="S9BEditor.Properties\**\*.cs"/>
+    <Compile Include="S9BEditor.Scripts\**\*.cs"/>
+    <Compile Include="S9BEditor.Test\**\*.cs"/>
+    <Compile Include="S9BEditor.ViewModels\**\*.cs"/>
+    <Compile Include="TypeEdit.Diagnostics\**\*.cs"/>
+    <Compile Include="TypeEdit.Interfaces.Diagnostics\**\*.cs"/>
   </ItemGroup>
+
+  <!-- Ressourcen -->
+
+  <ItemGroup>
+
+    <EmbeddedResource Include="**\*.resx"/>
+
+    <EmbeddedResource Include="**\*.baml"/>
+
+    <EmbeddedResource Include="resources\**\*.*"/>
+
+  </ItemGroup>
+
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets"/>
+
 </Project>

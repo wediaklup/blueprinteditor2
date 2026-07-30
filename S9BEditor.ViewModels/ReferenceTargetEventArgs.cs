@@ -1,13 +1,14 @@
 using System;
 
-namespace S9BEditor.ViewModels;
-
-internal class ReferenceTargetEventArgs : EventArgs
+namespace S9BEditor.ViewModels
 {
-	public VMProperty ReferenceTarget { get; private set; }
-
-	public ReferenceTargetEventArgs(VMProperty referenceTarget)
+	internal class ReferenceTargetEventArgs : EventArgs
 	{
-		ReferenceTarget = referenceTarget;
+		public VMProperty ReferenceTarget { get; private set; }
+
+		public ReferenceTargetEventArgs(VMProperty referenceTarget)
+		{
+			ReferenceTarget = referenceTarget;
+		}
 	}
 }

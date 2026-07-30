@@ -1,31 +1,32 @@
 using System;
 
-namespace S9BEditor;
-
-internal class PreviewAsyncTask : ExportAsyncTask
+namespace S9BEditor
 {
-	private bool mCancel;
-
-	private TypeEditDocument mDocument;
-
-	public PreviewAsyncTask(TypeEditDocument doc)
+	internal class PreviewAsyncTask : ExportAsyncTask
 	{
-		mDocument = doc;
-	}
+		private bool mCancel;
 
-	protected override void OnTaskCompleted(EventArgs e)
-	{
-		bool lastExportFailed = AppServices.Exporter.LastExportFailed;
-		base.OnTaskCompleted(e);
-		if (!mCancel && !lastExportFailed)
+		private TypeEditDocument mDocument;
+
+		public PreviewAsyncTask(TypeEditDocument doc)
 		{
-			mDocument.Preview();
+			mDocument = doc;
 		}
-	}
 
-	public override void Cancel()
-	{
-		base.Cancel();
-		mCancel = true;
+		protected override void OnTaskCompleted(EventArgs e)
+		{
+			bool lastExportFailed = AppServices.Exporter.LastExportFailed;
+			base.OnTaskCompleted(e);
+			if (!mCancel && !lastExportFailed)
+			{
+				mDocument.Preview();
+			}
+		}
+
+		public override void Cancel()
+		{
+			base.Cancel();
+			mCancel = true;
+		}
 	}
 }

@@ -5,47 +5,48 @@ using System.Globalization;
 using System.Resources;
 using System.Runtime.CompilerServices;
 
-namespace S9BEditor.Properties;
-
-[CompilerGenerated]
-[DebuggerNonUserCode]
-[GeneratedCode("System.Resources.Tools.StronglyTypedResourceBuilder", "4.0.0.0")]
-internal class Resources
+namespace S9BEditor.Properties
 {
-	private static System.Resources.ResourceManager resourceMan;
-
-	private static CultureInfo resourceCulture;
-
-	[EditorBrowsable(EditorBrowsableState.Advanced)]
-	internal static System.Resources.ResourceManager ResourceManager
+	[CompilerGenerated]
+	[DebuggerNonUserCode]
+	[GeneratedCode("System.Resources.Tools.StronglyTypedResourceBuilder", "4.0.0.0")]
+	internal class Resources
 	{
-		get
+		private static System.Resources.ResourceManager resourceMan;
+
+		private static CultureInfo resourceCulture;
+
+		[EditorBrowsable(EditorBrowsableState.Advanced)]
+		internal static System.Resources.ResourceManager ResourceManager
 		{
-			if (object.ReferenceEquals(resourceMan, null))
+			get
 			{
-				System.Resources.ResourceManager resourceManager = new System.Resources.ResourceManager("S9BEditor.Properties.Resources", typeof(Resources).Assembly);
-				resourceMan = resourceManager;
+				if (object.ReferenceEquals(resourceMan, null))
+				{
+					System.Resources.ResourceManager resourceManager = new System.Resources.ResourceManager("S9BEditor.Properties.Resources", typeof(Resources).Assembly);
+					resourceMan = resourceManager;
+				}
+				return resourceMan;
 			}
-			return resourceMan;
 		}
-	}
 
-	[EditorBrowsable(EditorBrowsableState.Advanced)]
-	internal static CultureInfo Culture
-	{
-		get
+		[EditorBrowsable(EditorBrowsableState.Advanced)]
+		internal static CultureInfo Culture
 		{
-			return resourceCulture;
+			get
+			{
+				return resourceCulture;
+			}
+			set
+			{
+				resourceCulture = value;
+			}
 		}
-		set
+
+		internal static string LuaXML => ResourceManager.GetString("LuaXML", resourceCulture);
+
+		internal Resources()
 		{
-			resourceCulture = value;
 		}
-	}
-
-	internal static string LuaXML => ResourceManager.GetString("LuaXML", resourceCulture);
-
-	internal Resources()
-	{
 	}
 }

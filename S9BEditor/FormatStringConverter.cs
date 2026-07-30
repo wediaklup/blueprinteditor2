@@ -2,18 +2,19 @@ using System;
 using System.Globalization;
 using System.Windows.Data;
 
-namespace S9BEditor;
-
-internal class FormatStringConverter : IMultiValueConverter
+namespace S9BEditor
 {
-	public object Convert(object[] values, Type targetType, object parameter, CultureInfo culture)
+	internal class FormatStringConverter : IMultiValueConverter
 	{
-		string format = parameter as string;
-		return string.Format(CultureInfo.CurrentCulture, format, values);
-	}
+		public object Convert(object[] values, Type targetType, object parameter, CultureInfo culture)
+		{
+			string format = parameter as string;
+			return string.Format(CultureInfo.CurrentCulture, format, values);
+		}
 
-	public object[] ConvertBack(object value, Type[] targetTypes, object parameter, CultureInfo culture)
-	{
-		throw new NotImplementedException();
+		public object[] ConvertBack(object value, Type[] targetTypes, object parameter, CultureInfo culture)
+		{
+			throw new NotImplementedException();
+		}
 	}
 }

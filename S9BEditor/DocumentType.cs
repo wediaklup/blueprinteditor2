@@ -1,12 +1,13 @@
 using TypeEdit.Interfaces.Editing;
 using TypeEdit.Interfaces.UI;
 
-namespace S9BEditor;
-
-internal class DocumentType<T> : IDocumentType where T : IDocument, new()
+namespace S9BEditor
 {
-	public IDocument CreateDocument()
+	internal class DocumentType<T> : IDocumentType where T : IDocument, new()
 	{
-		return new T();
+		public IDocument CreateDocument()
+		{
+			return new T();
+		}
 	}
 }

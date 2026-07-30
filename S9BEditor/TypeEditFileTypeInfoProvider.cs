@@ -3,51 +3,52 @@ using System.Collections.Generic;
 using TypeEdit.Interfaces.Data.Descriptors;
 using TypeEdit.Interfaces.UI;
 
-namespace S9BEditor;
-
-internal class TypeEditFileTypeInfoProvider : IFileTypeInfoProvider
+namespace S9BEditor
 {
-	private List<TypeEditFileTypeInfo> mFileTypeInfos;
-
-	public IEnumerable<IFileTypeInfo> FileTypes => mFileTypeInfos;
-
-	public TypeEditFileTypeInfoProvider()
+	internal class TypeEditFileTypeInfoProvider : IFileTypeInfoProvider
 	{
-		AppServices.TypeEditSchema.Initialised += TypeEditSchema_Initialised;
-		if (AppServices.TypeEditSchema.IsInitialised)
+		private List<TypeEditFileTypeInfo> mFileTypeInfos;
+
+		public IEnumerable<IFileTypeInfo> FileTypes => mFileTypeInfos;
+
+		public TypeEditFileTypeInfoProvider()
+		{
+			AppServices.TypeEditSchema.Initialised += TypeEditSchema_Initialised;
+			if (AppServices.TypeEditSchema.IsInitialised)
+			{
+				onTypeEditSchemaInitialised();
+			}
+		}
+
+		private void TypeEditSchema_Initialised(object sender, EventArgs e)
 		{
 			onTypeEditSchemaInitialised();
 		}
-	}
 
-	private void TypeEditSchema_Initialised(object sender, EventArgs e)
-	{
-		onTypeEditSchemaInitialised();
-	}
-
-	private void onTypeEditSchemaInitialised()
-	{
-		mFileTypeInfos = new List<TypeEditFileTypeInfo>();
-		foreach (ITypeDescriptor type in AppServices.TypeEditSchema.GetTypes())
+		private void onTypeEditSchemaInitialised()
 		{
-			if (!(type is IClassTypeDescriptor { IsAbstract: false } classTypeDescriptor))
+			mFileTypeInfos = new List<TypeEditFileTypeInfo>();
+			foreach (ITypeDescriptor type in AppServices.TypeEditSchema.GetTypes())
 			{
-				continue;
-			}
-			foreach (string category in classTypeDescriptor.GetCategories())
-			{
-				TypeEditFileTypeInfo typeEditFileTypeInfo = null;
-				if (category == "Blueprint")
+				if (!(type is IClassTypeDescriptor classTypeDescriptor) || classTypeDescriptor.IsAbstract)
 				{
-					typeEditFileTypeInfo = new TypeEditFileTypeInfo(classTypeDescriptor, "Blueprint");
+					continue;
 				}
-				else if (category == "AudioControlBlueprint")
+				foreach (string category in classTypeDescriptor.GetCategories())
 				{
-					typeEditFileTypeInfo = new TypeEditFileTypeInfo(classTypeDescriptor, "Audio Control");
-				}
-				if (typeEditFileTypeInfo != null)
-				{
-					mFileTypeInfos.Add(typeEditFileTypeInfo);
+					TypeEditFileTypeInfo typeEditFileTypeInfo = null;
+					if (category == "Blueprint")
+					{
+						typeEditFileTypeInfo = new TypeEditFileTypeInfo(classTypeDescriptor, "Blueprint");
+					}
+					else if (category == "AudioControlBlueprint")
+					{
+						typeEditFileTypeInfo = new TypeEditFileTypeInfo(classTypeDescriptor, "Audio Control");
+					}
+					if (typeEditFileTypeInfo != null)
+					{
+						mFileTypeInfos.Add(typeEditFileTypeInfo);
+					}
 				}
 			}
 		}

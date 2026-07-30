@@ -3,40 +3,41 @@ using System.Globalization;
 using System.Windows.Data;
 using System.Windows.Input;
 
-namespace S9BEditor;
-
-internal class CommandsCanExecuteValuesConverter : IMultiValueConverter
+namespace S9BEditor
 {
-	private static CommandsCanExecuteValuesConverter mInstance;
-
-	public static CommandsCanExecuteValuesConverter Instance
+	internal class CommandsCanExecuteValuesConverter : IMultiValueConverter
 	{
-		get
-		{
-			if (mInstance == null)
-			{
-				mInstance = new CommandsCanExecuteValuesConverter();
-			}
-			return mInstance;
-		}
-	}
+		private static CommandsCanExecuteValuesConverter mInstance;
 
-	public object Convert(object[] values, Type targetType, object parameter, CultureInfo culture)
-	{
-		bool flag = false;
-		foreach (object obj in values)
+		public static CommandsCanExecuteValuesConverter Instance
 		{
-			if (!(obj is ICommand command) || command.CanExecute(null))
+			get
 			{
-				flag = true;
-				break;
+				if (mInstance == null)
+				{
+					mInstance = new CommandsCanExecuteValuesConverter();
+				}
+				return mInstance;
 			}
 		}
-		return flag;
-	}
 
-	public object[] ConvertBack(object value, Type[] targetTypes, object parameter, CultureInfo culture)
-	{
-		throw new NotImplementedException();
+		public object Convert(object[] values, Type targetType, object parameter, CultureInfo culture)
+		{
+			bool flag = false;
+			foreach (object obj in values)
+			{
+				if (!(obj is ICommand command) || command.CanExecute(null))
+				{
+					flag = true;
+					break;
+				}
+			}
+			return flag;
+		}
+
+		public object[] ConvertBack(object value, Type[] targetTypes, object parameter, CultureInfo culture)
+		{
+			throw new NotImplementedException();
+		}
 	}
 }

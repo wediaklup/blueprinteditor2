@@ -2,23 +2,24 @@ using System;
 using System.Globalization;
 using System.Windows.Data;
 
-namespace S9BEditor;
-
-public class EBoolToStringConverter : IValueConverter
+namespace S9BEditor
 {
-	public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+	public class EBoolToStringConverter : IValueConverter
 	{
-		string text = (string)value;
-		bool flag = text == "eTrue";
-		return flag;
-	}
-
-	public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
-	{
-		if ((bool)value)
+		public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
 		{
-			return "eTrue";
+			string text = (string)value;
+			bool flag = text == "eTrue";
+			return flag;
 		}
-		return "eFalse";
+
+		public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+		{
+			if ((bool)value)
+			{
+				return "eTrue";
+			}
+			return "eFalse";
+		}
 	}
 }
