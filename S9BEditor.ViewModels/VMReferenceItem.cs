@@ -108,7 +108,7 @@ namespace S9BEditor.ViewModels
 					mNameDatum = vMPrimitiveTypeDatum;
 				}
 			}
-			else if (mReference is VMCustomDatumEditor { Editor: IDatumNameProvider editor })
+			else if (mReference is VMCustomDatumEditor vmCustomDatumEditor && vmCustomDatumEditor.Editor is IDatumNameProvider editor)
 			{
 				mNameProvider = editor;
 			}

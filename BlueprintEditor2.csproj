@@ -28,6 +28,9 @@
     <UseHostCompilerIfAvailable>true</UseHostCompilerIfAvailable>
     
     <LangVersion>7.3</LangVersion>
+    
+    <PlatformTarget>x86</PlatformTarget>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
@@ -90,6 +93,33 @@
 
     <EmbeddedResource Include="resources\**\*.*"/>
 
+  </ItemGroup>
+  
+  <!-- DLLs -->
+  <ItemGroup>
+    <Reference Include="TypeEdit.Base">
+      <HintPath>TypeEdit.Base.dll</HintPath>
+      <Private>true</Private>
+    </Reference>
+
+    <Reference Include="TypeEdit.DataHandling">
+      <HintPath>TypeEdit.DataHandling.dll</HintPath>
+      <Private>true</Private>
+    </Reference>
+
+    <Reference Include="TypeEdit.Interfaces">
+      <HintPath>TypeEdit.Interfaces.dll</HintPath>
+      <Private>true</Private>
+    </Reference>
+
+    <Reference Include="TypeEdit.Interop">
+      <HintPath>TypeEdit.Interop.dll</HintPath>
+      <Private>true</Private>
+    </Reference>
+
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="WindowsFormsIntegration" />
+    <Reference Include="Microsoft.VisualBasic" />
   </ItemGroup>
 
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets"/>

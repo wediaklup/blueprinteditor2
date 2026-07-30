@@ -74,9 +74,12 @@ namespace S9BEditor
 			{
 				using (FileStream stream = new FileStream(FileName, FileMode.Create, FileAccess.Write))
 				{
-					using StreamWriter streamWriter = new StreamWriter(stream, Encoding.ASCII);
-					streamWriter.Write(mLuaDocument.Text);
+					using (StreamWriter streamWriter = new StreamWriter(stream, Encoding.ASCII))
+					{
+						streamWriter.Write(mLuaDocument.Text);
+					}
 				}
+
 				mLuaDocument.Modified = false;
 			}
 			catch (Exception e)

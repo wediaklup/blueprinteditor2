@@ -1576,10 +1576,15 @@ namespace S9BEditor
 			{
 				return;
 			}
-			using FileStream stream = new FileStream(((FileDialog)val).FileName, FileMode.Create, FileAccess.Write);
-			using StreamWriter streamWriter = new StreamWriter(stream);
-			streamWriter.Write(outputTextBox.Text);
-			streamWriter.Close();
+
+			using (FileStream stream = new FileStream(((FileDialog)val).FileName, FileMode.Create, FileAccess.Write))
+			{
+				using (StreamWriter streamWriter = new StreamWriter(stream))
+				{
+					streamWriter.Write(outputTextBox.Text);
+					streamWriter.Close();
+				}
+			}
 		}
 
 		private void reloadBlueprintSchema_CanExecute(object sender, CanExecuteRoutedEventArgs e)
