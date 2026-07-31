@@ -13,7 +13,7 @@ using ScintillaNET.Configuration;
 namespace S9BEditor
 {
 	[ContentProperty("Text")]
-	[Localizability(/*Could not decode attribute arguments.*/)]
+	//NOFIX [Localizability(/*Could not decode attribute arguments.*/)]
 	internal class ScintillaHost : ContentControl, IDisposable
 	{
 		private string mErr;
@@ -26,7 +26,7 @@ namespace S9BEditor
 
 		private int mLastLineCount;
 
-		[Localizability(/*Could not decode attribute arguments.*/)]
+		//NOFIX [Localizability(/*Could not decode attribute arguments.*/)]
 		public string Text
 		{
 			get

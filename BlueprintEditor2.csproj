@@ -117,6 +117,11 @@
       <Private>true</Private>
     </Reference>
 
+    <Reference Include="ScintillaNET">
+      <HintPath>ScintillaNET.dll</HintPath>
+      <Private>true</Private>
+    </Reference>
+
     <Reference Include="System.Windows.Forms" />
     <Reference Include="WindowsFormsIntegration" />
     <Reference Include="Microsoft.VisualBasic" />
