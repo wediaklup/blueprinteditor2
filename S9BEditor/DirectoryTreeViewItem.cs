@@ -126,7 +126,7 @@ namespace S9BEditor
 		{
 			//IL_0028: Unknown result type (might be due to invalid IL or missing references)
 			//IL_0043: Unknown result type (might be due to invalid IL or missing references)
-			((FrameworkElement)this).OnInitialized(e);
+			base.OnInitialized(e);
 			((Collection<SortDescription>)(object)((CollectionView)((ItemsControl)this).Items).SortDescriptions).Clear();
 			((Collection<SortDescription>)(object)((CollectionView)((ItemsControl)this).Items).SortDescriptions).Add(new SortDescription("IsDirectory", ListSortDirection.Descending));
 			((Collection<SortDescription>)(object)((CollectionView)((ItemsControl)this).Items).SortDescriptions).Add(new SortDescription("ActualDisplayName", ListSortDirection.Ascending));
@@ -274,13 +274,13 @@ namespace S9BEditor
 		protected override void OnExpanded(RoutedEventArgs e)
 		{
 			Refresh();
-			((TreeViewItem)this).OnExpanded(e);
+			base.OnExpanded(e);
 		}
 
 		protected override void OnCollapsed(RoutedEventArgs e)
 		{
 			Refresh();
-			((TreeViewItem)this).OnCollapsed(e);
+			base.OnCollapsed(e);
 		}
 
 		public void Refresh()
@@ -396,7 +396,7 @@ namespace S9BEditor
 		protected override void OnVisualParentChanged(DependencyObject oldParent)
 		{
 			GetParentTreeView()?.UpdateIcon(this);
-			((TreeViewItem)this).OnVisualParentChanged(oldParent);
+			base.OnVisualParentChanged(oldParent);
 		}
 	}
 }

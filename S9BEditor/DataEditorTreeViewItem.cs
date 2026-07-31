@@ -50,7 +50,7 @@ namespace S9BEditor
 		protected override void OnGotFocus(RoutedEventArgs e)
 		{
 			mSuppressNextBringIntoView = true;
-			((TreeViewItem)this).OnGotFocus(e);
+			base.OnGotFocus(e);
 		}
 
 		private void DataEditorTreeViewItem_RequestBringIntoView(object sender, RequestBringIntoViewEventArgs e)
@@ -98,7 +98,7 @@ namespace S9BEditor
 		protected override void OnIsKeyboardFocusWithinChanged(DependencyPropertyChangedEventArgs e)
 		{
 			//IL_0001: Unknown result type (might be due to invalid IL or missing references)
-			((UIElement)this).OnIsKeyboardFocusWithinChanged(e);
+			base.OnIsKeyboardFocusWithinChanged(e);
 			if (((UIElement)this).IsKeyboardFocusWithin && (object)findFirstFocusedTreeViewItem((UIElement)(object)this) == this && ((UIElement)this).Focusable)
 			{
 				((TreeViewItem)this).IsSelected = true;
@@ -114,14 +114,14 @@ namespace S9BEditor
 				((TreeViewItem)this).IsSelected = true;
 				((UIElement)this).Focus();
 			}
-			((UIElement)this).OnPreviewMouseRightButtonDown(e);
+			base.OnPreviewMouseRightButtonDown(e);
 		}
 
 		protected override void OnSelected(RoutedEventArgs e)
 		{
 			if (((UIElement)this).IsKeyboardFocusWithin)
 			{
-				DependencyObject templateChild = ((FrameworkElement)this).GetTemplateChild("PART_ValueContentPresenter");
+				DependencyObject templateChild = base.GetTemplateChild("PART_ValueContentPresenter");
 				FrameworkElement val = (FrameworkElement)(object)((templateChild is FrameworkElement) ? templateChild : null);
 				if (val != null)
 				{
@@ -132,7 +132,7 @@ namespace S9BEditor
 					((UIElement)this).Focus();
 				}
 			}
-			((TreeViewItem)this).OnSelected(e);
+			base.OnSelected(e);
 		}
 
 		static DataEditorTreeViewItem()

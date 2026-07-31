@@ -181,7 +181,7 @@ namespace S9BEditor
 
 		protected override void OnMouseDown(MouseButtonEventArgs e)
 		{
-			((UIElement)this).OnMouseDown(e);
+			base.OnMouseDown(e);
 		}
 
 		protected override void OnLocationChanged(EventArgs e)
@@ -449,7 +449,7 @@ namespace S9BEditor
 			updateThreadCount();
 			createCustomMenuItems();
 			createToolBars();
-			((FrameworkElement)this).OnInitialized(e);
+			base.OnInitialized(e);
 		}
 
 		private void createToolBars()
@@ -897,13 +897,13 @@ namespace S9BEditor
 			AppServices.FileManager.RequestShowInTree -= FileManager_RequestShowInTree;
 			AppServices.ShapeViewer.Close();
 			AppServices.MainWindow = null;
-			((Window)this).OnClosed(e);
+			base.OnClosed(e);
 		}
 
 		protected override void OnClosing(CancelEventArgs e)
 		{
 			e.Cancel = !documentTabControl.CloseAll();
-			((Window)this).OnClosing(e);
+			base.OnClosing(e);
 		}
 
 		private void cut_CanExecute(object sender, CanExecuteRoutedEventArgs e)

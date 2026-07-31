@@ -154,7 +154,7 @@ namespace S9BEditor
 			{
 				mPopup = null;
 			}
-			DependencyObject templateChild = ((FrameworkElement)this).GetTemplateChild("PART_Popup");
+			DependencyObject templateChild = base.GetTemplateChild("PART_Popup");
 			mPopup = (Popup)(object)((templateChild is Popup) ? templateChild : null);
 			_ = mPopup;
 			((FrameworkElement)this).OnApplyTemplate();

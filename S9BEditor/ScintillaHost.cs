@@ -101,14 +101,14 @@ namespace S9BEditor
 			{
 				((Control)mSCI).Text = (string)((DependencyPropertyChangedEventArgs)(e)).NewValue;
 			}
-			((FrameworkElement)this).OnPropertyChanged(e);
+			base.OnPropertyChanged(e);
 		}
 
 		protected override void OnInitialized(EventArgs e)
 		{
 			//IL_0030: Unknown result type (might be due to invalid IL or missing references)
 			//IL_0036: Expected O, but got Unknown
-			((FrameworkElement)this).OnInitialized(e);
+			base.OnInitialized(e);
 			if ((mSCI != null) & (mWFH != null))
 			{
 				((ContentControl)this).Content = mWFH;

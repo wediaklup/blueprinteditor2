@@ -104,7 +104,7 @@ namespace S9BEditor
 			if (CanRearrange)
 			{
 				UIElement val = null;
-				foreach (UIElement internalChild in ((Panel)this).InternalChildren)
+				foreach (UIElement internalChild in base.InternalChildren)
 				{
 					UIElement val2 = internalChild;
 					if (val2.InputHitTest(Mouse.GetPosition((IInputElement)(object)val2)) != null)
@@ -119,7 +119,7 @@ namespace S9BEditor
 					mDragStartPoint = Mouse.GetPosition((IInputElement)(object)this);
 				}
 			}
-			((UIElement)this).OnPreviewMouseLeftButtonDown(e);
+			base.OnPreviewMouseLeftButtonDown(e);
 		}
 
 		protected override void OnPreviewMouseMove(MouseEventArgs e)
@@ -201,7 +201,7 @@ namespace S9BEditor
 						break;
 					}
 				}
-				int num7 = Math.Max(0, Math.Min(Math.Min(num3, ((Panel)this).InternalChildren.Count - 1), num6 - 1));
+				int num7 = Math.Max(0, Math.Min(Math.Min(num3, base.InternalChildren.Count - 1), num6 - 1));
 				if (num7 != num)
 				{
 					mLastDragThresholdEnd = mItemOffsets[num7 + 1];
@@ -213,7 +213,7 @@ namespace S9BEditor
 			}
 			else
 			{
-				((UIElement)this).OnPreviewMouseMove(e);
+				base.OnPreviewMouseMove(e);
 			}
 		}
 
@@ -226,12 +226,12 @@ namespace S9BEditor
 			mDragging = false;
 			mDraggingElement = null;
 			mLastDragThresholdsValid = false;
-			((UIElement)this).OnPreviewMouseLeftButtonUp(e);
+			base.OnPreviewMouseLeftButtonUp(e);
 		}
 
 		protected override void OnVisualChildrenChanged(DependencyObject visualAdded, DependencyObject visualRemoved)
 		{
-			((Panel)this).OnVisualChildrenChanged(visualAdded, visualRemoved);
+			base.OnVisualChildrenChanged(visualAdded, visualRemoved);
 		}
 
 		protected override Size MeasureOverride(Size availableSize)
@@ -276,17 +276,17 @@ namespace S9BEditor
 			{
 				object? target = o.Target;
 				UIElement val2 = (UIElement)((target is UIElement) ? target : null);
-				if (val2 == null || !((Panel)this).InternalChildren.Contains(val2))
+				if (val2 == null || !base.InternalChildren.Contains(val2))
 				{
 					changed = true;
 					return true;
 				}
 				return false;
 			});
-			bool[] array = new bool[((Panel)this).InternalChildren.Count];
-			for (int num = 0; num < ((Panel)this).InternalChildren.Count; num++)
+			bool[] array = new bool[base.InternalChildren.Count];
+			for (int num = 0; num < base.InternalChildren.Count; num++)
 			{
-				UIElement val = ((Panel)this).InternalChildren[num];
+				UIElement val = base.InternalChildren[num];
 				foreach (WeakReference item in mChildOrdering)
 				{
 					if (item.Target == val)
@@ -295,17 +295,17 @@ namespace S9BEditor
 					}
 				}
 			}
-			for (int num2 = 0; num2 < ((Panel)this).InternalChildren.Count; num2++)
+			for (int num2 = 0; num2 < base.InternalChildren.Count; num2++)
 			{
 				if (!array[num2])
 				{
 					switch (OverflowAppendMode)
 					{
 						case OverflowAppendMode.AppendFront:
-							mChildOrdering.Insert(0, new WeakReference(((Panel)this).InternalChildren[num2]));
+							mChildOrdering.Insert(0, new WeakReference(base.InternalChildren[num2]));
 							break;
 						case OverflowAppendMode.AppendBack:
-							mChildOrdering.Add(new WeakReference(((Panel)this).InternalChildren[num2]));
+							mChildOrdering.Add(new WeakReference(base.InternalChildren[num2]));
 							break;
 					}
 					changed = true;

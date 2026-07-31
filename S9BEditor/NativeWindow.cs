@@ -143,7 +143,7 @@ namespace S9BEditor
 			Handle = new WindowInteropHelper((Window)(object)this).Handle;
 			mOldWndProc = Native.GetWindowLong(Handle, -4);
 			Native.SetWindowLong(Handle, -4, mNewWndProc);
-			((Window)this).OnSourceInitialized(e);
+			base.OnSourceInitialized(e);
 			resizeModeChanged();
 		}
 
@@ -179,7 +179,7 @@ namespace S9BEditor
 		protected override void OnPropertyChanged(DependencyPropertyChangedEventArgs e)
 		{
 			//IL_0001: Unknown result type (might be due to invalid IL or missing references)
-			((FrameworkElement)this).OnPropertyChanged(e);
+			base.OnPropertyChanged(e);
 			if (((DependencyPropertyChangedEventArgs)(e)).Property == Window.ResizeModeProperty)
 			{
 				resizeModeChanged();

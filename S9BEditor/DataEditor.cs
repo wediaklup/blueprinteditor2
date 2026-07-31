@@ -386,7 +386,7 @@ namespace S9BEditor
 				mMainScrollView.ScrollChanged -= new ScrollChangedEventHandler(scrollViewer_ScrollChanged);
 				mMainScrollView = null;
 			}
-			((Control)this).OnTemplateChanged(oldTemplate, newTemplate);
+			base.OnTemplateChanged(oldTemplate, newTemplate);
 		}
 
 		public override void OnApplyTemplate()
@@ -482,7 +482,7 @@ namespace S9BEditor
 					ActualValueColumnSeparatorWidth = num;
 				}
 			}
-			((FrameworkElement)this).OnPropertyChanged(e);
+			base.OnPropertyChanged(e);
 		}
 
 		public static bool GetIndentsChildren(DependencyObject obj)

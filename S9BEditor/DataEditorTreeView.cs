@@ -7,7 +7,7 @@ namespace S9BEditor
 	{
 		public DataEditorTreeView()
 		{
-			((FrameworkElement)this).DefaultStyleKey = typeof(DataEditorTreeView);
+			base.DefaultStyleKey = typeof(DataEditorTreeView);
 		}
 
 		protected override DependencyObject GetContainerForItemOverride()

@@ -209,8 +209,8 @@ namespace S9BEditor
 
 		protected override void OnMouseRightButtonDown(MouseButtonEventArgs e)
 		{
-			((TreeViewItem)this).OnMouseLeftButtonDown(e);
-			((UIElement)this).OnMouseRightButtonDown(e);
+			base.OnMouseLeftButtonDown(e);
+			base.OnMouseRightButtonDown(e);
 		}
 
 		protected override void OnPreviewMouseLeftButtonDown(MouseButtonEventArgs e)
@@ -237,7 +237,7 @@ namespace S9BEditor
 					IsEditing = false;
 				}
 			}
-			((UIElement)this).OnPreviewMouseLeftButtonDown(e);
+			base.OnPreviewMouseLeftButtonDown(e);
 		}
 
 		protected override void OnMouseLeftButtonDown(MouseButtonEventArgs e)
@@ -272,7 +272,7 @@ namespace S9BEditor
 					}
 				}
 			}
-			((TreeViewItem)this).OnMouseLeftButtonDown(e);
+			base.OnMouseLeftButtonDown(e);
 		}
 
 		private void dt_Tick(object sender, EventArgs e)
@@ -321,7 +321,7 @@ namespace S9BEditor
 					((UIElement)mEditBox).Visibility = (Visibility)1;
 				}
 			}
-			((FrameworkElement)this).OnPropertyChanged(e);
+			base.OnPropertyChanged(e);
 		}
 
 		protected override void OnTemplateChanged(ControlTemplate oldTemplate, ControlTemplate newTemplate)
@@ -336,7 +336,7 @@ namespace S9BEditor
 				((UIElement)mEditBox).PreviewKeyDown -= new KeyEventHandler(mEditBox_PreviewKeyDown);
 				mEditBox = null;
 			}
-			((Control)this).OnTemplateChanged(oldTemplate, newTemplate);
+			base.OnTemplateChanged(oldTemplate, newTemplate);
 		}
 
 		public override void OnApplyTemplate()

@@ -41,18 +41,18 @@ namespace S9BEditor
 				((TextBoxBase)this).SelectAll();
 			}
 			mIsMouseDown = true;
-			((UIElement)this).OnPreviewMouseDown(e);
+			base.OnPreviewMouseDown(e);
 		}
 
 		protected override void OnPreviewMouseLeftButtonUp(MouseButtonEventArgs e)
 		{
 			mIsMouseDown = false;
-			((UIElement)this).OnPreviewMouseUp(e);
+			base.OnPreviewMouseUp(e);
 		}
 
 		protected override void OnLostFocus(RoutedEventArgs e)
 		{
-			((TextBoxBase)this).OnLostFocus(e);
+			base.OnLostFocus(e);
 		}
 
 		protected override void OnGotKeyboardFocus(KeyboardFocusChangedEventArgs e)
@@ -61,7 +61,7 @@ namespace S9BEditor
 			{
 				((TextBoxBase)this).SelectAll();
 			}
-			((TextBoxBase)this).OnGotKeyboardFocus(e);
+			base.OnGotKeyboardFocus(e);
 		}
 	}
 }

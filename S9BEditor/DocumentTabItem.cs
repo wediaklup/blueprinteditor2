@@ -123,7 +123,7 @@ namespace S9BEditor
 		{
 			((TabItem)this).IsSelected = true;
 			FocusContent();
-			((TabItem)this).OnMouseLeftButtonDown(e);
+			base.OnMouseLeftButtonDown(e);
 		}
 
 		public void FocusContent()
@@ -201,7 +201,7 @@ namespace S9BEditor
 				}
 				updateVSM();
 			}
-			((FrameworkElement)this).OnPropertyChanged(e);
+			base.OnPropertyChanged(e);
 		}
 
 		private void updateVSM()

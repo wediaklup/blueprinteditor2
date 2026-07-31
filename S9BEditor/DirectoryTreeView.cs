@@ -86,7 +86,7 @@ namespace S9BEditor
 				}
 				OnFileIconUriProviderChanged(EventArgs.Empty);
 			}
-			((FrameworkElement)this).OnPropertyChanged(e);
+			base.OnPropertyChanged(e);
 		}
 
 		private void newVal_IconsChanged(object sender, EventArgs e)
@@ -170,7 +170,7 @@ namespace S9BEditor
 			{
 				OpenItem(directoryTreeViewItem);
 			}
-			((Control)this).OnMouseDoubleClick(e);
+			base.OnMouseDoubleClick(e);
 		}
 
 		protected override void OnItemsChanged(NotifyCollectionChangedEventArgs e)
@@ -213,7 +213,7 @@ namespace S9BEditor
 					}
 				}
 			}
-			((TreeView)this).OnItemsChanged(e);
+			base.OnItemsChanged(e);
 		}
 
 		private void fsw_Created(object sender, FileSystemEventArgs e)

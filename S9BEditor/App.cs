@@ -49,7 +49,7 @@ namespace S9BEditor
 				Settings.Default.ThreadCountSet = true;
 				((SettingsBase)Settings.Default).Save();
 			}
-			((Application)this).OnStartup(e);
+			base.OnStartup(e);
 		}
 
 		private void App_DispatcherUnhandledException(object sender, DispatcherUnhandledExceptionEventArgs e)
@@ -84,7 +84,7 @@ namespace S9BEditor
 		protected override void OnExit(ExitEventArgs e)
 		{
 			((SettingsBase)Settings.Default).Save();
-			((Application)this).OnExit(e);
+			base.OnExit(e);
 		}
 
 		private void initSingletons()

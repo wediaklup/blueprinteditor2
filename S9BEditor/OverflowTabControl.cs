@@ -95,7 +95,7 @@ namespace S9BEditor
 				mOverflowPanel.OverflowStatesChanged -= overflowStatesChanged;
 			}
 			mOverflowPanel = null;
-			((Control)this).OnTemplateChanged(oldTemplate, newTemplate);
+			base.OnTemplateChanged(oldTemplate, newTemplate);
 		}
 
 		public override void OnApplyTemplate()
@@ -136,13 +136,13 @@ namespace S9BEditor
 		protected override void OnSelectionChanged(SelectionChangedEventArgs e)
 		{
 			ensureSelectedVisible();
-			((TabControl)this).OnSelectionChanged(e);
+			base.OnSelectionChanged(e);
 		}
 
 		protected override void OnItemsChanged(NotifyCollectionChangedEventArgs e)
 		{
 			ensureSelectedVisible();
-			((TabControl)this).OnItemsChanged(e);
+			base.OnItemsChanged(e);
 		}
 
 		private void ensureSelectedVisible()

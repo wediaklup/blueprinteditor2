@@ -122,6 +122,10 @@
       <Private>true</Private>
     </Reference>
 
+    <None Include="SciLexer.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+
     <Reference Include="System.Windows.Forms" />
     <Reference Include="WindowsFormsIntegration" />
     <Reference Include="Microsoft.VisualBasic" />

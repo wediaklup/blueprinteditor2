@@ -235,13 +235,13 @@ namespace S9BEditor
 
 		protected override void OnRenderSizeChanged(SizeChangedInfo sizeInfo)
 		{
-			((FrameworkElement)this).OnRenderSizeChanged(sizeInfo);
+			base.OnRenderSizeChanged(sizeInfo);
 			updateShadowBorder();
 		}
 
 		protected override void OnLocationChanged(EventArgs e)
 		{
-			((Window)this).OnLocationChanged(e);
+			base.OnLocationChanged(e);
 			updateShadowBorder();
 		}
 
@@ -460,7 +460,7 @@ namespace S9BEditor
 
 		protected override void OnStateChanged(EventArgs e)
 		{
-			((Window)this).OnStateChanged(e);
+			base.OnStateChanged(e);
 			updateActualTitleBarHeight();
 			updateActualBorderWidth();
 			updateActualBorderHeight();
