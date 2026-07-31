@@ -40,7 +40,6 @@ namespace S9BEditor
 				//IL_0058: Expected O, but got Unknown
 				//IL_0066: Unknown result type (might be due to invalid IL or missing references)
 				//IL_0070: Expected O, but got Unknown
-				base._002Ector();
 				Gestures = new List<InputGesture>();
 				switch (type)
 				{

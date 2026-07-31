@@ -27,7 +27,6 @@ namespace TypeEdit.Diagnostics
 		public OutputManager()
 		{
 			//IL_0029: Unknown result type (might be due to invalid IL or missing references)
-			base._002Ector();
 			mContext = SynchronizationContext.Current;
 			if (mContext == null)
 			{

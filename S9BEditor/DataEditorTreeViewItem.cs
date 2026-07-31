@@ -43,7 +43,6 @@ namespace S9BEditor
 		{
 			//IL_000e: Unknown result type (might be due to invalid IL or missing references)
 			//IL_0018: Expected O, but got Unknown
-			((TreeViewItem)this)._002Ector();
 			((FrameworkElement)this).RequestBringIntoView += new RequestBringIntoViewEventHandler(DataEditorTreeViewItem_RequestBringIntoView);
 		}
 

@@ -47,7 +47,6 @@ namespace S9BEditor
 			//IL_0054: Expected O, but got Unknown
 			//IL_0022: Unknown result type (might be due to invalid IL or missing references)
 			//IL_002c: Expected O, but got Unknown
-			((ContentControl)this)._002Ector();
 			try
 			{
 				if (mWFH == null)

@@ -500,11 +500,9 @@ namespace S9BEditor
 					Matrix transformToDevice = ((CompositionTarget)val4.CompositionTarget).TransformToDevice;
 					double m = ((Matrix)(transformToDevice)).M11;
 					double m2 = ((Matrix)(transformToDevice)).M22;
-					Point val5 = default(Point);
-					((Point)(val5))._002Ector((double)xLParam / m, (double)yLParam / m2);
+					Point val5 = new Point((double)xLParam / m, (double)yLParam / m2);
 					Native.GetWindowRect(hWnd, out var rect);
-					Rect val6 = default(Rect);
-					((Rect)(val6))._002Ector((double)rect.Left / m, (double)rect.Top / m2, (double)(rect.Right - rect.Left) / m, (double)(rect.Bottom - rect.Top) / m2);
+					Rect val6 = new Rect((double)rect.Left / m, (double)rect.Top / m2, (double)(rect.Right - rect.Left) / m, (double)(rect.Bottom - rect.Top) / m2);
 					bool nonClientElementFound = false;
 					PointHitTestParameters val7 = new PointHitTestParameters((Point)(val5 - ((Rect)(val6)).Location));
 					VisualTreeHelper.HitTest((Visual)(object)this, (HitTestFilterCallback)null, (HitTestResultCallback)delegate(HitTestResult hr)

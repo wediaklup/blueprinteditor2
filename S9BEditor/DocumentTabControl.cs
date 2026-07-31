@@ -104,7 +104,6 @@ namespace S9BEditor
 			//IL_023b: Expected O, but got Unknown
 			//IL_0243: Unknown result type (might be due to invalid IL or missing references)
 			//IL_024d: Expected O, but got Unknown
-			base._002Ector();
 			mDocumentFolderWatchers = new Dictionary<FileSystemWatcher, List<DocumentTabItem>>();
 			mDocumentTabItems = new ObservableCollection<DocumentTabItem>();
 			((ItemsControl)this).ItemsSource = mDocumentTabItems;

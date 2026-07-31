@@ -68,7 +68,6 @@ namespace S9BEditor
 		{
 			//IL_0045: Unknown result type (might be due to invalid IL or missing references)
 			//IL_004b: Expected O, but got Unknown
-			this._002Ector();
 			if (document != null)
 			{
 				mFileName = fileName;

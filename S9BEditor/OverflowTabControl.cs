@@ -84,7 +84,6 @@ namespace S9BEditor
 			//IL_0022: Expected O, but got Unknown
 			//IL_001d: Unknown result type (might be due to invalid IL or missing references)
 			//IL_0027: Expected O, but got Unknown
-			((TabControl)this)._002Ector();
 			((UIElement)this).CommandBindings.Add(new CommandBinding(SelectTabCommand, new ExecutedRoutedEventHandler(tabMenuItemSelected)));
 		}
 

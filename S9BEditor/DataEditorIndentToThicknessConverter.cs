@@ -29,8 +29,7 @@ namespace S9BEditor
 						num++;
 					}
 				}
-				Thickness val2 = default(Thickness);
-				((Thickness)(val2))._002Ector((double)(num * IndentWidth), 0.0, 0.0, 0.0);
+				Thickness val2 = new Thickness((double)(num * IndentWidth), 0.0, 0.0, 0.0);
 				if (parameter != null && parameter.GetType() == typeof(string))
 				{
 					string[] array = ((string)parameter).Split(new char[1] { ',' });

@@ -54,7 +54,6 @@ namespace S9BEditor
 		{
 			//IL_0022: Unknown result type (might be due to invalid IL or missing references)
 			//IL_003d: Unknown result type (might be due to invalid IL or missing references)
-			((TreeView)this)._002Ector();
 			mWatchedItems = new Dictionary<DirectoryTreeViewItem, FileSystemWatcher>();
 			((Collection<SortDescription>)(object)((CollectionView)((ItemsControl)this).Items).SortDescriptions).Add(new SortDescription("IsDirectory", ListSortDirection.Ascending));
 			((Collection<SortDescription>)(object)((CollectionView)((ItemsControl)this).Items).SortDescriptions).Add(new SortDescription("ActualDisplayName", ListSortDirection.Ascending));
