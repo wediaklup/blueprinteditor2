@@ -194,7 +194,7 @@ namespace S9BEditor
 				int num6;
 				for (num6 = 0; num6 < mChildOrdering.Count; num6++)
 				{
-					object? target = mChildOrdering[num6].Target;
+					object target = mChildOrdering[num6].Target;
 					UIElement val2 = (UIElement)((target is UIElement) ? target : null);
 					if (val2 != null && GetIsOnOverflow((DependencyObject)(object)val2))
 					{
@@ -248,7 +248,7 @@ namespace S9BEditor
 			Size result = default(Size);
 			foreach (WeakReference item in mChildOrdering)
 			{
-				object? target = item.Target;
+				object target = item.Target;
 				UIElement val = (UIElement)((target is UIElement) ? target : null);
 				if (val != null)
 				{
@@ -256,13 +256,13 @@ namespace S9BEditor
 					Size desiredSize = val.DesiredSize;
 					if (flag)
 					{
-						((Size)(result)).Height = Math.Min(((Size)(result)).Height + ((Size)(desiredSize)).Height, ((Size)(availableSize)).Height);
-						((Size)(result)).Width = Math.Max(((Size)(result)).Width, ((Size)(desiredSize)).Width);
+						result.Height = Math.Min(((Size)(result)).Height + ((Size)(desiredSize)).Height, ((Size)(availableSize)).Height);
+						result.Width = Math.Max(((Size)(result)).Width, ((Size)(desiredSize)).Width);
 					}
 					else
 					{
-						((Size)(result)).Width = Math.Min(((Size)(result)).Width + ((Size)(desiredSize)).Width, ((Size)(availableSize)).Width);
-						((Size)(result)).Height = Math.Max(((Size)(result)).Height, ((Size)(desiredSize)).Height);
+						result.Width = Math.Min(((Size)(result)).Width + ((Size)(desiredSize)).Width, ((Size)(availableSize)).Width);
+						result.Height = Math.Max(((Size)(result)).Height, ((Size)(desiredSize)).Height);
 					}
 				}
 			}
@@ -274,7 +274,7 @@ namespace S9BEditor
 			bool changed = false;
 			mChildOrdering.RemoveAll(delegate(WeakReference o)
 			{
-				object? target = o.Target;
+				object target = o.Target;
 				UIElement val2 = (UIElement)((target is UIElement) ? target : null);
 				if (val2 == null || !base.InternalChildren.Contains(val2))
 				{
@@ -332,7 +332,7 @@ namespace S9BEditor
 			foreach (WeakReference item in mChildOrdering)
 			{
 				mItemOffsets.Add(num);
-				object? target = item.Target;
+				object target = item.Target;
 				UIElement val = (UIElement)((target is UIElement) ? target : null);
 				if (val != null)
 				{

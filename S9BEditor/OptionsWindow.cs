@@ -49,7 +49,7 @@ namespace S9BEditor
 			//IL_0006: Expected O, but got Unknown
 			//IL_0036: Unknown result type (might be due to invalid IL or missing references)
 			//IL_003c: Invalid comparison between Unknown and I4
-			FolderBrowserDialog val = new FolderBrowserDialog();
+			System.Windows.Forms.FolderBrowserDialog val = new System.Windows.Forms.FolderBrowserDialog();
 			if (Directory.Exists(AppServices.ResourceManager.DeploymentPath))
 			{
 				val.SelectedPath = AppServices.ResourceManager.DeploymentPath;
@@ -58,7 +58,7 @@ namespace S9BEditor
 			{
 				val.SelectedPath = string.Empty;
 			}
-			if ((int)((CommonDialog)val).ShowDialog((IWin32Window)(object)this) == 1)
+			if ((int)((System.Windows.Forms.CommonDialog)val).ShowDialog((System.Windows.Forms.IWin32Window)(object)this) == 1)
 			{
 				((DependencyObject)tbDeploymentPath).SetCurrentValue(TextBox.TextProperty, (object)val.SelectedPath);
 			}

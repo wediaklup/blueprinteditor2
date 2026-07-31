@@ -521,10 +521,10 @@ namespace S9BEditor
 					{
 						if ((int)((Window)this).WindowState == 2)
 						{
-							((Rect)(val6)).X = ((Rect)(val6)).X + SystemParameters.ResizeFrameVerticalBorderWidth;
-							((Rect)(val6)).Width = ((Rect)(val6)).Width - SystemParameters.ResizeFrameVerticalBorderWidth * 2.0;
-							((Rect)(val6)).Y = ((Rect)(val6)).Y + SystemParameters.ResizeFrameHorizontalBorderHeight;
-							((Rect)(val6)).Height = ((Rect)(val6)).Height - SystemParameters.ResizeFrameHorizontalBorderHeight * 2.0;
+							val6.X = ((Rect)(val6)).X + SystemParameters.ResizeFrameVerticalBorderWidth;
+							val6.Width = ((Rect)(val6)).Width - SystemParameters.ResizeFrameVerticalBorderWidth * 2.0;
+							val6.Y = ((Rect)(val6)).Y + SystemParameters.ResizeFrameHorizontalBorderHeight;
+							val6.Height = ((Rect)(val6)).Height - SystemParameters.ResizeFrameHorizontalBorderHeight * 2.0;
 						}
 						if (!(((Point)(val5)).X >= ((Rect)(val6)).Left) || !(((Point)(val5)).X < ((Rect)(val6)).Right) || !(((Point)(val5)).Y >= ((Rect)(val6)).Top) || !(((Point)(val5)).Y < ((Rect)(val6)).Bottom))
 						{
@@ -598,12 +598,12 @@ namespace S9BEditor
 					return new IntPtr(1);
 				case 5:
 				{
-					Rectangle rectangle = new Rectangle(0, 0, Native.LoWord(lParam.ToInt32()), Native.HiWord(lParam.ToInt32()));
+					System.Drawing.Rectangle rectangle = new System.Drawing.Rectangle(0, 0, Native.LoWord(lParam.ToInt32()), Native.HiWord(lParam.ToInt32()));
 					updateShadowBorder();
-					Region val = new Region(rectangle);
+					System.Drawing.Region val = new System.Drawing.Region(rectangle);
 					try
 					{
-						Graphics val2 = Graphics.FromHwnd(hWnd);
+						System.Drawing.Graphics val2 = System.Drawing.Graphics.FromHwnd(hWnd);
 						try
 						{
 							Native.GetWindowPlacement(hWnd, out var lpwndpl);

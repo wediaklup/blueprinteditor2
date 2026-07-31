@@ -35,10 +35,10 @@ namespace S9BEditor
 					string[] array = ((string)parameter).Split(new char[1] { ',' });
 					if (array.Length == 4)
 					{
-						((Thickness)(val2)).Left = ((Thickness)(val2)).Left + double.Parse(array[0], CultureInfo.InvariantCulture);
-						((Thickness)(val2)).Top = ((Thickness)(val2)).Top + double.Parse(array[1], CultureInfo.InvariantCulture);
-						((Thickness)(val2)).Right = ((Thickness)(val2)).Right + double.Parse(array[2], CultureInfo.InvariantCulture);
-						((Thickness)(val2)).Bottom = ((Thickness)(val2)).Bottom + double.Parse(array[3], CultureInfo.InvariantCulture);
+						val2.Left = ((Thickness)(val2)).Left + double.Parse(array[0], CultureInfo.InvariantCulture);
+						val2.Top = ((Thickness)(val2)).Top + double.Parse(array[1], CultureInfo.InvariantCulture);
+						val2.Right = ((Thickness)(val2)).Right + double.Parse(array[2], CultureInfo.InvariantCulture);
+						val2.Bottom = ((Thickness)(val2)).Bottom + double.Parse(array[3], CultureInfo.InvariantCulture);
 					}
 				}
 				return val2;

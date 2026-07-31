@@ -361,7 +361,7 @@ namespace S9BEditor
 			}
 			if (flag)
 			{
-				Screen val = Screen.FromRectangle(windowRect);
+				System.Windows.Forms.Screen val = System.Windows.Forms.Screen.FromRectangle(windowRect);
 				if (val == null)
 				{
 					val = Screen.PrimaryScreen;

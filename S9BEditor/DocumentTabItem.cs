@@ -135,7 +135,7 @@ namespace S9BEditor
 				return;
 			}
 			((UIElement)contentPresenter).UpdateLayout();
-			object? target = mLastFocusedElement.Target;
+			object target = mLastFocusedElement.Target;
 			FrameworkElement val = (FrameworkElement)((target is FrameworkElement) ? target : null);
 			if (val != null)
 			{
