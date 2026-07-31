@@ -4,7 +4,7 @@ using System.Threading;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
-using System.Windows.Forms;
+//using System.Windows.Forms;
 using System.Windows.Interop;
 using System.Windows.Markup;
 using System.Windows.Media;
