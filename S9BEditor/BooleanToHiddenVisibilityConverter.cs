@@ -13,7 +13,7 @@ namespace S9BEditor
 			{
 				value = !(bool)value;
 			}
-			return (object)(Visibility)(!(bool)value);
+			return (bool)value ? Visibility.Hidden : Visibility.Visible;
 		}
 
 		public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)

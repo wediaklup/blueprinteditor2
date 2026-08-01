@@ -34,9 +34,9 @@ namespace S9BEditor
 			processCommandLineArgs(e.Args);
 			if (!Debugger.IsAttached)
 			{
-				((Application)this).DispatcherUnhandledException += new DispatcherUnhandledExceptionEventHandler(App_DispatcherUnhandledException);
+				base.DispatcherUnhandledException += new DispatcherUnhandledExceptionEventHandler(App_DispatcherUnhandledException);
 			}
-			Application.EnableVisualStyles();
+			System.Windows.Forms.Application.EnableVisualStyles();
 			initSingletons();
 			if (!Settings.Default.UseSystemDataFormat)
 			{

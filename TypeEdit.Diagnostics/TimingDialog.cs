@@ -33,7 +33,7 @@ namespace TypeEdit.Diagnostics
 			{
 				components.Dispose();
 			}
-			((Form)this).Dispose(disposing);
+			base.Dispose(disposing);
 		}
 
 		private void InitializeComponent()
@@ -146,7 +146,7 @@ namespace TypeEdit.Diagnostics
 		{
 			mTimingManager = timingMan;
 			InitializeComponent();
-			((Control)this).SetStyle((ControlStyles)139282, true);
+			base.SetStyle((ControlStyles)139282, true);
 		}
 
 		private void timer1_Tick(object sender, EventArgs e)

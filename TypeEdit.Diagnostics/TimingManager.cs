@@ -68,7 +68,7 @@ namespace TypeEdit.Diagnostics
 			{
 				throw new InvalidOperationException("name cannot be null or empty!");
 			}
-			StackFrame stackFrame = new StackFrame(2, needFileInfo: false);
+			StackFrame stackFrame = new StackFrame(2, false);
 			int uid = stackFrame.GetNativeOffset();
 			TimingInfo timingInfo = value;
 			if (timingInfo.UID != uid)

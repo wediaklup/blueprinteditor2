@@ -57,7 +57,7 @@ namespace S9BEditor
 				{
 					mSCI = new Scintilla();
 				}
-				mWFH.Child = (Control)(object)mSCI;
+				mWFH.Child = (System.Windows.Forms.Control)(object)mSCI;
 				((FrameworkElement)mWFH).Loaded += new RoutedEventHandler(mWFH_Loaded);
 				applyLua();
 				mSCI.BorderStyle = (BorderStyle)0;
@@ -72,7 +72,7 @@ namespace S9BEditor
 
 		private void mWFH_Loaded(object sender, RoutedEventArgs e)
 		{
-			((Control)mSCI).TextChanged += mSCI_TextChanged;
+			((System.Windows.Forms.Control)mSCI).TextChanged += mSCI_TextChanged;
 		}
 
 		private void mSCI_TextChanged(object sender, EventArgs e)
@@ -90,7 +90,7 @@ namespace S9BEditor
 				mSCI.Margins[0].Width = mSCI.NativeInterface.TextWidth(33, text);
 				mLastLineCount = count;
 			}
-			Text = ((Control)mSCI).Text;
+			Text = ((System.Windows.Forms.Control)mSCI).Text;
 		}
 
 		protected override void OnPropertyChanged(DependencyPropertyChangedEventArgs e)
@@ -98,7 +98,7 @@ namespace S9BEditor
 			//IL_003e: Unknown result type (might be due to invalid IL or missing references)
 			if (((DependencyPropertyChangedEventArgs)(e)).Property == TextProperty && ((DependencyPropertyChangedEventArgs)(e)).NewValue != ((DependencyPropertyChangedEventArgs)(e)).OldValue && mSCI != null)
 			{
-				((Control)mSCI).Text = (string)((DependencyPropertyChangedEventArgs)(e)).NewValue;
+				((System.Windows.Forms.Control)mSCI).Text = (string)((DependencyPropertyChangedEventArgs)(e)).NewValue;
 			}
 			base.OnPropertyChanged(e);
 		}
@@ -124,7 +124,7 @@ namespace S9BEditor
 			//IL_002f: Unknown result type (might be due to invalid IL or missing references)
 			//IL_0035: Expected O, but got Unknown
 			XmlDocument xmlDocument = new XmlDocument();
-			xmlDocument.LoadXml(Resources.LuaXML);
+			xmlDocument.LoadXml(S9BEditor.Properties.Resources.LuaXML);
 			mSCI.ConfigurationManager.Language = "lua";
 			if (xmlDocument != null)
 			{

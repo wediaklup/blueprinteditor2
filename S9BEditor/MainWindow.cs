@@ -364,7 +364,7 @@ namespace S9BEditor
 				System.Windows.Forms.Screen val = System.Windows.Forms.Screen.FromRectangle(windowRect);
 				if (val == null)
 				{
-					val = Screen.PrimaryScreen;
+					val = System.Windows.Forms.Screen.PrimaryScreen;
 				}
 				if (val != null)
 				{
@@ -709,7 +709,7 @@ namespace S9BEditor
 			{
 				if (e.Document != null)
 				{
-					item.Value.RemoveAll((IErrorItem item) => item.ErrorSource is DocumentErrorData documentErrorData && documentErrorData.Document == e.Document);
+					item.Value.RemoveAll((IErrorItem errorItem) => errorItem.ErrorSource is DocumentErrorData documentErrorData && documentErrorData.Document == e.Document);
 				}
 				else
 				{

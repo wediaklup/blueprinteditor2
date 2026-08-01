@@ -627,7 +627,7 @@ namespace S9BEditor
 							else
 							{
 								Native.SetWindowRgn(hWnd, IntPtr.Zero, bRedraw: false);
-								Size frameBorderSize = SystemInformation.FrameBorderSize;
+								System.Drawing.Size frameBorderSize = System.Windows.Forms.SystemInformation.FrameBorderSize;
 								if (mClientAreaGrid != null)
 								{
 									mClientAreaGrid.Margin = new Thickness((double)frameBorderSize.Width, (double)frameBorderSize.Height, (double)frameBorderSize.Width, (double)frameBorderSize.Height);
