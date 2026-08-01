@@ -12,7 +12,7 @@ using System.Windows.Markup;
 
 namespace S9BEditor
 {
-	public class AddItemWindow : CustomWindow, IComponentConnector
+	public partial class AddItemWindow : CustomWindow, IComponentConnector
 	{
 		public static readonly DependencyProperty ItemsSourceProperty;
 
@@ -21,12 +21,6 @@ namespace S9BEditor
 		public static readonly DependencyProperty SelectedFileTypeProperty;
 
 		public static readonly DependencyProperty FileNameProperty;
-
-		internal Button button2;
-
-		internal Button button3;
-
-		private bool _contentLoaded;
 
 		public IEnumerable ItemsSource
 		{
@@ -170,51 +164,6 @@ namespace S9BEditor
 		private void button3_Click(object sender, RoutedEventArgs e)
 		{
 			((Window)this).DialogResult = true;
-		}
-
-		[DebuggerNonUserCode]
-		[GeneratedCode("PresentationBuildTasks", "4.0.0.0")]
-		public void InitializeComponent()
-		{
-			if (!_contentLoaded)
-			{
-				_contentLoaded = true;
-				Uri uri = new Uri("/BlueprintEditor2;component/additemwindow.xaml", UriKind.Relative);
-				Application.LoadComponent((object)this, uri);
-			}
-		}
-
-		[GeneratedCode("PresentationBuildTasks", "4.0.0.0")]
-		[DebuggerNonUserCode]
-		internal Delegate _CreateDelegate(Type delegateType, string handler)
-		{
-			return Delegate.CreateDelegate(delegateType, this, handler);
-		}
-
-		[GeneratedCode("PresentationBuildTasks", "4.0.0.0")]
-		[DebuggerNonUserCode]
-		[EditorBrowsable(EditorBrowsableState.Never)]
-		void IComponentConnector.Connect(int connectionId, object target)
-		{
-			//IL_0016: Unknown result type (might be due to invalid IL or missing references)
-			//IL_0020: Expected O, but got Unknown
-			//IL_0023: Unknown result type (might be due to invalid IL or missing references)
-			//IL_002d: Expected O, but got Unknown
-			//IL_003a: Unknown result type (might be due to invalid IL or missing references)
-			//IL_0044: Expected O, but got Unknown
-			switch (connectionId)
-			{
-				case 1:
-					button2 = (Button)target;
-					break;
-				case 2:
-					button3 = (Button)target;
-					((ButtonBase)button3).Click += new RoutedEventHandler(button3_Click);
-					break;
-				default:
-					_contentLoaded = true;
-					break;
-			}
 		}
 
 		static AddItemWindow()

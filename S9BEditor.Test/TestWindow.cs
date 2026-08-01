@@ -7,7 +7,7 @@ using System.Windows.Markup;
 
 namespace S9BEditor.Test
 {
-	public class TestWindow : Window, IComponentConnector
+	public partial class TestWindow : Window, IComponentConnector
 	{
 		private bool _contentLoaded;
 

@@ -1,0 +1,33 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:custom="clr-namespace:S9BEditor" xmlns:System="clr-namespace:System;assembly=mscorlib" xmlns:viewModels="clr-namespace:S9BEditor.ViewModels">
+  <DataTemplate x:Key="providerScriptProperty" DataType="{x:Type viewModels:VMScriptProperty}">
+    <Grid Margin="0,4,0,0">
+      <Grid.ColumnDefinitions>
+        <ColumnDefinition Width="Auto" />
+        <ColumnDefinition />
+      </Grid.ColumnDefinitions>
+      <TextBlock HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,0,4,0" Text="{Binding Name}" />
+      <ComboBox Grid.Column="1" IsEditable="True" ItemsSource="{Binding Path=Owner.Providers, Mode=OneWay}" Text="{Binding Value}" />
+    </Grid>
+  </DataTemplate>
+  <DataTemplate x:Key="productScriptProperty" DataType="{x:Type viewModels:VMScriptProperty}">
+    <Grid Margin="0,4,0,0">
+      <Grid.ColumnDefinitions>
+        <ColumnDefinition Width="Auto" />
+        <ColumnDefinition />
+      </Grid.ColumnDefinitions>
+      <TextBlock HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,0,4,0" Text="{Binding Name}" />
+      <ComboBox Grid.Column="1" IsEditable="True" ItemsSource="{Binding Path=Owner.Products, Mode=OneWay}" Text="{Binding Value}" />
+    </Grid>
+  </DataTemplate>
+  <DataTemplate x:Key="stringScriptProperty" DataType="{x:Type viewModels:VMScriptProperty}">
+    <Grid Margin="0,4,0,0">
+      <Grid.ColumnDefinitions>
+        <ColumnDefinition Width="Auto" />
+        <ColumnDefinition />
+      </Grid.ColumnDefinitions>
+      <TextBlock HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,0,4,0" Text="{Binding Name}" />
+      <TextBox Grid.Column="1" Text="{Binding Value}" />
+    </Grid>
+  </DataTemplate>
+</ResourceDictionary>

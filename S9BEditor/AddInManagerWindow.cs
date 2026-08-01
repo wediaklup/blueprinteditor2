@@ -12,15 +12,11 @@ using TypeEdit.Interfaces.AddIns;
 
 namespace S9BEditor
 {
-	public class AddInManagerWindow : CustomWindow, IComponentConnector
+	public partial class AddInManagerWindow : CustomWindow, IComponentConnector
 	{
 		private AddInManager mAddInManager;
 
 		public static readonly DependencyProperty AddInsProperty;
-
-		internal ListBox addInListbox;
-
-		private bool _contentLoaded;
 
 		internal AddInManager AddInManager
 		{
@@ -69,42 +65,6 @@ namespace S9BEditor
 			if (((ItemsControl)addInListbox).HasItems)
 			{
 				((Selector)addInListbox).SelectedIndex = 0;
-			}
-		}
-
-		[DebuggerNonUserCode]
-		[GeneratedCode("PresentationBuildTasks", "4.0.0.0")]
-		public void InitializeComponent()
-		{
-			if (!_contentLoaded)
-			{
-				_contentLoaded = true;
-				Uri uri = new Uri("/BlueprintEditor2;component/addinmanagerwindow.xaml", UriKind.Relative);
-				Application.LoadComponent((object)this, uri);
-			}
-		}
-
-		[DebuggerNonUserCode]
-		[GeneratedCode("PresentationBuildTasks", "4.0.0.0")]
-		internal Delegate _CreateDelegate(Type delegateType, string handler)
-		{
-			return Delegate.CreateDelegate(delegateType, this, handler);
-		}
-
-		[DebuggerNonUserCode]
-		[GeneratedCode("PresentationBuildTasks", "4.0.0.0")]
-		[EditorBrowsable(EditorBrowsableState.Never)]
-		void IComponentConnector.Connect(int connectionId, object target)
-		{
-			//IL_0008: Unknown result type (might be due to invalid IL or missing references)
-			//IL_0012: Expected O, but got Unknown
-			if (connectionId == 1)
-			{
-				addInListbox = (ListBox)target;
-			}
-			else
-			{
-				_contentLoaded = true;
 			}
 		}
 

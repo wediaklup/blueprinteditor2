@@ -14,13 +14,11 @@ using TypeEdit.Interfaces;
 
 namespace S9BEditor
 {
-	public class App : Application
+	public partial class App : Application
 	{
 		private bool mUseVCRailWorks;
 
 		private bool mUseICRailWorks;
-
-		private bool _contentLoaded;
 
 		public App()
 		{
@@ -110,19 +108,6 @@ namespace S9BEditor
 			if (!File.Exists(schemaPath))
 			{
 				AppServices.OutputManager.ReportError("TypeEdit", OutputMessageTarget.Application, ErrorMessageType.Error, schemaPath + " is missing. Run RailWorks at least once to create this file");
-			}
-		}
-
-		[GeneratedCode("PresentationBuildTasks", "4.0.0.0")]
-		[DebuggerNonUserCode]
-		public void InitializeComponent()
-		{
-			if (!_contentLoaded)
-			{
-				_contentLoaded = true;
-				((Application)this).StartupUri = new Uri("MainWindow.xaml", UriKind.Relative);
-				Uri uri = new Uri("/BlueprintEditor2;component/app.xaml", UriKind.Relative);
-				Application.LoadComponent((object)this, uri);
 			}
 		}
 

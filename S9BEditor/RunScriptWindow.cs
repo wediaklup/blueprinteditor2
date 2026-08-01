@@ -14,13 +14,9 @@ using TypeEdit.Interfaces;
 
 namespace S9BEditor
 {
-	public class RunScriptWindow : CustomWindow, IComponentConnector
+	public partial class RunScriptWindow : CustomWindow, IComponentConnector
 	{
 		public static readonly DependencyProperty ScriptsProperty;
-
-		internal ListBox scriptsListBox;
-
-		private bool _contentLoaded;
 
 		internal ObservableCollection<VMScript> Scripts
 		{
@@ -98,61 +94,6 @@ namespace S9BEditor
 		private void Cancel_Click(object sender, RoutedEventArgs e)
 		{
 			((Window)this).Close();
-		}
-
-		[DebuggerNonUserCode]
-		[GeneratedCode("PresentationBuildTasks", "4.0.0.0")]
-		public void InitializeComponent()
-		{
-			if (!_contentLoaded)
-			{
-				_contentLoaded = true;
-				Uri uri = new Uri("/BlueprintEditor2;component/runscriptwindow.xaml", UriKind.Relative);
-				Application.LoadComponent((object)this, uri);
-			}
-		}
-
-		[GeneratedCode("PresentationBuildTasks", "4.0.0.0")]
-		[DebuggerNonUserCode]
-		internal Delegate _CreateDelegate(Type delegateType, string handler)
-		{
-			return Delegate.CreateDelegate(delegateType, this, handler);
-		}
-
-		[GeneratedCode("PresentationBuildTasks", "4.0.0.0")]
-		[DebuggerNonUserCode]
-		[EditorBrowsable(EditorBrowsableState.Never)]
-		void IComponentConnector.Connect(int connectionId, object target)
-		{
-			//IL_001e: Unknown result type (might be due to invalid IL or missing references)
-			//IL_0028: Expected O, but got Unknown
-			//IL_002a: Unknown result type (might be due to invalid IL or missing references)
-			//IL_0036: Unknown result type (might be due to invalid IL or missing references)
-			//IL_0040: Expected O, but got Unknown
-			//IL_0042: Unknown result type (might be due to invalid IL or missing references)
-			//IL_004e: Unknown result type (might be due to invalid IL or missing references)
-			//IL_0058: Expected O, but got Unknown
-			//IL_005a: Unknown result type (might be due to invalid IL or missing references)
-			//IL_0066: Unknown result type (might be due to invalid IL or missing references)
-			//IL_0070: Expected O, but got Unknown
-			switch (connectionId)
-			{
-				case 1:
-					scriptsListBox = (ListBox)target;
-					break;
-				case 2:
-					((ButtonBase)(Button)target).Click += new RoutedEventHandler(Reload_Click);
-					break;
-				case 3:
-					((ButtonBase)(Button)target).Click += new RoutedEventHandler(Run_Click);
-					break;
-				case 4:
-					((ButtonBase)(Button)target).Click += new RoutedEventHandler(Cancel_Click);
-					break;
-				default:
-					_contentLoaded = true;
-					break;
-			}
 		}
 
 		static RunScriptWindow()

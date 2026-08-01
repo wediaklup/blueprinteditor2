@@ -89,10 +89,25 @@
 
     <EmbeddedResource Include="**\*.resx"/>
 
-    <EmbeddedResource Include="**\*.baml"/>
-
     <EmbeddedResource Include="resources\**\*.*"/>
 
+  </ItemGroup>
+  
+  <ItemGroup>
+    <Page Include="*.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+
+    <Page Include="resourcedictionaries\*.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+
+    <Page Include="test\testWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
   </ItemGroup>
   
   <!-- DLLs -->
