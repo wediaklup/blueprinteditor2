@@ -7,7 +7,7 @@ using TypeEdit.Interfaces.Data.Instancing;
 
 namespace S9BEditor.ViewModels
 {
-	internal class VMTypeEditContainer : ViewModelBase
+	public class VMTypeEditContainer : ViewModelBase
 	{
 		private bool mModified;
 

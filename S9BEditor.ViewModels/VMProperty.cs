@@ -12,7 +12,7 @@ using TypeEdit.Interfaces.Data.Instancing;
 
 namespace S9BEditor.ViewModels
 {
-	internal class VMProperty : VMTypeEditComponent
+	public class VMProperty : VMTypeEditComponent
 	{
 		private bool mIsEnabled;
 

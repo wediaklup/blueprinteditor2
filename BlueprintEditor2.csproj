@@ -99,10 +99,7 @@
       <SubType>Designer</SubType>
     </Page>
 
-    <Page Include="resourcedictionaries\*.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
+    <Resource Include="resourcedictionaries\*.xaml" />
 
     <Page Include="test\testWindow.xaml">
       <Generator>MSBuild:Compile</Generator>

@@ -10,7 +10,7 @@ using TypeEdit.Interfaces.Data.Instancing;
 
 namespace S9BEditor.ViewModels
 {
-	internal abstract class VMTypeDatumBase : VMTypeEditComponent, IDatumBase<VMTypeDatumBase>, IDatumBase
+	public abstract class VMTypeDatumBase : VMTypeEditComponent, IDatumBase<VMTypeDatumBase>, IDatumBase
 	{
 		private bool mModified;
 

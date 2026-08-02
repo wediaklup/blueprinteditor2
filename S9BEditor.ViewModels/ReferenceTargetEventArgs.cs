@@ -2,7 +2,7 @@ using System;
 
 namespace S9BEditor.ViewModels
 {
-	internal class ReferenceTargetEventArgs : EventArgs
+	public class ReferenceTargetEventArgs : EventArgs
 	{
 		public VMProperty ReferenceTarget { get; private set; }
 

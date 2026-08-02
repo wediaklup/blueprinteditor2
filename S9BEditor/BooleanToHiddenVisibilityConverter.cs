@@ -5,7 +5,7 @@ using System.Windows.Data;
 
 namespace S9BEditor
 {
-	internal class BooleanToHiddenVisibilityConverter : IValueConverter
+	public class BooleanToHiddenVisibilityConverter : IValueConverter
 	{
 		public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
 		{

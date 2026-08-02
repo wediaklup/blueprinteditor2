@@ -2,7 +2,7 @@ using TypeEdit.Base;
 
 namespace S9BEditor.ViewModels
 {
-	internal class VMTypeEditComponent : ViewModelBase
+	public class VMTypeEditComponent : ViewModelBase
 	{
 		private string[] mErrors;
 
