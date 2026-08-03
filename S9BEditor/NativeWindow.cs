@@ -178,7 +178,6 @@ namespace S9BEditor
 
 		protected override void OnPropertyChanged(DependencyPropertyChangedEventArgs e)
 		{
-			//IL_0001: Unknown result type (might be due to invalid IL or missing references)
 			base.OnPropertyChanged(e);
 			if (((DependencyPropertyChangedEventArgs)(e)).Property == Window.ResizeModeProperty)
 			{

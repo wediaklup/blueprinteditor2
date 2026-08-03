@@ -48,6 +48,8 @@ namespace S9BEditor
 				((SettingsBase)Settings.Default).Save();
 			}
 			base.OnStartup(e);
+            Debug.WriteLine(Application.Current.StartupUri);
+            new MainWindow().Show();
 		}
 
 		private void App_DispatcherUnhandledException(object sender, DispatcherUnhandledExceptionEventArgs e)
@@ -118,7 +120,7 @@ namespace S9BEditor
 		{
 			App app = new App();
 			app.InitializeComponent();
-			((Application)app).Run();
+			app.Run();
 		}
 	}
 }
