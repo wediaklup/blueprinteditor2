@@ -4,7 +4,7 @@ using S9BEditor.ViewModels;
 
 namespace S9BEditor
 {
-	internal class DataEditorItemIndexedStyleSelector : StyleSelector
+	public class DataEditorItemIndexedStyleSelector : StyleSelector
 	{
 		public override Style SelectStyle(object item, DependencyObject container)
 		{

@@ -5,7 +5,7 @@ using System.Windows.Data;
 
 namespace S9BEditor
 {
-	internal class GridLengthConverter : IValueConverter
+	public class GridLengthConverter : IValueConverter
 	{
 		public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
 		{

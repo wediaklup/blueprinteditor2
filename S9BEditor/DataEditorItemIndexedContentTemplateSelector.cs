@@ -4,7 +4,7 @@ using S9BEditor.ViewModels;
 
 namespace S9BEditor
 {
-	internal class DataEditorItemIndexedContentTemplateSelector : DataTemplateSelector
+	public class DataEditorItemIndexedContentTemplateSelector : DataTemplateSelector
 	{
 		public override DataTemplate SelectTemplate(object item, DependencyObject container)
 		{

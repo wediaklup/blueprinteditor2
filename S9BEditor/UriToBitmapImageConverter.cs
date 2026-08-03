@@ -8,7 +8,7 @@ using System.Windows.Media.Imaging;
 
 namespace S9BEditor
 {
-	internal class UriToBitmapImageConverter : IValueConverter
+	public class UriToBitmapImageConverter : IValueConverter
 	{
 		public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
 		{

@@ -6,7 +6,7 @@ using System.Xaml;
 namespace S9BEditor
 {
 	[MarkupExtensionReturnType(typeof(object))]
-	internal class ResourceAlias : MarkupExtension
+	public class ResourceAlias : MarkupExtension
 	{
 		public object ResourceKey { get; set; }
 

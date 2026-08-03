@@ -89,8 +89,6 @@
 
     <EmbeddedResource Include="**\*.resx"/>
 
-    <EmbeddedResource Include="resources\**\*.*"/>
-
   </ItemGroup>
   
   <ItemGroup>
@@ -99,10 +97,9 @@
       <SubType>Designer</SubType>
     </Page>
 
-    <Page Include="resourcedictionaries\*.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
+    <Resource Include="resourcedictionaries\*.xaml" />
+
+    <Resource Include="resources\*" />
 
     <Page Include="test\testWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
