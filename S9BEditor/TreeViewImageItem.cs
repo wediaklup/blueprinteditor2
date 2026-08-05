@@ -345,7 +345,7 @@ namespace S9BEditor
 			//IL_0038: Expected O, but got Unknown
 			//IL_0045: Unknown result type (might be due to invalid IL or missing references)
 			//IL_004f: Expected O, but got Unknown
-			ControlTemplate template = ((Control)this).Template;
+			ControlTemplate template = base.Template;
 			if (template != null)
 			{
 				object obj = ((FrameworkTemplate)template).FindName("PART_EditBox", (FrameworkElement)(object)this);
@@ -359,7 +359,7 @@ namespace S9BEditor
 					((UIElement)mEditBox).Focus();
 				}
 			}
-			((FrameworkElement)this).OnApplyTemplate();
+			base.OnApplyTemplate();
 		}
 
 		private void mEditBox_PreviewKeyDown(object sender, KeyEventArgs e)

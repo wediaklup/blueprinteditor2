@@ -5,6 +5,8 @@ using System.Windows;
 using System.Windows.Interop;
 using System.Windows.Media;
 
+using System.Diagnostics;
+
 namespace S9BEditor
 {
 	public class NativeWindow : Window, IWin32Window
@@ -231,6 +233,7 @@ namespace S9BEditor
 
 		static NativeWindow()
 		{
+            Debug.WriteLine("NativeWindow()");
 			//IL_001f: Unknown result type (might be due to invalid IL or missing references)
 			//IL_0029: Expected O, but got Unknown
 			//IL_004d: Unknown result type (might be due to invalid IL or missing references)

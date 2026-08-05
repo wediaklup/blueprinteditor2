@@ -1,6 +1,6 @@
 namespace S9BEditor
 {
-	internal enum OverflowAppendMode
+	public enum OverflowAppendMode
 	{
 		AppendFront,
 		AppendBack

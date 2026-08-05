@@ -60,7 +60,7 @@ namespace S9BEditor
 
 		public override void OnApplyTemplate()
 		{
-			((FrameworkElement)this).OnApplyTemplate();
+			base.OnApplyTemplate();
 			updateVSM();
 		}
 

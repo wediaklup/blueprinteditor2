@@ -4,7 +4,7 @@ using System.Windows.Controls.Primitives;
 
 namespace S9BEditor
 {
-	internal class DropDownButton : ToggleButton
+	public class DropDownButton : ToggleButton
 	{
 		public static readonly DependencyProperty DropDownProperty;
 

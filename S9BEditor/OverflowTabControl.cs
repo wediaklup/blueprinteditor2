@@ -109,10 +109,10 @@ namespace S9BEditor
 					mOverflowPanel.OverflowStatesChanged += overflowStatesChanged;
 					Binding val = new Binding("HasOverflowItems");
 					val.Source = mOverflowPanel;
-					((FrameworkElement)this).SetBinding(HasOverflowItemsProperty, (BindingBase)(object)val);
+					base.SetBinding(HasOverflowItemsProperty, (BindingBase)(object)val);
 				}
 			}
-			((TabControl)this).OnApplyTemplate();
+			base.OnApplyTemplate();
 		}
 
 		private void overflowStatesChanged(object sender, OverflowStatesChangedEventArgs e)

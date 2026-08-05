@@ -6,7 +6,7 @@ using System.Windows.Input;
 
 namespace S9BEditor
 {
-	internal class OverflowPanel : Panel
+	public class OverflowPanel : Panel
 	{
 		private List<WeakReference> mChildOrdering;
 

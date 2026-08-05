@@ -22,11 +22,14 @@ namespace S9BEditor
 
 		public App()
 		{
+            Debug.WriteLine("App()");
 			InitializeComponent();
+            Debug.WriteLine("Post App()");
 		}
 
 		protected override void OnStartup(StartupEventArgs e)
 		{
+            Debug.WriteLine("App.OnStartup");
 			//IL_001b: Unknown result type (might be due to invalid IL or missing references)
 			//IL_0025: Expected O, but got Unknown
 			processCommandLineArgs(e.Args);
@@ -47,7 +50,9 @@ namespace S9BEditor
 				Settings.Default.ThreadCountSet = true;
 				((SettingsBase)Settings.Default).Save();
 			}
+            Debug.WriteLine("Pre App.basecall");
 			base.OnStartup(e);
+            Debug.WriteLine("Post App.basecall");
 		}
 
 		private void App_DispatcherUnhandledException(object sender, DispatcherUnhandledExceptionEventArgs e)
@@ -110,6 +115,19 @@ namespace S9BEditor
 				AppServices.OutputManager.ReportError("TypeEdit", OutputMessageTarget.Application, ErrorMessageType.Error, schemaPath + " is missing. Run RailWorks at least once to create this file");
 			}
 		}
+		
+		// [GeneratedCode("PresentationBuildTasks", "4.0.0.0")]
+		// [DebuggerNonUserCode]
+		// public void InitializeComponent()
+		// {
+		// 	if (!_contentLoaded)
+		// 	{
+		// 		_contentLoaded = true;
+		// 		((Application)this).StartupUri = new Uri("MainWindow.xaml", UriKind.Relative);
+		// 		Uri uri = new Uri("/BlueprintEditor2;component/app.xaml", UriKind.Relative);
+		// 		Application.LoadComponent((object)this, uri);
+		// 	}
+		// }
 
 		[STAThread]
 		[DebuggerNonUserCode]
@@ -117,7 +135,7 @@ namespace S9BEditor
 		public static void Main()
 		{
 			App app = new App();
-			app.InitializeComponent();
+			//app.InitializeComponent();
 			((Application)app).Run();
 		}
 	}

@@ -9,6 +9,8 @@ using System.Windows.Interop;
 using System.Windows.Markup;
 using System.Windows.Media;
 
+using System.Diagnostics;
+
 namespace S9BEditor
 {
 	public class CustomWindow : NativeWindow
@@ -49,10 +51,12 @@ namespace S9BEditor
 		{
 			get
 			{
+				Debug.WriteLine("CustomWindow.BorderWidth access");
 				return (double?)((DependencyObject)this).GetValue(BorderWidthProperty);
 			}
 			set
 			{
+				Debug.WriteLine("CustomWindow.BorderWidth access");
 				((DependencyObject)this).SetValue(BorderWidthProperty, (object)value);
 				updateActualBorderWidth();
 			}
@@ -62,10 +66,12 @@ namespace S9BEditor
 		{
 			get
 			{
+				Debug.WriteLine("CustomWindow.BorderHeight");
 				return (double?)((DependencyObject)this).GetValue(BorderHeightProperty);
 			}
 			set
 			{
+				Debug.WriteLine("CustomWindow.BorderHeight");
 				((DependencyObject)this).SetValue(BorderHeightProperty, (object)value);
 				updateActualBorderHeight();
 			}
@@ -75,10 +81,12 @@ namespace S9BEditor
 		{
 			get
 			{
+				Debug.WriteLine("CustomWindow.Property");
 				return (double?)((DependencyObject)this).GetValue(TitleBarHeightProperty);
 			}
 			set
 			{
+				Debug.WriteLine("CustomWindow.Property");
 				((DependencyObject)this).SetValue(TitleBarHeightProperty, (object)value);
 				updateActualTitleBarHeight();
 			}
@@ -88,10 +96,12 @@ namespace S9BEditor
 		{
 			get
 			{
+				Debug.WriteLine("CustomWindow.Property");
 				return (double)((DependencyObject)this).GetValue(ActualBorderWidthProperty);
 			}
 			private set
 			{
+				Debug.WriteLine("CustomWindow.Property");
 				((DependencyObject)this).SetValue(ActualBorderWidthProperty, (object)value);
 			}
 		}
@@ -100,10 +110,12 @@ namespace S9BEditor
 		{
 			get
 			{
+				Debug.WriteLine("CustomWindow.Property");
 				return (double)((DependencyObject)this).GetValue(ActualTitleBarHeightProperty);
 			}
 			private set
 			{
+				Debug.WriteLine("CustomWindow.Property");
 				((DependencyObject)this).SetValue(ActualTitleBarHeightProperty, (object)value);
 			}
 		}
@@ -112,10 +124,12 @@ namespace S9BEditor
 		{
 			get
 			{
+				Debug.WriteLine("CustomWindow.Property");
 				return (double)((DependencyObject)this).GetValue(ActualBorderHeightProperty);
 			}
 			set
 			{
+				Debug.WriteLine("CustomWindow.Property");
 				((DependencyObject)this).SetValue(ActualBorderHeightProperty, (object)value);
 			}
 		}
@@ -124,11 +138,13 @@ namespace S9BEditor
 		{
 			get
 			{
+				Debug.WriteLine("CustomWindow.Property");
 				//IL_000b: Unknown result type (might be due to invalid IL or missing references)
 				return (Thickness)((DependencyObject)this).GetValue(CaptionMarginProperty);
 			}
 			set
 			{
+				Debug.WriteLine("CustomWindow.Property");
 				//IL_0006: Unknown result type (might be due to invalid IL or missing references)
 				((DependencyObject)this).SetValue(CaptionMarginProperty, (object)value);
 			}
@@ -138,10 +154,12 @@ namespace S9BEditor
 		{
 			get
 			{
+				Debug.WriteLine("CustomWindow.Property");
 				return ((DependencyObject)this).GetValue(NonClientContentProperty);
 			}
 			set
 			{
+				Debug.WriteLine("CustomWindow.Property");
 				((DependencyObject)this).SetValue(NonClientContentProperty, value);
 			}
 		}
@@ -150,12 +168,14 @@ namespace S9BEditor
 		{
 			get
 			{
+				Debug.WriteLine("CustomWindow.Property");
 				//IL_000b: Unknown result type (might be due to invalid IL or missing references)
 				//IL_0011: Expected O, but got Unknown
 				return (DataTemplate)((DependencyObject)this).GetValue(NonClientContentTemplateProperty);
 			}
 			set
 			{
+				Debug.WriteLine("CustomWindow.Property");
 				((DependencyObject)this).SetValue(NonClientContentTemplateProperty, (object)value);
 			}
 		}
@@ -164,16 +184,19 @@ namespace S9BEditor
 		{
 			get
 			{
+				Debug.WriteLine("CustomWindow.Property");
 				return (bool)((DependencyObject)this).GetValue(HasDialogBackgroundProperty);
 			}
 			set
 			{
+				Debug.WriteLine("CustomWindow.Property");
 				((DependencyObject)this).SetValue(HasDialogBackgroundProperty, (object)value);
 			}
 		}
 
 		static CustomWindow()
 		{
+            Debug.WriteLine("static CustomWindow()");
 			//IL_001a: Unknown result type (might be due to invalid IL or missing references)
 			//IL_0024: Expected O, but got Unknown
 			//IL_0043: Unknown result type (might be due to invalid IL or missing references)
@@ -215,11 +238,13 @@ namespace S9BEditor
 
 		public CustomWindow()
 		{
-			((FrameworkElement)this).Language = XmlLanguage.GetLanguage(Thread.CurrentThread.CurrentCulture.IetfLanguageTag);
+			Debug.WriteLine("CustomWindow()");
+			base.Language = XmlLanguage.GetLanguage(Thread.CurrentThread.CurrentCulture.IetfLanguageTag);
 		}
 
 		protected override void OnSourceInitialized(EventArgs e)
 		{
+			Debug.WriteLine("CustomWindow.OnSourceInitialized");
 			base.OnSourceInitialized(e);
 			updateActualBorderHeight();
 			updateActualBorderWidth();
@@ -235,30 +260,33 @@ namespace S9BEditor
 
 		protected override void OnRenderSizeChanged(SizeChangedInfo sizeInfo)
 		{
+			Debug.WriteLine("CustomWindow.OnRenderSizeChanged");
 			base.OnRenderSizeChanged(sizeInfo);
 			updateShadowBorder();
 		}
 
 		protected override void OnLocationChanged(EventArgs e)
 		{
+			Debug.WriteLine("CustomWindow.OnLocationChanged");
 			base.OnLocationChanged(e);
 			updateShadowBorder();
 		}
 
 		private void updateShadowBorder()
 		{
-			double num = (double)((FrameworkElement)this).Style.Resources[(object)"ShadowWidth"];
+			double num = (double)base.Style.Resources[(object)"ShadowWidth"];
 			if (mBorderWin != null)
 			{
 				((Window)mBorderWin).Left = ((Window)this).Left - num;
 				((Window)mBorderWin).Top = ((Window)this).Top - num;
-				((FrameworkElement)mBorderWin).Height = ((FrameworkElement)this).Height + num * 2.0;
-				((FrameworkElement)mBorderWin).Width = ((FrameworkElement)this).Width + num * 2.0;
+				((FrameworkElement)mBorderWin).Height = base.Height + num * 2.0;
+				((FrameworkElement)mBorderWin).Width = base.Width + num * 2.0;
 			}
 		}
 
 		public override void OnApplyTemplate()
 		{
+			Debug.WriteLine("CustomWindow.OnApplyTemplate");
 			//IL_0015: Unknown result type (might be due to invalid IL or missing references)
 			//IL_001f: Expected O, but got Unknown
 			//IL_0034: Unknown result type (might be due to invalid IL or missing references)
@@ -306,7 +334,7 @@ namespace S9BEditor
 			{
 				mCloseButton.Click += new RoutedEventHandler(mCloseButton_Click);
 			}
-			((FrameworkElement)this).OnApplyTemplate();
+			base.OnApplyTemplate();
 		}
 
 		private void updateActualBorderWidth()
@@ -460,6 +488,7 @@ namespace S9BEditor
 
 		protected override void OnStateChanged(EventArgs e)
 		{
+			Debug.WriteLine("CustomWindow.OnStateChanged");
 			base.OnStateChanged(e);
 			updateActualTitleBarHeight();
 			updateActualBorderWidth();
@@ -468,6 +497,7 @@ namespace S9BEditor
 
 		protected override IntPtr WndProc(IntPtr hWnd, int message, IntPtr wParam, IntPtr lParam)
 		{
+			Debug.WriteLine("CustomWindow.WndProc");
 			//IL_008d: Unknown result type (might be due to invalid IL or missing references)
 			//IL_0092: Unknown result type (might be due to invalid IL or missing references)
 			//IL_010b: Unknown result type (might be due to invalid IL or missing references)
