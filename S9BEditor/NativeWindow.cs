@@ -156,7 +156,7 @@ namespace S9BEditor
 			} catch (Exception e)
 			{
 				PLogger.Write("ERROR IN customWndProc");
-				PLogger.Write(e);
+				PLogger.Write(e.ToString());
 				return new IntPtr(12);
 			}
 
