@@ -56,6 +56,7 @@ namespace S9BEditor
 		public DocumentTabItem()
 		{
 			mLastFocusedElement = new WeakReference(null);
+			PLogger.Write("DocumentTabItem(): " + mLastFocusedElement);
 		}
 
 		public override void OnApplyTemplate()
@@ -66,6 +67,8 @@ namespace S9BEditor
 
 		public DocumentTabItem(IDocument document, IDocumentType documentType, string fileName)
 		{
+			mLastFocusedElement = new WeakReference(null);
+			PLogger.Write("DocumentTabItem() alternative constructor");
 			//IL_0045: Unknown result type (might be due to invalid IL or missing references)
 			//IL_004b: Expected O, but got Unknown
 			if (document != null)
