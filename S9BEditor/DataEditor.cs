@@ -283,6 +283,7 @@ namespace S9BEditor
 
 		static DataEditor()
 		{
+			PLogger.Write("static DataEditor()");
 			//IL_002d: Unknown result type (might be due to invalid IL or missing references)
 			//IL_0032: Unknown result type (might be due to invalid IL or missing references)
 			//IL_003c: Expected O, but got Unknown
@@ -379,6 +380,7 @@ namespace S9BEditor
 
 		protected override void OnTemplateChanged(ControlTemplate oldTemplate, ControlTemplate newTemplate)
 		{
+			PLogger.Write("DataEditor.OnTemplateChanged");
 			//IL_0018: Unknown result type (might be due to invalid IL or missing references)
 			//IL_0022: Expected O, but got Unknown
 			if (oldTemplate != null && mMainScrollView != null)
@@ -391,10 +393,11 @@ namespace S9BEditor
 
 		public override void OnApplyTemplate()
 		{
+			PLogger.Write("DataEditor.OnApplyTemplate");
 			//IL_003f: Unknown result type (might be due to invalid IL or missing references)
 			//IL_0049: Expected O, but got Unknown
-			((FrameworkElement)this).OnApplyTemplate();
-			if (((Control)this).Template != null)
+			base.OnApplyTemplate();
+			if (base.Template != null)
 			{
 				object obj = ((FrameworkTemplate)((Control)this).Template).FindName("PART_scrollViewer", (FrameworkElement)(object)this);
 				mMainScrollView = (ScrollViewer)((obj is ScrollViewer) ? obj : null);
@@ -407,6 +410,7 @@ namespace S9BEditor
 
 		private void scrollViewer_ScrollChanged(object sender, ScrollChangedEventArgs e)
 		{
+			PLogger.Write("DataEditor.ScrollChanged");
 			if (((Control)this).Template != null)
 			{
 				object obj = ((FrameworkTemplate)((Control)this).Template).FindName("PART_columnHeadersScrollViewer", (FrameworkElement)(object)this);
@@ -420,6 +424,7 @@ namespace S9BEditor
 
 		protected override void OnPropertyChanged(DependencyPropertyChangedEventArgs e)
 		{
+			PLogger.Write("DataEditor.OnPropertyChanged");
 			//IL_0185: Unknown result type (might be due to invalid IL or missing references)
 			if (((DependencyPropertyChangedEventArgs)(e)).Property == TypeColumnVisibleProperty)
 			{
@@ -487,16 +492,19 @@ namespace S9BEditor
 
 		public static bool GetIndentsChildren(DependencyObject obj)
 		{
+			PLogger.Write("DataEditor.GetIndentsChildren");
 			return (bool)obj.GetValue(IndentsChildrenProperty);
 		}
 
 		public static void SetIndentsChildren(DependencyObject obj, bool value)
 		{
+			PLogger.Write("DataEditor.SetIndentsChildren");
 			obj.SetValue(IndentsChildrenProperty, (object)value);
 		}
 
 		public static Brush GetContainerHeaderBackground(DependencyObject obj)
 		{
+			PLogger.Write("DataEditor.GetContainerHeaderBackground");
 			//IL_000b: Unknown result type (might be due to invalid IL or missing references)
 			//IL_0011: Expected O, but got Unknown
 			return (Brush)obj.GetValue(ContainerHeaderBackgroundProperty);
@@ -504,11 +512,13 @@ namespace S9BEditor
 
 		public static void SetContainerHeaderBackground(DependencyObject obj, Brush value)
 		{
+			PLogger.Write("DataEditor.SetContainerHeaderBackground");
 			obj.SetValue(ContainerHeaderBackgroundProperty, (object)value);
 		}
 
 		public static Brush GetContainerHeaderForeground(DependencyObject obj)
 		{
+			PLogger.Write("DataEditor.GetContainerHeaderForeground");
 			//IL_000b: Unknown result type (might be due to invalid IL or missing references)
 			//IL_0011: Expected O, but got Unknown
 			return (Brush)obj.GetValue(ContainerHeaderForegroundProperty);
@@ -516,11 +526,13 @@ namespace S9BEditor
 
 		public static void SetContainerHeaderForeground(DependencyObject obj, Brush value)
 		{
+			PLogger.Write("DataEditor.SetContainerHeaderForeground");
 			obj.SetValue(ContainerHeaderForegroundProperty, (object)value);
 		}
 
 		public static Brush GetContainerHeaderForegroundSelected(DependencyObject obj)
 		{
+			PLogger.Write("DataEditor.GetContainerHeaderForegroundSelected");
 			//IL_000b: Unknown result type (might be due to invalid IL or missing references)
 			//IL_0011: Expected O, but got Unknown
 			return (Brush)obj.GetValue(ContainerHeaderForegroundSelectedProperty);
@@ -528,21 +540,25 @@ namespace S9BEditor
 
 		public static void SetContainerHeaderForegroundSelected(DependencyObject obj, Brush value)
 		{
+			PLogger.Write("DataEditor.SetContainerHeaderForegroundSelected");
 			obj.SetValue(ContainerHeaderForegroundSelectedProperty, (object)value);
 		}
 
 		public static bool GetBringIntoView(DependencyObject obj)
 		{
+			PLogger.Write("DataEditor.GetBringIntoView");
 			return (bool)obj.GetValue(BringIntoViewProperty);
 		}
 
 		public static void SetBringIntoView(DependencyObject obj, bool value)
 		{
+			PLogger.Write("DataEditor.SetBringIntoView");
 			obj.SetValue(BringIntoViewProperty, (object)value);
 		}
 
 		private static void onBringIntoView(DependencyObject o, DependencyPropertyChangedEventArgs e)
 		{
+			PLogger.Write("DataEditor.onBringIntoView");
 			if (!(bool)((DependencyPropertyChangedEventArgs)(e)).NewValue)
 			{
 				return;

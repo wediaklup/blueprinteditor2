@@ -45,11 +45,11 @@ namespace S9BEditor
 		{
 			get
 			{
-				return (bool)((DependencyObject)this).GetValue(EditorOnlyModifiedProperty);
+				return (bool)base.GetValue(EditorOnlyModifiedProperty);
 			}
 			set
 			{
-				((DependencyObject)this).SetValue(EditorOnlyModifiedProperty, (object)value);
+				base.SetValue(EditorOnlyModifiedProperty, (object)value);
 			}
 		}
 
@@ -86,7 +86,7 @@ namespace S9BEditor
 				{
 					val.ContentTemplate = null;
 				}
-				((ContentControl)this).Content = val;
+				base.Content = val;
 				updateHeader();
 			}
 		}
@@ -105,7 +105,7 @@ namespace S9BEditor
 		{
 			if (Document != null)
 			{
-				((HeaderedContentControl)this).Header = (Path.GetFileName(FileName) + (Modified ? "*" : "")).Replace("_", "__");
+				base.Header = (Path.GetFileName(FileName) + (Modified ? "*" : "")).Replace("_", "__");
 			}
 		}
 
@@ -120,43 +120,56 @@ namespace S9BEditor
 
 		protected override void OnMouseLeftButtonDown(MouseButtonEventArgs e)
 		{
-			((TabItem)this).IsSelected = true;
+			base.IsSelected = true;
 			FocusContent();
 			base.OnMouseLeftButtonDown(e);
 		}
 
 		public void FocusContent()
 		{
+			PLogger.Write("DocumentTabItem.FocusContent " + getContentPresenter());
 			//IL_0049: Unknown result type (might be due to invalid IL or missing references)
 			//IL_0053: Expected O, but got Unknown
 			ContentPresenter contentPresenter = getContentPresenter();
+			PLogger.Write("DocumentTabItem.FocusContent P1");
 			if (contentPresenter == null)
 			{
 				return;
 			}
-			((UIElement)contentPresenter).UpdateLayout();
+			PLogger.Write("DocumentTabItem.FocusContent P2");
+			base.UpdateLayout();
+			PLogger.Write("DocumentTabItem.FocusContent P2-1: " + (mLastFocusedElement == null));
 			object target = mLastFocusedElement.Target;
+			PLogger.Write("DocumentTabItem.FocusContent P2-2");
 			FrameworkElement val = (FrameworkElement)((target is FrameworkElement) ? target : null);
+			PLogger.Write("DocumentTabItem.FocusContent P3");
 			if (val != null)
 			{
+				PLogger.Write("DocumentTabItem.FocusContent P4 val!=null");
 				bool flag = false;
 				for (DependencyObject val2 = (DependencyObject)(object)val; val2 != null; val2 = VisualTreeHelper.GetParent(val2))
 				{
+					PLogger.Write("DocumentTabItem.FocusContent P5 forloop");
 					if ((object)val2 == contentPresenter)
 					{
+						PLogger.Write("DocumentTabItem.FocusContent P6 for if");
 						flag = true;
 						break;
 					}
+					PLogger.Write("DocumentTabItem.FocusContent P7 nobreak");
 				}
 				if (flag)
 				{
-					((UIElement)val).Focus();
+					PLogger.Write("DocumentTabItem.FocusContent P8 if flag");
+					val.Focus();
 				}
 			}
 			else
 			{
+				PLogger.Write("DocumentTabItem.FocusContent P8 else");
 				((UIElement)contentPresenter).MoveFocus(new TraversalRequest((FocusNavigationDirection)2));
 			}
+			PLogger.Write("DocumentTabItem.FocusContent end (:");
 		}
 
 		private TabControl getParentTabControl()
@@ -205,32 +218,32 @@ namespace S9BEditor
 
 		private void updateVSM()
 		{
-			if (((UIElement)this).IsKeyboardFocusWithin || ((UIElement)this).IsFocused)
+			if (base.IsKeyboardFocusWithin || base.IsFocused)
 			{
-				if (((TabItem)this).IsSelected)
+				if (base.IsSelected)
 				{
-					VisualStateManager.GoToState((FrameworkElement)(object)this, "FocusedSelected", true);
+					VisualStateManager.GoToState(this, "FocusedSelected", true);
 				}
-				else if (((UIElement)this).IsMouseOver)
+				else if (base.IsMouseOver)
 				{
-					VisualStateManager.GoToState((FrameworkElement)(object)this, "DefaultMouseOver", true);
+					VisualStateManager.GoToState(this, "DefaultMouseOver", true);
 				}
 				else
 				{
-					VisualStateManager.GoToState((FrameworkElement)(object)this, "Default", true);
+					VisualStateManager.GoToState(this, "Default", true);
 				}
 			}
-			else if (((TabItem)this).IsSelected)
+			else if (base.IsSelected)
 			{
-				VisualStateManager.GoToState((FrameworkElement)(object)this, "UnfocusedSelected", true);
+				VisualStateManager.GoToState(this, "UnfocusedSelected", true);
 			}
-			else if (((UIElement)this).IsMouseOver)
+			else if (base.IsMouseOver)
 			{
-				VisualStateManager.GoToState((FrameworkElement)(object)this, "DefaultMouseOver", true);
+				VisualStateManager.GoToState(this, "DefaultMouseOver", true);
 			}
 			else
 			{
-				VisualStateManager.GoToState((FrameworkElement)(object)this, "Default", true);
+				VisualStateManager.GoToState(this, "Default", true);
 			}
 		}
 

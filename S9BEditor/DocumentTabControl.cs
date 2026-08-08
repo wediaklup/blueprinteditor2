@@ -27,7 +27,7 @@ namespace S9BEditor
 		{
 			get
 			{
-				if (((Selector)this).SelectedItem is DocumentTabItem documentTabItem)
+				if (base.SelectedItem is DocumentTabItem documentTabItem)
 				{
 					return documentTabItem.Document;
 				}
@@ -39,7 +39,7 @@ namespace S9BEditor
 				{
 					if (item is DocumentTabItem documentTabItem && documentTabItem.Document == value)
 					{
-						((Selector)this).SelectedItem = documentTabItem;
+						base.SelectedItem = documentTabItem;
 						break;
 					}
 				}
@@ -113,42 +113,42 @@ namespace S9BEditor
 			val.Command = (ICommand)ApplicationCommands.Close;
 			val.Executed += new ExecutedRoutedEventHandler(closeCommand_Executed);
 			val.CanExecute += new CanExecuteRoutedEventHandler(closeCommand_CanExecute);
-			((UIElement)this).CommandBindings.Add(val);
+			base.CommandBindings.Add(val);
 			val = new CommandBinding();
 			val.Command = (ICommand)Commands.CloseAll;
 			val.Executed += new ExecutedRoutedEventHandler(closeAllCommand_Executed);
 			val.CanExecute += new CanExecuteRoutedEventHandler(closeAllCommand_CanExecute);
-			((UIElement)this).CommandBindings.Add(val);
+			base.CommandBindings.Add(val);
 			val = new CommandBinding();
 			val.Command = (ICommand)ApplicationCommands.Save;
 			val.Executed += new ExecutedRoutedEventHandler(saveCommand_Executed);
 			val.CanExecute += new CanExecuteRoutedEventHandler(saveCommand_CanExecute);
-			((UIElement)this).CommandBindings.Add(val);
+			base.CommandBindings.Add(val);
 			val = new CommandBinding();
 			val.Command = (ICommand)Commands.SaveAll;
 			val.Executed += new ExecutedRoutedEventHandler(saveAllCommand_Executed);
 			val.CanExecute += new CanExecuteRoutedEventHandler(saveAllCommand_CanExecute);
-			((UIElement)this).CommandBindings.Add(val);
+			base.CommandBindings.Add(val);
 			val = new CommandBinding();
 			val.Command = (ICommand)ApplicationCommands.Copy;
 			val.Executed += new ExecutedRoutedEventHandler(copyCommand_Executed);
 			val.CanExecute += new CanExecuteRoutedEventHandler(copyCommand_CanExecute);
-			((UIElement)this).CommandBindings.Add(val);
+			base.CommandBindings.Add(val);
 			val = new CommandBinding();
 			val.Command = (ICommand)ApplicationCommands.Cut;
 			val.Executed += new ExecutedRoutedEventHandler(cutCommand_Executed);
 			val.CanExecute += new CanExecuteRoutedEventHandler(cutCommand_CanExecute);
-			((UIElement)this).CommandBindings.Add(val);
+			base.CommandBindings.Add(val);
 			val = new CommandBinding();
 			val.Command = (ICommand)ApplicationCommands.Paste;
 			val.Executed += new ExecutedRoutedEventHandler(pasteCommand_Executed);
 			val.CanExecute += new CanExecuteRoutedEventHandler(pasteCommand_CanExecute);
-			((UIElement)this).CommandBindings.Add(val);
+			base.CommandBindings.Add(val);
 			val = new CommandBinding();
 			val.Command = (ICommand)ApplicationCommands.Delete;
 			val.Executed += new ExecutedRoutedEventHandler(deleteCommand_Executed);
 			val.CanExecute += new CanExecuteRoutedEventHandler(deleteCommand_CanExecute);
-			((UIElement)this).CommandBindings.Add(val);
+			base.CommandBindings.Add(val);
 		}
 
 		private void closeAllCommand_CanExecute(object sender, CanExecuteRoutedEventArgs e)
@@ -165,7 +165,7 @@ namespace S9BEditor
 
 		private void copyCommand_CanExecute(object sender, CanExecuteRoutedEventArgs e)
 		{
-			if (((Selector)this).SelectedItem is DocumentTabItem documentTabItem)
+			if (base.SelectedItem is DocumentTabItem documentTabItem)
 			{
 				e.CanExecute = documentTabItem.Document.CanCopy;
 			}
@@ -178,7 +178,7 @@ namespace S9BEditor
 
 		private void copyCommand_Executed(object sender, ExecutedRoutedEventArgs e)
 		{
-			if (((Selector)this).SelectedItem is DocumentTabItem documentTabItem)
+			if (base.SelectedItem is DocumentTabItem documentTabItem)
 			{
 				documentTabItem.Document.Copy();
 			}
@@ -187,7 +187,7 @@ namespace S9BEditor
 
 		private void cutCommand_CanExecute(object sender, CanExecuteRoutedEventArgs e)
 		{
-			if (((Selector)this).SelectedItem is DocumentTabItem documentTabItem)
+			if (base.SelectedItem is DocumentTabItem documentTabItem)
 			{
 				e.CanExecute = documentTabItem.Document.CanCut;
 			}
@@ -200,7 +200,7 @@ namespace S9BEditor
 
 		private void cutCommand_Executed(object sender, ExecutedRoutedEventArgs e)
 		{
-			if (((Selector)this).SelectedItem is DocumentTabItem documentTabItem)
+			if (base.SelectedItem is DocumentTabItem documentTabItem)
 			{
 				documentTabItem.Document.Cut();
 			}
@@ -209,7 +209,7 @@ namespace S9BEditor
 
 		private void pasteCommand_CanExecute(object sender, CanExecuteRoutedEventArgs e)
 		{
-			if (((Selector)this).SelectedItem is DocumentTabItem documentTabItem)
+			if (base.SelectedItem is DocumentTabItem documentTabItem)
 			{
 				e.CanExecute = documentTabItem.Document.CanPaste;
 			}
@@ -222,7 +222,7 @@ namespace S9BEditor
 
 		private void pasteCommand_Executed(object sender, ExecutedRoutedEventArgs e)
 		{
-			if (((Selector)this).SelectedItem is DocumentTabItem documentTabItem)
+			if (base.SelectedItem is DocumentTabItem documentTabItem)
 			{
 				documentTabItem.Document.Paste();
 			}
@@ -231,7 +231,7 @@ namespace S9BEditor
 
 		private void deleteCommand_CanExecute(object sender, CanExecuteRoutedEventArgs e)
 		{
-			if (((Selector)this).SelectedItem is DocumentTabItem documentTabItem)
+			if (base.SelectedItem is DocumentTabItem documentTabItem)
 			{
 				e.CanExecute = documentTabItem.Document.CanDelete;
 			}
@@ -244,7 +244,7 @@ namespace S9BEditor
 
 		private void deleteCommand_Executed(object sender, ExecutedRoutedEventArgs e)
 		{
-			if (((Selector)this).SelectedItem is DocumentTabItem documentTabItem)
+			if (base.SelectedItem is DocumentTabItem documentTabItem)
 			{
 				documentTabItem.Document.Delete();
 			}
@@ -265,7 +265,7 @@ namespace S9BEditor
 
 		public void FocusContent()
 		{
-			if (((Selector)this).SelectedItem is DocumentTabItem documentTabItem)
+			if (base.SelectedItem is DocumentTabItem documentTabItem)
 			{
 				documentTabItem.FocusContent();
 			}
@@ -351,6 +351,7 @@ namespace S9BEditor
 						}
 						catch (Exception e)
 						{
+							MessageBox.Show("Could not create document for " + fileName + ". Document type was " + documentType.GetType().FullName);
 							AppServices.ErrorManager.ErrorMessage("Could not create document for " + fileName + ". Document type was " + documentType.GetType().FullName, e);
 						}
 						if (document != null)
@@ -464,7 +465,7 @@ namespace S9BEditor
 
 		public bool TrySave(DocumentTabItem document = null, bool confirmBeforeSave = true)
 		{
-			if (document == null && ((Selector)this).SelectedItem is DocumentTabItem documentTabItem)
+			if (document == null && base.SelectedItem is DocumentTabItem documentTabItem)
 			{
 				document = documentTabItem;
 			}
@@ -479,7 +480,7 @@ namespace S9BEditor
 		{
 			//IL_0050: Unknown result type (might be due to invalid IL or missing references)
 			//IL_0056: Invalid comparison between Unknown and I4
-			if (((Selector)this).SelectedItem is DocumentTabItem documentTabItem && !documentTabItem.EditorOnlyModified && !File.Exists(documentTabItem.FileName))
+			if (base.SelectedItem is DocumentTabItem documentTabItem && !documentTabItem.EditorOnlyModified && !File.Exists(documentTabItem.FileName))
 			{
 				documentTabItem.EditorOnlyModified = true;
 				if ((int)MessageBox.Show((Window)(object)AppServices.MainWindow, "File " + Path.GetFileName(documentTabItem.FileName) + " no longer exists on disk. Keep this file in editor?", "Blueprint Editor 2", (MessageBoxButton)4) == 7)
@@ -577,14 +578,14 @@ namespace S9BEditor
 				fileSystemWatcher.Deleted -= fsw_Deleted;
 				mDocumentFolderWatchers.Remove(fileSystemWatcher);
 			}
-			if (documentTabItem == ((Selector)this).SelectedItem && (((UIElement)documentTabItem).IsKeyboardFocusWithin || ((UIElement)documentTabItem).IsFocused))
+			if (documentTabItem == base.SelectedItem && (((UIElement)documentTabItem).IsKeyboardFocusWithin || ((UIElement)documentTabItem).IsFocused))
 			{
 				int num = ((CollectionView)((ItemsControl)this).Items).IndexOf((object)documentTabItem);
 				num = ((num > 0) ? (num - 1) : ((mDocumentTabItems.Count > 1) ? 1 : (-1)));
 				if (num != -1 && ((ItemsControl)this).Items[num] is DocumentTabItem documentTabItem2)
 				{
-					((Selector)this).SelectedItem = documentTabItem2;
-					((UIElement)this).UpdateLayout();
+					base.SelectedItem = documentTabItem2;
+					base.UpdateLayout();
 					documentTabItem2.FocusContent();
 				}
 			}

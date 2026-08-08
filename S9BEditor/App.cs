@@ -22,14 +22,11 @@ namespace S9BEditor
 
 		public App()
 		{
-            Debug.WriteLine("App()");
 			InitializeComponent();
-            Debug.WriteLine("Post App()");
 		}
 
 		protected override void OnStartup(StartupEventArgs e)
 		{
-            Debug.WriteLine("App.OnStartup");
 			//IL_001b: Unknown result type (might be due to invalid IL or missing references)
 			//IL_0025: Expected O, but got Unknown
 			processCommandLineArgs(e.Args);
@@ -50,9 +47,7 @@ namespace S9BEditor
 				Settings.Default.ThreadCountSet = true;
 				((SettingsBase)Settings.Default).Save();
 			}
-            Debug.WriteLine("Pre App.basecall");
 			base.OnStartup(e);
-            Debug.WriteLine("Post App.basecall");
 		}
 
 		private void App_DispatcherUnhandledException(object sender, DispatcherUnhandledExceptionEventArgs e)
@@ -134,6 +129,7 @@ namespace S9BEditor
 		[GeneratedCode("PresentationBuildTasks", "4.0.0.0")]
 		public static void Main()
 		{
+			PLogger.Write("\n\n\nAPPLICATION STARTED Main() ENTRY POINT");
 			App app = new App();
 			//app.InitializeComponent();
 			((Application)app).Run();

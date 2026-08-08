@@ -3,7 +3,7 @@ using System.Windows.Controls;
 
 namespace S9BEditor
 {
-	internal class DataEditorTreeView : TreeView
+	public class DataEditorTreeView : TreeView
 	{
 		public DataEditorTreeView()
 		{

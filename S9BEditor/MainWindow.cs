@@ -86,12 +86,9 @@ namespace S9BEditor
 				mErrorMessages[value].Add(ErrorMessageType.Information, new List<IErrorItem>());
 			}
 			mOutputMessages = new Dictionary<string, string>();
-            Debug.WriteLine("MainWindow.InitializeComponent() call");
 			InitializeComponent();
-            Debug.WriteLine("Post MainWindow.InitializeComponent()");
 			documentTabControl.DocumentFileTypeMap = mDocumentTypeProviders;
 			NameScope.SetNameScope((DependencyObject)(object)dirViewContextMenu, NameScope.GetNameScope((DependencyObject)(object)this));
-            Debug.WriteLine("Post MainWindow()");
 		}
 
 		protected override void OnMouseDown(MouseButtonEventArgs e)
@@ -101,7 +98,6 @@ namespace S9BEditor
 
 		protected override void OnLocationChanged(EventArgs e)
 		{
-			Debug.WriteLine("MainWindow.OnLocationChanged");
 			//IL_0007: Unknown result type (might be due to invalid IL or missing references)
 			Settings.Default.WindowRect2 = RectVisualToNative(((Window)this).RestoreBounds);
 			base.OnLocationChanged(e);
@@ -109,7 +105,6 @@ namespace S9BEditor
 
 		protected override void OnRenderSizeChanged(SizeChangedInfo sizeInfo)
 		{
-			Debug.WriteLine("MainWindow.OnRenderSizeChanged");
 			//IL_0007: Unknown result type (might be due to invalid IL or missing references)
 			Settings.Default.WindowRect2 = RectVisualToNative(((Window)this).RestoreBounds);
 			base.OnRenderSizeChanged(sizeInfo);
@@ -117,7 +112,6 @@ namespace S9BEditor
 
 		protected override void OnStateChanged(EventArgs e)
 		{
-			Debug.WriteLine("MainWindow.OnStateChanged");
 			//IL_0006: Unknown result type (might be due to invalid IL or missing references)
 			//IL_000c: Invalid comparison between Unknown and I4
 			Settings.Default.Maximized = (int)((Window)this).WindowState == 2;

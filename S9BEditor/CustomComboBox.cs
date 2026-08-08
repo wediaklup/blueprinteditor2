@@ -157,7 +157,7 @@ namespace S9BEditor
 			DependencyObject templateChild = base.GetTemplateChild("PART_Popup");
 			mPopup = (Popup)(object)((templateChild is Popup) ? templateChild : null);
 			_ = mPopup;
-			((FrameworkElement)this).OnApplyTemplate();
+			base.OnApplyTemplate();
 		}
 
 		private static void OnMouseButtonDown(object sender, MouseButtonEventArgs e)

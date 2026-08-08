@@ -5,7 +5,6 @@ using System.Windows;
 using System.Windows.Interop;
 using System.Windows.Media;
 
-using System.Diagnostics;
 
 namespace S9BEditor
 {
@@ -151,7 +150,16 @@ namespace S9BEditor
 
 		private IntPtr customWndProc(IntPtr hWnd, int message, IntPtr wParam, IntPtr lParam)
 		{
-			return WndProc(hWnd, message, wParam, lParam);
+			try
+			{
+				return WndProc(hWnd, message, wParam, lParam);
+			} catch (Exception e)
+			{
+				PLogger.Write("ERROR IN customWndProc");
+				PLogger.Write(e);
+				return new IntPtr(12);
+			}
+
 		}
 
 		protected virtual IntPtr WndProc(IntPtr hWnd, int message, IntPtr wParam, IntPtr lParam)
@@ -233,7 +241,6 @@ namespace S9BEditor
 
 		static NativeWindow()
 		{
-            Debug.WriteLine("NativeWindow()");
 			//IL_001f: Unknown result type (might be due to invalid IL or missing references)
 			//IL_0029: Expected O, but got Unknown
 			//IL_004d: Unknown result type (might be due to invalid IL or missing references)
