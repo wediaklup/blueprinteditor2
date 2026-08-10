@@ -380,7 +380,6 @@ namespace S9BEditor
 
 		protected override void OnTemplateChanged(ControlTemplate oldTemplate, ControlTemplate newTemplate)
 		{
-			PLogger.Write("DataEditor.OnTemplateChanged");
 			//IL_0018: Unknown result type (might be due to invalid IL or missing references)
 			//IL_0022: Expected O, but got Unknown
 			if (oldTemplate != null && mMainScrollView != null)
@@ -393,7 +392,6 @@ namespace S9BEditor
 
 		public override void OnApplyTemplate()
 		{
-			PLogger.Write("DataEditor.OnApplyTemplate");
 			//IL_003f: Unknown result type (might be due to invalid IL or missing references)
 			//IL_0049: Expected O, but got Unknown
 			base.OnApplyTemplate();
@@ -410,7 +408,6 @@ namespace S9BEditor
 
 		private void scrollViewer_ScrollChanged(object sender, ScrollChangedEventArgs e)
 		{
-			PLogger.Write("DataEditor.ScrollChanged");
 			if (((Control)this).Template != null)
 			{
 				object obj = ((FrameworkTemplate)((Control)this).Template).FindName("PART_columnHeadersScrollViewer", (FrameworkElement)(object)this);
@@ -424,7 +421,6 @@ namespace S9BEditor
 
 		protected override void OnPropertyChanged(DependencyPropertyChangedEventArgs e)
 		{
-			PLogger.Write("DataEditor.OnPropertyChanged");
 			//IL_0185: Unknown result type (might be due to invalid IL or missing references)
 			if (((DependencyPropertyChangedEventArgs)(e)).Property == TypeColumnVisibleProperty)
 			{

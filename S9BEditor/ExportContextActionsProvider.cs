@@ -167,6 +167,7 @@ namespace S9BEditor
 					}
 					catch (Exception)
 					{
+						PLogger.Write("ExportContextActionsProvider : EXCEPTION");
 					}
 				}
 				files = Directory.GetDirectories(path);
@@ -203,6 +204,7 @@ namespace S9BEditor
 				}
 				exportContext.SourceFileType = SourceFileType.Unknown;
 				exportContext.ToolsDirectory = AppServices.ResourceManager.DeploymentPath;
+				PLogger.Write("ExportContextActionsProvider.AddSingleFileToExportQueue: AddFile(" + provider + ", " + product + ", " + exportContext + ", " + overrideTargetFileName + ")");
 				AppServices.Exporter.AddFile(provider, product, relativePath, exportContext, overrideTargetFileName);
 			}
 
