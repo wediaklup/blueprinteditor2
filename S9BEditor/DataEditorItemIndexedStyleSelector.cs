@@ -2,18 +2,19 @@ using System.Windows;
 using System.Windows.Controls;
 using S9BEditor.ViewModels;
 
-namespace S9BEditor;
-
-internal class DataEditorItemIndexedStyleSelector : StyleSelector
+namespace S9BEditor
 {
-	public override Style SelectStyle(object item, DependencyObject container)
+	public class DataEditorItemIndexedStyleSelector : StyleSelector
 	{
-		if (item is VMClassTypeDatum)
+		public override Style SelectStyle(object item, DependencyObject container)
 		{
-			object obj = Application.Current.Resources[(object)"headeredIndexedContainerStyle"];
-			return (Style)((obj is Style) ? obj : null);
+			if (item is VMClassTypeDatum)
+			{
+				object obj = Application.Current.Resources[(object)"headeredIndexedContainerStyle"];
+				return (Style)((obj is Style) ? obj : null);
+			}
+			object obj2 = Application.Current.Resources[(object)"indexedItemStyle"];
+			return (Style)((obj2 is Style) ? obj2 : null);
 		}
-		object obj2 = Application.Current.Resources[(object)"indexedItemStyle"];
-		return (Style)((obj2 is Style) ? obj2 : null);
 	}
 }

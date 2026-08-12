@@ -1,0 +1,20 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:p="clr-namespace:S9BEditor.Properties;assembly=BlueprintEditor2" xmlns:custom="clr-namespace:S9BEditor;assembly=BlueprintEditor2" xmlns:viewModel="clr-namespace:S9BEditor.ViewModels;assembly=BlueprintEditor2" xmlns:sys="clr-namespace:System;assembly=mscorlib">
+  <DataTemplate x:Key="{DataTemplateKey {x:Type viewModel:VMTypeEditContainer}}" DataType="{x:Type viewModel:VMTypeEditContainer}">
+    <Border Background="#FFFFFFFF">
+      <Grid>
+        <Grid.RowDefinitions>
+          <RowDefinition Height="Auto" />
+          <RowDefinition Height="1" />
+          <RowDefinition />
+        </Grid.RowDefinitions>
+        <TextBlock Padding="4,2,4,4" FontWeight="Bold" Text="{Binding Path=Name}" />
+        <Rectangle Grid.Row="1" Fill="#FFC1C1C1" />
+        <custom:DataEditor Grid.Row="2" ItemsSource="{Binding Path=Items}" TypeColumnVisible="{Binding Source={x:Static p:Settings.Default}, Path=AdvancedDataEditorView, Mode=OneWay}" NameColumnWidth="{Binding Source={x:Static p:Settings.Default}, Path=TypeEditorNameColumnWidth, Mode=TwoWay}" ValueColumnWidth="{Binding Source={x:Static p:Settings.Default}, Path=TypeEditorValueColumnWidth, Mode=TwoWay}" TypeColumnWidth="{Binding Source={x:Static p:Settings.Default}, Path=TypeEditorTypeColumnWidth, Mode=TwoWay}" />
+      </Grid>
+    </Border>
+  </DataTemplate>
+  <DataTemplate x:Key="{DataTemplateKey {x:Type viewModel:VMLuaDocument}}" DataType="{x:Type viewModel:VMLuaDocument}">
+    <custom:ScintillaHost Text="{Binding Text, Mode=TwoWay}" />
+  </DataTemplate>
+</ResourceDictionary>

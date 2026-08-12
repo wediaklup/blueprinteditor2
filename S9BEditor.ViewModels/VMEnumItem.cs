@@ -4,62 +4,63 @@ using S9BEditor.Properties;
 using TypeEdit.Base;
 using TypeEdit.Interfaces.Data.Descriptors;
 
-namespace S9BEditor.ViewModels;
-
-internal class VMEnumItem : ViewModelBase
+namespace S9BEditor.ViewModels
 {
-	private IEnumItemDescriptor mEnumItemDescriptor;
-
-	private IClassTypeDescriptor mAssociatedMeta;
-
-	public string Value => mEnumItemDescriptor.Name;
-
-	public string Name
+	internal class VMEnumItem : ViewModelBase
 	{
-		get
+		private IEnumItemDescriptor mEnumItemDescriptor;
+
+		private IClassTypeDescriptor mAssociatedMeta;
+
+		public string Value => mEnumItemDescriptor.Name;
+
+		public string Name
 		{
-			if (Settings.Default.AdvancedDataEditorView)
+			get
 			{
-				return mEnumItemDescriptor.Name;
+				if (Settings.Default.AdvancedDataEditorView)
+				{
+					return mEnumItemDescriptor.Name;
+				}
+				if (TryGetFriendlyEnumItemName(out var friendlyName))
+				{
+					return friendlyName;
+				}
+				return S9BEUtil.CamelCaseToNormal(mEnumItemDescriptor.Name);
 			}
-			if (TryGetFriendlyEnumItemName(out var friendlyName))
+		}
+
+		internal VMEnumItem(ViewModelBase owner, IEnumItemDescriptor enumItemDescriptor)
+			: base(owner)
+		{
+			mEnumItemDescriptor = enumItemDescriptor;
+			string name = "cMeta_" + enumItemDescriptor.Owner.Name;
+			mAssociatedMeta = enumItemDescriptor.Owner.GetTypeEditSchema().GetTypeFromName(name) as IClassTypeDescriptor;
+			((ApplicationSettingsBase)Settings.Default).PropertyChanged += globalSettingsPropertyChanged;
+		}
+
+		private void globalSettingsPropertyChanged(object sender, PropertyChangedEventArgs e)
+		{
+			if (e.PropertyName == "AdvancedDataEditorView")
 			{
-				return friendlyName;
+				RaisePropertyChanged("Name");
 			}
-			return S9BEUtil.CamelCaseToNormal(mEnumItemDescriptor.Name);
 		}
-	}
 
-	internal VMEnumItem(ViewModelBase owner, IEnumItemDescriptor enumItemDescriptor)
-		: base(owner)
-	{
-		mEnumItemDescriptor = enumItemDescriptor;
-		string name = "cMeta_" + enumItemDescriptor.Owner.Name;
-		mAssociatedMeta = enumItemDescriptor.Owner.GetTypeEditSchema().GetTypeFromName(name) as IClassTypeDescriptor;
-		((ApplicationSettingsBase)Settings.Default).PropertyChanged += globalSettingsPropertyChanged;
-	}
-
-	private void globalSettingsPropertyChanged(object sender, PropertyChangedEventArgs e)
-	{
-		if (e.PropertyName == "AdvancedDataEditorView")
+		public bool TryGetFriendlyEnumItemName(out string friendlyName)
 		{
-			RaisePropertyChanged("Name");
+			if (mAssociatedMeta != null)
+			{
+				return mAssociatedMeta.TryGetEditHintValue("EnumMember:" + mEnumItemDescriptor.Name, "name", out friendlyName);
+			}
+			friendlyName = null;
+			return false;
 		}
-	}
 
-	public bool TryGetFriendlyEnumItemName(out string friendlyName)
-	{
-		if (mAssociatedMeta != null)
+		public override void Dispose()
 		{
-			return mAssociatedMeta.TryGetEditHintValue("EnumMember:" + mEnumItemDescriptor.Name, "name", out friendlyName);
+			((ApplicationSettingsBase)Settings.Default).PropertyChanged -= globalSettingsPropertyChanged;
+			base.Dispose();
 		}
-		friendlyName = null;
-		return false;
-	}
-
-	public override void Dispose()
-	{
-		((ApplicationSettingsBase)Settings.Default).PropertyChanged -= globalSettingsPropertyChanged;
-		base.Dispose();
 	}
 }

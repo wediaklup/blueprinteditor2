@@ -10,226 +10,176 @@ using System.Windows.Controls.Primitives;
 using System.Windows.Data;
 using System.Windows.Markup;
 
-namespace S9BEditor;
-
-public class AddItemWindow : CustomWindow, IComponentConnector
+namespace S9BEditor
 {
-	public static readonly DependencyProperty ItemsSourceProperty;
-
-	public static readonly DependencyProperty SelectedCategoryProperty;
-
-	public static readonly DependencyProperty SelectedFileTypeProperty;
-
-	public static readonly DependencyProperty FileNameProperty;
-
-	internal Button button2;
-
-	internal Button button3;
-
-	private bool _contentLoaded;
-
-	public IEnumerable ItemsSource
+	public partial class AddItemWindow : CustomWindow, IComponentConnector
 	{
-		get
-		{
-			return (IEnumerable)((DependencyObject)this).GetValue(ItemsSourceProperty);
-		}
-		set
-		{
-			((DependencyObject)this).SetValue(ItemsSourceProperty, (object)value);
-		}
-	}
+		public static readonly DependencyProperty ItemsSourceProperty;
 
-	public ObservableCollection<FileTypeCategory> Items { get; private set; }
+		public static readonly DependencyProperty SelectedCategoryProperty;
 
-	public FileTypeCategory SelectedCategory
-	{
-		get
-		{
-			return (FileTypeCategory)((DependencyObject)this).GetValue(SelectedCategoryProperty);
-		}
-		set
-		{
-			((DependencyObject)this).SetValue(SelectedCategoryProperty, (object)value);
-		}
-	}
+		public static readonly DependencyProperty SelectedFileTypeProperty;
 
-	public FileType SelectedFileType
-	{
-		get
-		{
-			return (FileType)((DependencyObject)this).GetValue(SelectedFileTypeProperty);
-		}
-		set
-		{
-			((DependencyObject)this).SetValue(SelectedFileTypeProperty, (object)value);
-		}
-	}
+		public static readonly DependencyProperty FileNameProperty;
 
-	public string FileName
-	{
-		get
+		public IEnumerable ItemsSource
 		{
-			return (string)((DependencyObject)this).GetValue(FileNameProperty);
-		}
-		set
-		{
-			((DependencyObject)this).SetValue(FileNameProperty, (object)value);
-		}
-	}
-
-	public AddItemWindow()
-	{
-		Items = new ObservableCollection<FileTypeCategory>();
-		InitializeComponent();
-	}
-
-	protected override void OnPropertyChanged(DependencyPropertyChangedEventArgs e)
-	{
-		//IL_01e9: Unknown result type (might be due to invalid IL or missing references)
-		if (((DependencyPropertyChangedEventArgs)(e)).Property == ItemsSourceProperty)
-		{
-			SelectedCategory = null;
-			Items.Clear();
-			if (ItemsSource != null)
+			get
 			{
-				foreach (object item2 in ItemsSource)
+				return (IEnumerable)((DependencyObject)this).GetValue(ItemsSourceProperty);
+			}
+			set
+			{
+				((DependencyObject)this).SetValue(ItemsSourceProperty, (object)value);
+			}
+		}
+
+		public ObservableCollection<FileTypeCategory> Items { get; private set; }
+
+		public FileTypeCategory SelectedCategory
+		{
+			get
+			{
+				return (FileTypeCategory)((DependencyObject)this).GetValue(SelectedCategoryProperty);
+			}
+			set
+			{
+				((DependencyObject)this).SetValue(SelectedCategoryProperty, (object)value);
+			}
+		}
+
+		public FileType SelectedFileType
+		{
+			get
+			{
+				return (FileType)((DependencyObject)this).GetValue(SelectedFileTypeProperty);
+			}
+			set
+			{
+				((DependencyObject)this).SetValue(SelectedFileTypeProperty, (object)value);
+			}
+		}
+
+		public string FileName
+		{
+			get
+			{
+				return (string)((DependencyObject)this).GetValue(FileNameProperty);
+			}
+			set
+			{
+				((DependencyObject)this).SetValue(FileNameProperty, (object)value);
+			}
+		}
+
+		public AddItemWindow()
+		{
+			Items = new ObservableCollection<FileTypeCategory>();
+			InitializeComponent();
+		}
+
+		protected override void OnPropertyChanged(DependencyPropertyChangedEventArgs e)
+		{
+			//IL_01e9: Unknown result type (might be due to invalid IL or missing references)
+			if (((DependencyPropertyChangedEventArgs)(e)).Property == ItemsSourceProperty)
+			{
+				SelectedCategory = null;
+				Items.Clear();
+				if (ItemsSource != null)
 				{
-					if (item2 is FileTypeCategory item)
+					foreach (object item2 in ItemsSource)
 					{
-						Items.Add(item);
-					}
-				}
-				object obj = ((FrameworkElement)this).Resources[(object)"sortedCategories"];
-				CollectionViewSource val = (CollectionViewSource)((obj is CollectionViewSource) ? obj : null);
-				if (val != null && val.View != null)
-				{
-					{
-						IEnumerator enumerator2 = ((IEnumerable)val.View).GetEnumerator();
-						try
+						if (item2 is FileTypeCategory item)
 						{
-							if (enumerator2.MoveNext())
-							{
-								object current2 = enumerator2.Current;
-								SelectedCategory = current2 as FileTypeCategory;
-							}
+							Items.Add(item);
 						}
-						finally
+					}
+					object obj = ((FrameworkElement)this).Resources[(object)"sortedCategories"];
+					CollectionViewSource val = (CollectionViewSource)((obj is CollectionViewSource) ? obj : null);
+					if (val != null && val.View != null)
+					{
 						{
-							IDisposable disposable = enumerator2 as IDisposable;
-							if (disposable != null)
+							IEnumerator enumerator2 = ((IEnumerable)val.View).GetEnumerator();
+							try
 							{
-								disposable.Dispose();
+								if (enumerator2.MoveNext())
+								{
+									object current2 = enumerator2.Current;
+									SelectedCategory = current2 as FileTypeCategory;
+								}
+							}
+							finally
+							{
+								IDisposable disposable = enumerator2 as IDisposable;
+								if (disposable != null)
+								{
+									disposable.Dispose();
+								}
 							}
 						}
 					}
 				}
 			}
-		}
-		else if (((DependencyPropertyChangedEventArgs)(e)).Property == SelectedCategoryProperty)
-		{
-			if (SelectedCategory != null && SelectedCategory.Items.Count > 0)
+			else if (((DependencyPropertyChangedEventArgs)(e)).Property == SelectedCategoryProperty)
 			{
-				object obj2 = ((FrameworkElement)this).Resources[(object)"sortedFileTypes"];
-				CollectionViewSource val2 = (CollectionViewSource)((obj2 is CollectionViewSource) ? obj2 : null);
-				if (val2 != null && val2.View != null)
+				if (SelectedCategory != null && SelectedCategory.Items.Count > 0)
 				{
+					object obj2 = ((FrameworkElement)this).Resources[(object)"sortedFileTypes"];
+					CollectionViewSource val2 = (CollectionViewSource)((obj2 is CollectionViewSource) ? obj2 : null);
+					if (val2 != null && val2.View != null)
 					{
-						IEnumerator enumerator3 = ((IEnumerable)val2.View).GetEnumerator();
-						try
 						{
-							if (enumerator3.MoveNext())
+							IEnumerator enumerator3 = ((IEnumerable)val2.View).GetEnumerator();
+							try
 							{
-								object current3 = enumerator3.Current;
-								SelectedFileType = current3 as FileType;
+								if (enumerator3.MoveNext())
+								{
+									object current3 = enumerator3.Current;
+									SelectedFileType = current3 as FileType;
+								}
 							}
-						}
-						finally
-						{
-							IDisposable disposable2 = enumerator3 as IDisposable;
-							if (disposable2 != null)
+							finally
 							{
-								disposable2.Dispose();
+								IDisposable disposable2 = enumerator3 as IDisposable;
+								if (disposable2 != null)
+								{
+									disposable2.Dispose();
+								}
 							}
 						}
 					}
 				}
+				else
+				{
+					SelectedFileType = null;
+				}
 			}
-			else
+			else if (((DependencyPropertyChangedEventArgs)(e)).Property == SelectedFileTypeProperty && ((DependencyPropertyChangedEventArgs)(e)).NewValue != null && (FileName == null || FileName == ((FileType)((DependencyPropertyChangedEventArgs)(e)).OldValue).DefaultFileName))
 			{
-				SelectedFileType = null;
+				FileName = ((FileType)((DependencyPropertyChangedEventArgs)(e)).NewValue).DefaultFileName;
 			}
+			base.OnPropertyChanged(e);
 		}
-		else if (((DependencyPropertyChangedEventArgs)(e)).Property == SelectedFileTypeProperty && ((DependencyPropertyChangedEventArgs)(e)).NewValue != null && (FileName == null || FileName == ((FileType)((DependencyPropertyChangedEventArgs)(e)).OldValue).DefaultFileName))
+
+		private void button3_Click(object sender, RoutedEventArgs e)
 		{
-			FileName = ((FileType)((DependencyPropertyChangedEventArgs)(e)).NewValue).DefaultFileName;
+			((Window)this).DialogResult = true;
 		}
-		base.OnPropertyChanged(e);
-	}
 
-	private void button3_Click(object sender, RoutedEventArgs e)
-	{
-		((Window)this).DialogResult = true;
-	}
-
-	[DebuggerNonUserCode]
-	[GeneratedCode("PresentationBuildTasks", "4.0.0.0")]
-	public void InitializeComponent()
-	{
-		if (!_contentLoaded)
+		static AddItemWindow()
 		{
-			_contentLoaded = true;
-			Uri uri = new Uri("/BlueprintEditor2;component/additemwindow.xaml", UriKind.Relative);
-			Application.LoadComponent((object)this, uri);
+			//IL_001a: Unknown result type (might be due to invalid IL or missing references)
+			//IL_0024: Expected O, but got Unknown
+			//IL_0043: Unknown result type (might be due to invalid IL or missing references)
+			//IL_004d: Expected O, but got Unknown
+			//IL_006c: Unknown result type (might be due to invalid IL or missing references)
+			//IL_0076: Expected O, but got Unknown
+			//IL_0095: Unknown result type (might be due to invalid IL or missing references)
+			//IL_009f: Expected O, but got Unknown
+			ItemsSourceProperty = DependencyProperty.Register("ItemsSource", typeof(IEnumerable), typeof(AddItemWindow), (PropertyMetadata)new UIPropertyMetadata((PropertyChangedCallback)null));
+			SelectedCategoryProperty = DependencyProperty.Register("SelectedCategory", typeof(FileTypeCategory), typeof(AddItemWindow), (PropertyMetadata)new UIPropertyMetadata((PropertyChangedCallback)null));
+			SelectedFileTypeProperty = DependencyProperty.Register("SelectedFileType", typeof(FileType), typeof(AddItemWindow), (PropertyMetadata)new UIPropertyMetadata((PropertyChangedCallback)null));
+			FileNameProperty = DependencyProperty.Register("FileName", typeof(string), typeof(AddItemWindow), (PropertyMetadata)new UIPropertyMetadata((PropertyChangedCallback)null));
 		}
-	}
-
-	[GeneratedCode("PresentationBuildTasks", "4.0.0.0")]
-	[DebuggerNonUserCode]
-	internal Delegate _CreateDelegate(Type delegateType, string handler)
-	{
-		return Delegate.CreateDelegate(delegateType, this, handler);
-	}
-
-	[GeneratedCode("PresentationBuildTasks", "4.0.0.0")]
-	[DebuggerNonUserCode]
-	[EditorBrowsable(EditorBrowsableState.Never)]
-	void IComponentConnector.Connect(int connectionId, object target)
-	{
-		//IL_0016: Unknown result type (might be due to invalid IL or missing references)
-		//IL_0020: Expected O, but got Unknown
-		//IL_0023: Unknown result type (might be due to invalid IL or missing references)
-		//IL_002d: Expected O, but got Unknown
-		//IL_003a: Unknown result type (might be due to invalid IL or missing references)
-		//IL_0044: Expected O, but got Unknown
-		switch (connectionId)
-		{
-		case 1:
-			button2 = (Button)target;
-			break;
-		case 2:
-			button3 = (Button)target;
-			((ButtonBase)button3).Click += new RoutedEventHandler(button3_Click);
-			break;
-		default:
-			_contentLoaded = true;
-			break;
-		}
-	}
-
-	static AddItemWindow()
-	{
-		//IL_001a: Unknown result type (might be due to invalid IL or missing references)
-		//IL_0024: Expected O, but got Unknown
-		//IL_0043: Unknown result type (might be due to invalid IL or missing references)
-		//IL_004d: Expected O, but got Unknown
-		//IL_006c: Unknown result type (might be due to invalid IL or missing references)
-		//IL_0076: Expected O, but got Unknown
-		//IL_0095: Unknown result type (might be due to invalid IL or missing references)
-		//IL_009f: Expected O, but got Unknown
-		ItemsSourceProperty = DependencyProperty.Register("ItemsSource", typeof(IEnumerable), typeof(AddItemWindow), (PropertyMetadata)new UIPropertyMetadata((PropertyChangedCallback)null));
-		SelectedCategoryProperty = DependencyProperty.Register("SelectedCategory", typeof(FileTypeCategory), typeof(AddItemWindow), (PropertyMetadata)new UIPropertyMetadata((PropertyChangedCallback)null));
-		SelectedFileTypeProperty = DependencyProperty.Register("SelectedFileType", typeof(FileType), typeof(AddItemWindow), (PropertyMetadata)new UIPropertyMetadata((PropertyChangedCallback)null));
-		FileNameProperty = DependencyProperty.Register("FileName", typeof(string), typeof(AddItemWindow), (PropertyMetadata)new UIPropertyMetadata((PropertyChangedCallback)null));
 	}
 }

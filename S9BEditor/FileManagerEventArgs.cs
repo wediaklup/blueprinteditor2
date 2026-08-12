@@ -1,15 +1,16 @@
 using System;
 
-namespace S9BEditor;
-
-internal class FileManagerEventArgs : EventArgs
+namespace S9BEditor
 {
-	public string FileName { get; private set; }
-
-	public bool Handled { get; set; }
-
-	public FileManagerEventArgs(string fileName)
+	internal class FileManagerEventArgs : EventArgs
 	{
-		FileName = fileName;
+		public string FileName { get; private set; }
+
+		public bool Handled { get; set; }
+
+		public FileManagerEventArgs(string fileName)
+		{
+			FileName = fileName;
+		}
 	}
 }

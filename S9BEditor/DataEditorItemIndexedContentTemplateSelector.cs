@@ -2,22 +2,23 @@ using System.Windows;
 using System.Windows.Controls;
 using S9BEditor.ViewModels;
 
-namespace S9BEditor;
-
-internal class DataEditorItemIndexedContentTemplateSelector : DataTemplateSelector
+namespace S9BEditor
 {
-	public override DataTemplate SelectTemplate(object item, DependencyObject container)
+	public class DataEditorItemIndexedContentTemplateSelector : DataTemplateSelector
 	{
-		if (item is VMTypeDatumBase)
+		public override DataTemplate SelectTemplate(object item, DependencyObject container)
 		{
-			if (item is VMClassTypeDatum)
+			if (item is VMTypeDatumBase)
 			{
-				object obj = Application.Current.Resources[(object)"indexedClassContainerTemplate"];
-				return (DataTemplate)((obj is DataTemplate) ? obj : null);
+				if (item is VMClassTypeDatum)
+				{
+					object obj = Application.Current.Resources[(object)"indexedClassContainerTemplate"];
+					return (DataTemplate)((obj is DataTemplate) ? obj : null);
+				}
+				object obj2 = Application.Current.Resources[(object)"indexedDatumItemTemplate"];
+				return (DataTemplate)((obj2 is DataTemplate) ? obj2 : null);
 			}
-			object obj2 = Application.Current.Resources[(object)"indexedDatumItemTemplate"];
-			return (DataTemplate)((obj2 is DataTemplate) ? obj2 : null);
+			return ((DataTemplateSelector)this).SelectTemplate(item, container);
 		}
-		return ((DataTemplateSelector)this).SelectTemplate(item, container);
 	}
 }

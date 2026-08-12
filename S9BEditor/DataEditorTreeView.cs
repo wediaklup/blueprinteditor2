@@ -1,17 +1,18 @@
 using System.Windows;
 using System.Windows.Controls;
 
-namespace S9BEditor;
-
-internal class DataEditorTreeView : TreeView
+namespace S9BEditor
 {
-	public DataEditorTreeView()
+	public class DataEditorTreeView : TreeView
 	{
-		((FrameworkElement)this).DefaultStyleKey = typeof(DataEditorTreeView);
-	}
+		public DataEditorTreeView()
+		{
+			base.DefaultStyleKey = typeof(DataEditorTreeView);
+		}
 
-	protected override DependencyObject GetContainerForItemOverride()
-	{
-		return (DependencyObject)(object)new DataEditorTreeViewItem();
+		protected override DependencyObject GetContainerForItemOverride()
+		{
+			return (DependencyObject)(object)new DataEditorTreeViewItem();
+		}
 	}
 }

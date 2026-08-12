@@ -1,6 +1,7 @@
-namespace RailWorks;
-
-internal class Properties
+namespace RailWorks
 {
-	public static string Version = "v72.4a";
+	internal class Properties
+	{
+		public static string Version = "v72.4a";
+	}
 }

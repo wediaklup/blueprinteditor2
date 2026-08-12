@@ -3,33 +3,34 @@ using System.Windows.Controls;
 using S9BEditor.ViewModels;
 using TypeEdit.Interfaces;
 
-namespace S9BEditor;
-
-internal class ScriptPropertyDataTemplateSelector : DataTemplateSelector
+namespace S9BEditor
 {
-	public override DataTemplate SelectTemplate(object item, DependencyObject container)
+	internal class ScriptPropertyDataTemplateSelector : DataTemplateSelector
 	{
-		if (item is VMScriptProperty vMScriptProperty)
+		public override DataTemplate SelectTemplate(object item, DependencyObject container)
 		{
-			switch (vMScriptProperty.ScriptPropertyAttribute.SpecialType)
+			if (item is VMScriptProperty vMScriptProperty)
 			{
-			case ScriptPropertySpecialType.Provider:
-			{
-				object obj3 = Application.Current.Resources[(object)"providerScriptProperty"];
-				return (DataTemplate)((obj3 is DataTemplate) ? obj3 : null);
+				switch (vMScriptProperty.ScriptPropertyAttribute.SpecialType)
+				{
+					case ScriptPropertySpecialType.Provider:
+					{
+						object obj3 = Application.Current.Resources[(object)"providerScriptProperty"];
+						return (DataTemplate)((obj3 is DataTemplate) ? obj3 : null);
+					}
+					case ScriptPropertySpecialType.Product:
+					{
+						object obj2 = Application.Current.Resources[(object)"productScriptProperty"];
+						return (DataTemplate)((obj2 is DataTemplate) ? obj2 : null);
+					}
+					default:
+					{
+						object obj = Application.Current.Resources[(object)"stringScriptProperty"];
+						return (DataTemplate)((obj is DataTemplate) ? obj : null);
+					}
+				}
 			}
-			case ScriptPropertySpecialType.Product:
-			{
-				object obj2 = Application.Current.Resources[(object)"productScriptProperty"];
-				return (DataTemplate)((obj2 is DataTemplate) ? obj2 : null);
-			}
-			default:
-			{
-				object obj = Application.Current.Resources[(object)"stringScriptProperty"];
-				return (DataTemplate)((obj is DataTemplate) ? obj : null);
-			}
-			}
+			return ((DataTemplateSelector)this).SelectTemplate(item, container);
 		}
-		return ((DataTemplateSelector)this).SelectTemplate(item, container);
 	}
 }

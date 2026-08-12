@@ -1,15 +1,16 @@
 using System;
 
-namespace S9BEditor;
-
-public class TransparentWindow : NativeWindow
+namespace S9BEditor
 {
-	protected override IntPtr WndProc(IntPtr hWnd, int message, IntPtr wParam, IntPtr lParam)
+	public class TransparentWindow : NativeWindow
 	{
-		if (message == 134 && wParam.ToInt32() == 1)
+		protected override IntPtr WndProc(IntPtr hWnd, int message, IntPtr wParam, IntPtr lParam)
 		{
-			return IntPtr.Zero;
+			if (message == 134 && wParam.ToInt32() == 1)
+			{
+				return IntPtr.Zero;
+			}
+			return base.WndProc(hWnd, message, wParam, lParam);
 		}
-		return base.WndProc(hWnd, message, wParam, lParam);
 	}
 }

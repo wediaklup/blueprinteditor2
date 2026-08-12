@@ -1,0 +1,104 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:scm="clr-namespace:System.ComponentModel;assembly=WindowsBase" xmlns:custom="clr-namespace:S9BEditor;assembly=BlueprintEditor2">
+  <custom:BooleanToHiddenVisibilityConverter x:Key="boolToVisHideConverter" />
+  <BooleanToVisibilityConverter x:Key="boolToVisConverter" />
+  <Style x:Key="{x:Type custom:DocumentTabControl}" TargetType="{x:Type custom:DocumentTabControl}" BasedOn="{StaticResource {x:Type custom:OverflowTabControl}}">
+    <Setter Property="ItemContainerStyle" Value="{x:Null}" />
+    <Setter Property="IsTabStop" Value="False" />
+    <Setter Property="KeyboardNavigation.TabNavigation" Value="Contained" />
+    <Setter Property="custom:OverflowTabControl.OverflowAppendMode" Value="AppendFront" />
+    <Setter Property="Template">
+      <Setter.Value>
+        <ControlTemplate TargetType="{x:Type custom:DocumentTabControl}">
+          <Grid KeyboardNavigation.TabNavigation="Local">
+            <Grid.RowDefinitions>
+              <RowDefinition Height="Auto" />
+              <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+              <ColumnDefinition Width="*" />
+              <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+            <Grid>
+              <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="Auto" />
+              </Grid.ColumnDefinitions>
+              <custom:OverflowPanel x:Name="PART_TabItemsOverflowPanel" ZIndex="1" Margin="0,0,0,-3" IsItemsHost="True" KeyboardNavigation.TabIndex="1" KeyboardNavigation.IsTabStop="False" Background="#00FFFFFF" CanRearrange="True" OverflowAppendMode="{Binding Path=OverflowAppendMode, RelativeSource={RelativeSource TemplatedParent}}" />
+            </Grid>
+            <custom:DropDownButton x:Name="PART_TabsContextMenuButton" Grid.Column="1" Margin="4,0,0,0" HorizontalAlignment="Center" VerticalAlignment="Center" Style="{StaticResource BPEFlatDropDownButtonStyle}" IsChecked="{Binding Path=DropDown.IsOpen, Mode=OneWay, RelativeSource={RelativeSource Self}}" IsEnabled="{Binding Path=HasItems, RelativeSource={RelativeSource TemplatedParent}}" Visibility="{Binding Path=HasItems, RelativeSource={RelativeSource TemplatedParent}, Converter={StaticResource boolToVisConverter}}">
+              <custom:DropDownButton.DropDown>
+                <ContextMenu Name="PART_TabItemsContextMenu" ItemsSource="{Binding Path=Items, Mode=OneWay, RelativeSource={RelativeSource TemplatedParent}}" ItemContainerStyle="{Binding Path=TabMenuItemsContainerStyle, Mode=OneWay, RelativeSource={RelativeSource TemplatedParent}}" />
+              </custom:DropDownButton.DropDown>
+              <Grid>
+                <Path SnapsToDevicePixels="True" Data="M1,2 L9,2" Stroke="#FFFFFFFF" HorizontalAlignment="Center" VerticalAlignment="Center" Width="10" Height="10" StrokeThickness="2" Visibility="{Binding Path=HasOverflowItems, RelativeSource={RelativeSource TemplatedParent}, Converter={StaticResource boolToVisHideConverter}}" />
+                <Path SnapsToDevicePixels="True" Data="M1,5 L9,5 L5,9" Fill="#FFFFFFFF" HorizontalAlignment="Center" VerticalAlignment="Center" Width="10" Height="10" StrokeThickness="0" />
+              </Grid>
+            </custom:DropDownButton>
+            <ContentControl Name="Border" Grid.Row="1" Grid.ColumnSpan="2" KeyboardNavigation.TabNavigation="Local" KeyboardNavigation.DirectionalNavigation="Contained" Focusable="False" IsTabStop="False" Style="{StaticResource BPEDocumentBorderStyle}">
+              <ContentPresenter Name="PART_SelectedContentHost" Margin="0" ContentSource="SelectedContent" KeyboardNavigation.TabNavigation="Cycle" KeyboardNavigation.IsTabStop="False" />
+            </ContentControl>
+          </Grid>
+        </ControlTemplate>
+      </Setter.Value>
+    </Setter>
+  </Style>
+  <Style x:Key="{x:Type custom:DocumentTabItem}" TargetType="{x:Type custom:DocumentTabItem}">
+    <Setter Property="Focusable" Value="False" />
+    <Setter Property="IsTabStop" Value="False" />
+    <Setter Property="Visibility" Value="{Binding Path=(custom:OverflowPanel.IsOnOverflow), ConverterParameter=!, Converter={StaticResource boolToVisHideConverter}, RelativeSource={RelativeSource Self}}" />
+    <Setter Property="Template">
+      <Setter.Value>
+        <ControlTemplate TargetType="{x:Type custom:DocumentTabItem}">
+          <Border Name="PART_tabBorder" BorderThickness="1" CornerRadius="2, 2, 0, 0" Background="#00FFFFFF" BorderBrush="#00FFFFFF">
+            <Grid Margin="4, 2, 4, 4">
+              <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="8" />
+                <ColumnDefinition Width="Auto" />
+              </Grid.ColumnDefinitions>
+              <ContentPresenter Name="PART_contentPresenter" ContentSource="Header" RecognizesAccessKey="True" TextBlock.Foreground="#FFFFFFFF" />
+              <Button Grid.Column="2" Command="ApplicationCommands.Close" Focusable="False" IsTabStop="False" Style="{StaticResource BPEFlatButtonStyle}" Width="{Binding Path=ActualHeight, RelativeSource={RelativeSource Self}}" CommandParameter="{Binding RelativeSource={RelativeSource TemplatedParent}}">
+                <Path Name="PART_XImagePath" Width="10" Height="8" Stretch="Fill" Fill="#00FFFFFF" Data="{StaticResource XImageGeometry}" />
+              </Button>
+            </Grid>
+            <VisualStateManager.VisualStateGroups>
+              <VisualStateGroup Name="TabStates">
+                <VisualState Name="FocusedSelected">
+                  <Storyboard>
+                    <ColorAnimation To="#FF000000" Storyboard.TargetName="PART_XImagePath" Storyboard.TargetProperty="Fill.Color" AccelerationRatio="1" SpeedRatio="{StaticResource BPEFadeInSpeedRatio}" />
+                    <ColorAnimation To="#FFFFFFFF" Storyboard.TargetName="PART_tabBorder" Storyboard.TargetProperty="BorderBrush.Color" AccelerationRatio="1" SpeedRatio="{StaticResource BPEFadeInSpeedRatio}" />
+                    <ColorAnimation To="#FFFFFFFF" Storyboard.TargetName="PART_tabBorder" Storyboard.TargetProperty="Background.Color" AccelerationRatio="1" SpeedRatio="{StaticResource BPEFadeInSpeedRatio}" />
+                    <ColorAnimation To="#FF000000" Storyboard.TargetName="PART_contentPresenter" Storyboard.TargetProperty="(TextBlock.Foreground).Color" AccelerationRatio="1" SpeedRatio="{StaticResource BPEFadeInSpeedRatio}" />
+                  </Storyboard>
+                </VisualState>
+                <VisualState Name="UnfocusedSelected">
+                  <Storyboard>
+                    <ColorAnimation To="#FF000000" Storyboard.TargetName="PART_XImagePath" Storyboard.TargetProperty="Fill.Color" AccelerationRatio="1" SpeedRatio="{StaticResource BPEFadeInSpeedRatio}" />
+                    <ColorAnimation To="#FFAAAAAA" Storyboard.TargetName="PART_tabBorder" Storyboard.TargetProperty="BorderBrush.Color" AccelerationRatio="1" SpeedRatio="{StaticResource BPEFadeInSpeedRatio}" />
+                    <ColorAnimation To="#FFAAAAAA" Storyboard.TargetName="PART_tabBorder" Storyboard.TargetProperty="Background.Color" AccelerationRatio="1" SpeedRatio="{StaticResource BPEFadeInSpeedRatio}" />
+                    <ColorAnimation To="#FF000000" Storyboard.TargetName="PART_contentPresenter" Storyboard.TargetProperty="(TextBlock.Foreground).Color" AccelerationRatio="1" SpeedRatio="{StaticResource BPEFadeInSpeedRatio}" />
+                  </Storyboard>
+                </VisualState>
+                <VisualState Name="DefaultMouseOver">
+                  <Storyboard>
+                    <ColorAnimation To="#FFFFFFFF" Storyboard.TargetName="PART_XImagePath" Storyboard.TargetProperty="Fill.Color" AccelerationRatio="1" SpeedRatio="{StaticResource BPEFadeInSpeedRatio}" />
+                    <ColorAnimation To="#70FFFFFF" Storyboard.TargetName="PART_tabBorder" Storyboard.TargetProperty="BorderBrush.Color" AccelerationRatio="1" SpeedRatio="{StaticResource BPEFadeInSpeedRatio}" />
+                    <ColorAnimation To="#50FFFFFF" Storyboard.TargetName="PART_tabBorder" Storyboard.TargetProperty="Background.Color" AccelerationRatio="1" SpeedRatio="{StaticResource BPEFadeInSpeedRatio}" />
+                  </Storyboard>
+                </VisualState>
+                <VisualState Name="Default">
+                  <Storyboard>
+                    <ColorAnimation To="#00FFFFFF" Storyboard.TargetName="PART_XImagePath" Storyboard.TargetProperty="Fill.Color" DecelerationRatio="1" SpeedRatio="{StaticResource BPEFadeOutSpeedRatio}" />
+                    <ColorAnimation To="#00FFFFFF" Storyboard.TargetName="PART_tabBorder" Storyboard.TargetProperty="BorderBrush.Color" DecelerationRatio="1" SpeedRatio="{StaticResource BPEFadeOutSpeedRatio}" />
+                    <ColorAnimation To="#00FFFFFF" Storyboard.TargetName="PART_tabBorder" Storyboard.TargetProperty="Background.Color" DecelerationRatio="1" SpeedRatio="{StaticResource BPEFadeOutSpeedRatio}" />
+                  </Storyboard>
+                </VisualState>
+              </VisualStateGroup>
+            </VisualStateManager.VisualStateGroups>
+          </Border>
+        </ControlTemplate>
+      </Setter.Value>
+    </Setter>
+  </Style>
+</ResourceDictionary>

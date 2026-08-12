@@ -1,8 +1,9 @@
-namespace TypeEdit.Diagnostics;
-
-public enum AssertionDialogResult
+namespace TypeEdit.Diagnostics
 {
-	Continue,
-	Ignore,
-	Break
+	public enum AssertionDialogResult
+	{
+		Continue,
+		Ignore,
+		Break
+	}
 }

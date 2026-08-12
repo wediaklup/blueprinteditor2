@@ -1,13 +1,14 @@
 using System;
 
-namespace TypeEdit.Interfaces.Diagnostics;
-
-public class OutputClearedEventArgs : EventArgs
+namespace TypeEdit.Interfaces.Diagnostics
 {
-	public string Filter { get; private set; }
-
-	public OutputClearedEventArgs(string filter)
+	public class OutputClearedEventArgs : EventArgs
 	{
-		Filter = filter;
+		public string Filter { get; private set; }
+
+		public OutputClearedEventArgs(string filter)
+		{
+			Filter = filter;
+		}
 	}
 }

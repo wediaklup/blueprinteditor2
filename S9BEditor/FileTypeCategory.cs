@@ -1,16 +1,17 @@
 using System.Collections.ObjectModel;
 
-namespace S9BEditor;
-
-public class FileTypeCategory
+namespace S9BEditor
 {
-	public string Name { get; private set; }
-
-	public ObservableCollection<FileType> Items { get; private set; }
-
-	public FileTypeCategory(string name)
+	public class FileTypeCategory
 	{
-		Name = name;
-		Items = new ObservableCollection<FileType>();
+		public string Name { get; private set; }
+
+		public ObservableCollection<FileType> Items { get; private set; }
+
+		public FileTypeCategory(string name)
+		{
+			Name = name;
+			Items = new ObservableCollection<FileType>();
+		}
 	}
 }

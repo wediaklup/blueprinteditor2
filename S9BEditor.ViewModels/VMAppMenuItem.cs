@@ -2,69 +2,70 @@ using System.Collections.Generic;
 using TypeEdit.Base;
 using TypeEdit.Interfaces.UI;
 
-namespace S9BEditor.ViewModels;
-
-public class VMAppMenuItem : VMMenuItem
+namespace S9BEditor.ViewModels
 {
-	public new IApplicationActionItem ActionItem => (IApplicationActionItem)base.ActionItem;
-
-	public VMAppMenuItem(IApplicationActionItem actionItem)
-		: base(actionItem)
+	public class VMAppMenuItem : VMMenuItem
 	{
-		VMAppMenuItem vMAppMenuItem = this;
-		IEnumerable<IApplicationActionItem> items = actionItem.Items;
-		if (items != null)
+		public new IApplicationActionItem ActionItem => (IApplicationActionItem)base.ActionItem;
+
+		public VMAppMenuItem(IApplicationActionItem actionItem)
+			: base(actionItem)
 		{
-			foreach (IApplicationActionItem item2 in items)
+			VMAppMenuItem vMAppMenuItem = this;
+			IEnumerable<IApplicationActionItem> items = actionItem.Items;
+			if (items != null)
 			{
-				VMAppMenuItem item = new VMAppMenuItem(item2);
-				base.Items.Add(item);
-			}
-		}
-		if (base.Items.Count > 0)
-		{
-			base.Command = new DelegateCommand(delegate
-			{
-			}, delegate
-			{
-				bool flag = false;
-				foreach (VMMenuItem item3 in base.Items)
+				foreach (IApplicationActionItem item2 in items)
 				{
-					if (!item3.IsSeparator)
+					VMAppMenuItem item = new VMAppMenuItem(item2);
+					base.Items.Add(item);
+				}
+			}
+			if (base.Items.Count > 0)
+			{
+				base.Command = new DelegateCommand(delegate
+				{
+				}, delegate
+				{
+					bool flag = false;
+					foreach (VMMenuItem item3 in base.Items)
 					{
-						flag = item3.Command.CanExecute(null);
-						if (flag)
+						if (!item3.IsSeparator)
 						{
-							break;
+							flag = item3.Command.CanExecute(null);
+							if (flag)
+							{
+								break;
+							}
 						}
 					}
-				}
-				return flag;
-			});
-		}
-		else
-		{
-			base.Command = new DelegateCommand(delegate
+					return flag;
+				});
+			}
+			else
 			{
-				actionItem.PerformAction();
-			}, () => actionItem.CanPerformAction());
-		}
-	}
-
-	public void Update()
-	{
-		foreach (VMMenuItem item in base.Items)
-		{
-			if (item is VMAppMenuItem vMAppMenuItem)
-			{
-				vMAppMenuItem.Update();
+				base.Command = new DelegateCommand(delegate
+				{
+					actionItem.PerformAction();
+				}, () => actionItem.CanPerformAction());
 			}
 		}
-		UpdateText();
-	}
 
-	public override void UpdateText()
-	{
-		base.Text = ActionItem.GetDisplayText();
+		public void Update()
+		{
+			foreach (VMMenuItem item in base.Items)
+			{
+				if (item is VMAppMenuItem vMAppMenuItem)
+				{
+					vMAppMenuItem.Update();
+				}
+			}
+			UpdateText();
+		}
+
+		public override void UpdateText()
+		{
+			base.Text = ActionItem.GetDisplayText();
+		}
 	}
 }

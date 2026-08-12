@@ -8,7 +8,7 @@ using System.Windows;
 using System.Windows.Resources;
 
 [assembly: AssemblyFileVersion("1.0.0.0")]
-[assembly: ThemeInfo(/*Could not decode attribute arguments.*/)]
+//NOFIX [assembly: ThemeInfo(/*Could not decode attribute arguments.*/)]
 [assembly: NeutralResourcesLanguage("en-GB")]
 [assembly: AssemblyTitle("BlueprintEditor2")]
 [assembly: AssemblyConfiguration("")]

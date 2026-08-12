@@ -3,25 +3,26 @@ using System.Globalization;
 using System.Windows;
 using System.Windows.Data;
 
-namespace S9BEditor;
-
-internal class GridLengthConverter : IValueConverter
+namespace S9BEditor
 {
-	public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+	public class GridLengthConverter : IValueConverter
 	{
-		//IL_0006: Unknown result type (might be due to invalid IL or missing references)
-		return (object)new GridLength((double)value);
-	}
-
-	public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
-	{
-		//IL_0001: Unknown result type (might be due to invalid IL or missing references)
-		//IL_0006: Unknown result type (might be due to invalid IL or missing references)
-		GridLength val = (GridLength)value;
-		if (((GridLength)(val)).IsAbsolute)
+		public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
 		{
-			return ((GridLength)(val)).Value;
+			//IL_0006: Unknown result type (might be due to invalid IL or missing references)
+			return (object)new GridLength((double)value);
 		}
-		return double.NaN;
+
+		public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+		{
+			//IL_0001: Unknown result type (might be due to invalid IL or missing references)
+			//IL_0006: Unknown result type (might be due to invalid IL or missing references)
+			GridLength val = (GridLength)value;
+			if (((GridLength)(val)).IsAbsolute)
+			{
+				return ((GridLength)(val)).Value;
+			}
+			return double.NaN;
+		}
 	}
 }

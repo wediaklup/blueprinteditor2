@@ -3,42 +3,43 @@ using S9BEditor.Scripts;
 using TypeEdit.Base;
 using TypeEdit.Interfaces;
 
-namespace S9BEditor.ViewModels;
-
-internal class VMScriptProperty : ViewModelBase
+namespace S9BEditor.ViewModels
 {
-	public ScriptPropertyDefinition Property { get; private set; }
-
-	public string Value
+	internal class VMScriptProperty : ViewModelBase
 	{
-		get
+		public ScriptPropertyDefinition Property { get; private set; }
+
+		public string Value
 		{
-			return Property.Value;
-		}
-		set
-		{
-			if (Property.Value != value)
+			get
 			{
-				Property.Value = value;
-				RaisePropertyChanged("Value");
+				return Property.Value;
+			}
+			set
+			{
+				if (Property.Value != value)
+				{
+					Property.Value = value;
+					RaisePropertyChanged("Value");
+				}
 			}
 		}
-	}
 
-	public string Name => Property.PropertyInfo.Name;
+		public string Name => Property.PropertyInfo.Name;
 
-	public ScriptPropertyAttribute ScriptPropertyAttribute { get; private set; }
+		public ScriptPropertyAttribute ScriptPropertyAttribute { get; private set; }
 
-	public VMScriptProperty(ScriptPropertyDefinition property, VMScript owner)
-		: base(owner)
-	{
-		Property = property;
-		object[] customAttributes = property.PropertyInfo.GetCustomAttributes(typeof(ScriptPropertyAttribute), inherit: true);
-		if (customAttributes.Length > 0)
+		public VMScriptProperty(ScriptPropertyDefinition property, VMScript owner)
+			: base(owner)
 		{
-			ScriptPropertyAttribute = (ScriptPropertyAttribute)customAttributes[0];
-			return;
+			Property = property;
+			object[] customAttributes = property.PropertyInfo.GetCustomAttributes(typeof(ScriptPropertyAttribute), inherit: true);
+			if (customAttributes.Length > 0)
+			{
+				ScriptPropertyAttribute = (ScriptPropertyAttribute)customAttributes[0];
+				return;
+			}
+			throw new InvalidOperationException("VMScriptProperty expects a ScriptPropertyAttribute on the property");
 		}
-		throw new InvalidOperationException("VMScriptProperty expects a ScriptPropertyAttribute on the property");
 	}
 }

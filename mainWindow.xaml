@@ -1,0 +1,401 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<custom:CustomWindow x:Class="S9BEditor.MainWindow" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:p="clr-namespace:S9BEditor.Properties" xmlns:comment="Tag to add comments" xmlns:custom="clr-namespace:S9BEditor" xmlns:viewModels="clr-namespace:S9BEditor.ViewModels" xmlns:System="clr-namespace:System;assembly=mscorlib" Height="620" Width="855" WindowStartupLocation="Manual" ResizeMode="CanResizeWithGrip" UseLayoutRounding="True" Style="{StaticResource BPEWindowStyle}" Icon="Resources/1381_cog.ico" DataContext="{Binding RelativeSource={RelativeSource Self}}">
+  <FrameworkElement.Resources>
+    <ResourceDictionary>
+      <custom:ValuesToMarginConverter x:Key="valuesToMarginConverter" />
+      <System:Double x:Key="zeroDouble">0.0</System:Double>
+      <BooleanToVisibilityConverter x:Key="booleanToVisibilityConverter" />
+      <custom:FormatStringConverter x:Key="formatStringConverter" />
+      <custom:MenuItemStyleSelector x:Key="menuItemStyleSelector" />
+    </ResourceDictionary>
+  </FrameworkElement.Resources>
+  <custom:CustomWindow.CaptionMargin>
+    <MultiBinding Converter="{StaticResource valuesToMarginConverter}">
+      <Binding Path="ActualWidth" ElementName="mainMenu" />
+      <Binding Source="{StaticResource zeroDouble}" />
+      <Binding Source="{StaticResource zeroDouble}" />
+      <Binding Source="{StaticResource zeroDouble}" />
+    </MultiBinding>
+  </custom:CustomWindow.CaptionMargin>
+  <custom:CustomWindow.NonClientContent>
+    <Grid Name="topGrid" VerticalAlignment="Top" Height="{Binding ActualTitleBarHeight}">
+      <FrameworkElement.Margin>
+        <MultiBinding Converter="{StaticResource valuesToMarginConverter}">
+          <Binding Path="ActualBorderWidth" />
+          <Binding Source="{StaticResource zeroDouble}" />
+          <Binding Path="ActualBorderWidth" />
+          <Binding Source="{StaticResource zeroDouble}" />
+        </MultiBinding>
+      </FrameworkElement.Margin>
+      <Grid.ColumnDefinitions>
+        <ColumnDefinition Width="*" />
+        <ColumnDefinition Width="Auto" MinWidth="60" />
+      </Grid.ColumnDefinitions>
+      <Menu Name="mainMenu" VerticalAlignment="Bottom" HorizontalAlignment="Left" Style="{StaticResource BPEMainMenuStyle}">
+        <MenuItem Name="fileMenuItem" Header="_File" SubmenuOpened="fileMenuItem_SubmenuOpened" SubmenuClosed="fileMenuItem_SubmenuClosed">
+          <MenuItem Name="fileClose" Header="_Close" Command="ApplicationCommands.Close" />
+          <MenuItem Name="fileCloseAll" Header="C_lose All Documents" Command="custom:Commands.CloseAll" />
+          <Separator Name="fileSep1" />
+          <MenuItem Name="fileSaveItem" Header="_Save" Command="ApplicationCommands.Save">
+            <MenuItem.Icon>
+              <Image Source="Resources/saveHS.png" MaxWidth="16" MaxHeight="16" />
+            </MenuItem.Icon>
+          </MenuItem>
+          <MenuItem Name="fileSaveAllItem" Header="Save _All" Command="custom:Commands.SaveAll">
+            <MenuItem.Icon>
+              <Image Source="Resources/SaveAllHS.png" MaxWidth="16" MaxHeight="16" />
+            </MenuItem.Icon>
+          </MenuItem>
+          <MenuItem Name="fileSaveOutputItem" Header="Save _Output" Command="custom:Commands.SaveOutput" />
+          <Separator Name="fileSep2" />
+          <Separator Name="fileSep3" Visibility="Collapsed" />
+          <MenuItem Name="fileExitItem" Header="E_xit" InputGestureText="Alt+F4" Click="menuItemExit_Click" />
+        </MenuItem>
+        <MenuItem Name="editMenuItem" Header="_Edit">
+          <MenuItem Header="_Undo" Command="ApplicationCommands.Undo">
+            <MenuItem.Icon>
+              <Image Source="Resources/Edit_UndoHS.png" MaxWidth="16" MaxHeight="16" />
+            </MenuItem.Icon>
+          </MenuItem>
+          <MenuItem Header="_Redo" Command="ApplicationCommands.Redo">
+            <MenuItem.Icon>
+              <Image Source="Resources/Edit_RedoHS.png" MaxWidth="16" MaxHeight="16" />
+            </MenuItem.Icon>
+          </MenuItem>
+          <Separator />
+          <MenuItem Header="C_ut" Command="ApplicationCommands.Cut">
+            <MenuItem.Icon>
+              <Image Source="Resources/CutHS.png" MaxWidth="16" MaxHeight="16" />
+            </MenuItem.Icon>
+          </MenuItem>
+          <MenuItem Header="_Copy" Command="ApplicationCommands.Copy">
+            <MenuItem.Icon>
+              <Image Source="Resources/CopyHS.png" MaxWidth="16" MaxHeight="16" />
+            </MenuItem.Icon>
+          </MenuItem>
+          <MenuItem Header="_Paste" Command="ApplicationCommands.Paste">
+            <MenuItem.Icon>
+              <Image Source="Resources/PasteHS.png" MaxWidth="16" MaxHeight="16" />
+            </MenuItem.Icon>
+          </MenuItem>
+          <MenuItem Header="_Delete" Command="ApplicationCommands.Delete">
+            <MenuItem.Icon>
+              <Image Source="Resources/DeleteHS.png" MaxWidth="16" MaxHeight="16" />
+            </MenuItem.Icon>
+          </MenuItem>
+          <Separator Style="{StaticResource BPESubMenuSeparatorStyle}" />
+          <MenuItem Header="Select _All" Command="ApplicationCommands.SelectAll" />
+          <Separator Style="{StaticResource BPESubMenuSeparatorStyle}" />
+          <MenuItem Header="_Find..." Command="ApplicationCommands.Find">
+            <MenuItem.Icon>
+              <Image Source="Resources/FindHS.png" MaxWidth="16" MaxHeight="16" />
+            </MenuItem.Icon>
+          </MenuItem>
+        </MenuItem>
+        <MenuItem Name="toolsMenuItem" Header="_Tools">
+          <MenuItem Header="_Reload BlueprintSchema.xml" Command="custom:Commands.ReloadBlueprintSchema" />
+          <Separator Style="{StaticResource BPESubMenuSeparatorStyle}" />
+          <MenuItem Name="menuItemOptions" Header="_Options..." Click="menuItemOptions_Click" />
+          <MenuItem Name="menuItemAddInManager" Header="_Add-in Manager..." Click="menuItemAddInManager_Click" />
+          <MenuItem Header="R_un Script..." Command="custom:Commands.RunScript" />
+        </MenuItem>
+        <MenuItem Name="helpMenuItem" Header="_Help">
+          <MenuItem Click="aboutMenuItem_Click">
+            <HeaderedItemsControl.Header>
+              <MultiBinding Converter="{StaticResource formatStringConverter}" ConverterParameter="_About {0}">
+                <Binding Source="{StaticResource appTitle}" />
+              </MultiBinding>
+            </HeaderedItemsControl.Header>
+          </MenuItem>
+        </MenuItem>
+      </Menu>
+    </Grid>
+  </custom:CustomWindow.NonClientContent>
+  <Grid Name="fullGrid">
+    <Grid.RowDefinitions>
+      <RowDefinition Height="Auto" />
+      <RowDefinition Height="*" />
+      <RowDefinition Height="Auto" />
+    </Grid.RowDefinitions>
+    <ToolBarTray Name="toolBarTray" Background="#33000000">
+      <ToolBar>
+        <Button ToolTip="Save" Command="ApplicationCommands.Save">
+          <Image Source="Resources/saveHS.png" MaxWidth="16" MaxHeight="16" />
+        </Button>
+        <Button ToolTip="Save All" Command="custom:Commands.SaveAll">
+          <Image Source="Resources/SaveAllHS.png" MaxWidth="16" MaxHeight="16" />
+        </Button>
+        <Separator />
+        <Button ToolTip="Cut" Command="ApplicationCommands.Cut">
+          <Image Source="Resources/CutHS.png" MaxWidth="16" MaxHeight="16" />
+        </Button>
+        <Button ToolTip="Copy" Command="ApplicationCommands.Copy">
+          <Image Source="Resources/CopyHS.png" MaxWidth="16" MaxHeight="16" />
+        </Button>
+        <Button ToolTip="Paste" Command="ApplicationCommands.Paste">
+          <Image Source="Resources/PasteHS.png" MaxWidth="16" MaxHeight="16" />
+        </Button>
+        <Separator />
+        <Button ToolTip="Undo" Command="ApplicationCommands.Undo">
+          <Image Source="Resources/Edit_UndoHS.png" MaxWidth="16" MaxHeight="16" />
+        </Button>
+        <Button ToolTip="Redo" Command="ApplicationCommands.Redo">
+          <Image Source="Resources/Edit_RedoHS.png" MaxWidth="16" MaxHeight="16" />
+        </Button>
+      </ToolBar>
+    </ToolBarTray>
+    <Grid Name="contentGrid" Row="1" Margin="6">
+      <UIElement.RenderTransform>
+        <TransformGroup>
+          <ScaleTransform ScaleX="1" ScaleY="1" />
+          <RotateTransform Angle="0" />
+        </TransformGroup>
+      </UIElement.RenderTransform>
+      <UIElement.RenderTransformOrigin>
+        <Point X="0.6" Y="0.6" />
+      </UIElement.RenderTransformOrigin>
+      <Grid.RowDefinitions>
+        <RowDefinition Name="mainContentRow" MinHeight="30" Height="{Binding Source={x:Static p:Settings.Default}, Path=WindowRow1Size, Mode=TwoWay}" />
+        <RowDefinition Height="6" />
+        <RowDefinition Name="outputExpanderRow" MinHeight="24" Height="{Binding Source={x:Static p:Settings.Default}, Path=WindowRow2Size, Mode=TwoWay}" />
+      </Grid.RowDefinitions>
+      <Grid.ColumnDefinitions>
+        <ColumnDefinition MinWidth="50" Width="{Binding Source={x:Static p:Settings.Default}, Path=WindowCol1Size, Mode=TwoWay}" />
+        <ColumnDefinition Width="6" />
+        <ColumnDefinition MinWidth="50" Width="{Binding Source={x:Static p:Settings.Default}, Path=WindowCol2Size, Mode=TwoWay}" />
+      </Grid.ColumnDefinitions>
+      <GridSplitter Grid.Column="1" Background="#00000000" ResizeDirection="Columns" HorizontalAlignment="Stretch" />
+      <custom:DocumentTabControl x:Name="documentTabControl" Grid.Column="2" />
+      <GridSplitter Grid.ColumnSpan="3" Grid.Row="1" ResizeDirection="Rows" Background="#00000000" HorizontalAlignment="Stretch" DragStarted="GridSplitter_DragStarted" DragDelta="GridSplitter_DragDelta" />
+      <Expander Name="outputExpander" Grid.ColumnSpan="3" Header="Output" Grid.Row="2" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="#FFFFFFFF" BorderThickness="0" Style="{StaticResource BPEExpanderStyle}" IsExpanded="{Binding Source={x:Static p:Settings.Default}, Path=OutputIsExpanded, Mode=TwoWay}" Collapsed="outputExpander_Collapsed" Expanded="outputExpander_Expanded">
+        <TabControl Name="outputTabControl" TabStripPlacement="Bottom">
+          <TabItem Header="Error List">
+            <Grid Margin="0,0,0,0">
+              <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="67*" />
+              </Grid.RowDefinitions>
+              <ToolBar>
+                <FrameworkElement.Style>
+                  <Style TargetType="{x:Type ToolBar}">
+                    <Setter Property="Template">
+                      <Setter.Value>
+                        <ControlTemplate>
+                          <ToolBarPanel Name="PART_ToolBarPanel" IsItemsHost="True" Margin="0,1,2,2" />
+                        </ControlTemplate>
+                      </Setter.Value>
+                    </Setter>
+                  </Style>
+                </FrameworkElement.Style>
+                <ToggleButton Name="errorsToggleButton" IsChecked="True" Checked="errorsToggleButton_Checked" Unchecked="errorsToggleButton_Unchecked">
+                  <Grid>
+                    <Grid.ColumnDefinitions>
+                      <ColumnDefinition />
+                      <ColumnDefinition Width="4" />
+                      <ColumnDefinition />
+                    </Grid.ColumnDefinitions>
+                    <Image Source="Resources/109_AllAnnotations_Error_16x16_72.png" MaxWidth="16" MaxHeight="16" />
+                    <TextBlock Name="errorsButtonText" Grid.Column="2">0 Errors</TextBlock>
+                  </Grid>
+                </ToggleButton>
+                <Separator />
+                <ToggleButton Name="warningsToggleButton" IsChecked="True" Checked="warningsToggleButton_Checked" Unchecked="warningsToggleButton_Unchecked">
+                  <Grid>
+                    <Grid.ColumnDefinitions>
+                      <ColumnDefinition />
+                      <ColumnDefinition Width="4" />
+                      <ColumnDefinition />
+                    </Grid.ColumnDefinitions>
+                    <Image Source="Resources/109_AllAnnotations_Warning_16x16_72.png" MaxWidth="16" MaxHeight="16" />
+                    <TextBlock Name="warningsButtonText" Grid.Column="2">0 Warnings</TextBlock>
+                  </Grid>
+                </ToggleButton>
+                <Separator />
+                <ToggleButton Name="messagesToggleButton" Checked="informationToggleButton_Checked" Unchecked="informationToggleButton_Unchecked">
+                  <Grid>
+                    <Grid.ColumnDefinitions>
+                      <ColumnDefinition />
+                      <ColumnDefinition Width="4" />
+                      <ColumnDefinition />
+                    </Grid.ColumnDefinitions>
+                    <Image Source="Resources/109_AllAnnotations_Info_16x16_72.png" MaxWidth="16" MaxHeight="16" />
+                    <TextBlock Name="messagesButtonText" Grid.Column="2">0 Messages</TextBlock>
+                  </Grid>
+                </ToggleButton>
+              </ToolBar>
+              <ListView Name="listView1" Grid.Row="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" BorderThickness="0">
+                <ItemsControl.ItemContainerStyle>
+                  <Style TargetType="{x:Type ListViewItem}">
+                    <EventSetter Event="MouseDoubleClick" Handler="listViewItem_MouseDoubleClick" />
+                  </Style>
+                </ItemsControl.ItemContainerStyle>
+                <ListView.View>
+                  <GridView AllowsColumnReorder="False">
+                    <custom:FixedWidthGridViewColumn FixedWidth="20">
+                      <GridViewColumn.CellTemplate>
+                        <DataTemplate>
+                          <Image Width="16" Height="16" Margin="-4, 0, -4, 0" VerticalAlignment="Top" Source="{Binding Icon}" />
+                        </DataTemplate>
+                      </GridViewColumn.CellTemplate>
+                    </custom:FixedWidthGridViewColumn>
+                    <GridViewColumn Header="Description" Width="700">
+                      <GridViewColumn.HeaderTemplate>
+                        <DataTemplate>
+                          <ContentPresenter Content="{Binding}" Width="{Binding Path=ActualWidth, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Control}}" />
+                        </DataTemplate>
+                      </GridViewColumn.HeaderTemplate>
+                      <GridViewColumn.CellTemplate>
+                        <DataTemplate>
+                          <TextBlock Margin="-4, 0, -4, 0" TextWrapping="Wrap" Text="{Binding Message}" />
+                        </DataTemplate>
+                      </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+                  </GridView>
+                </ListView.View>
+              </ListView>
+            </Grid>
+          </TabItem>
+          <TabItem Name="outputTab" Header="Output">
+            <Grid>
+              <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition />
+              </Grid.RowDefinitions>
+              <ToolBar>
+                <FrameworkElement.Style>
+                  <Style TargetType="{x:Type ToolBar}">
+                    <Setter Property="Template">
+                      <Setter.Value>
+                        <ControlTemplate>
+                          <ToolBarPanel Name="PART_ToolBarPanel" IsItemsHost="True" Margin="0,1,2,2" />
+                        </ControlTemplate>
+                      </Setter.Value>
+                    </Setter>
+                  </Style>
+                </FrameworkElement.Style>
+                <TextBlock Margin="0,0,8,0">Show output from:</TextBlock>
+                <ComboBox Name="outputSources" Width="200" IsEditable="False" SelectionChanged="outputSources_SelectionChanged" />
+                <Separator />
+                <Button ToolTip="Clear Output" Click="outputClearButton_Click">
+                  <Image Source="Resources/DeleteHS.png" MaxWidth="16" MaxHeight="16" />
+                </Button>
+              </ToolBar>
+              <TextBox Name="outputTextBox" IsReadOnly="True" VerticalScrollBarVisibility="Auto" TextWrapping="Wrap" Grid.Row="1" FontFamily="Courier New" IsReadOnlyCaretVisible="True" />
+            </Grid>
+          </TabItem>
+        </TabControl>
+      </Expander>
+      <HeaderedContentControl Style="{StaticResource BPEHeaderControlStyle}" Header="Explorer">
+        <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto">
+          <custom:DirectoryTreeView x:Name="directoryTreeView" FileSelected="directoryTreeView_FileSelected" ContextMenuOpening="directoryTreeView_ContextMenuOpening" SelectedItemChanged="directoryTreeView_SelectedItemChanged">
+            <custom:DirectoryTreeView.FileIconUriProvider>
+              <custom:TypeEditFileIconUriProvider x:Name="typeEditFileIconUriProvider" />
+            </custom:DirectoryTreeView.FileIconUriProvider>
+            <FrameworkElement.ContextMenu>
+              <ContextMenu Name="dirViewContextMenu">
+                <FrameworkElement.Resources>
+                  <x:ArrayExtension x:Key="ctxMenuItems" Type="{x:Type UIElement}">
+                    <MenuItem Header="_Add" Visibility="{Binding ElementName=ctxMenuAdd, Path=IsEnabled, Converter={StaticResource booleanToVisibilityConverter}}">
+                      <MenuItem.Command>
+                        <custom:AtLeastOneCommandProxy>
+                          <x:StaticExtension Member="custom:Commands.AddItem" />
+                          <x:StaticExtension Member="custom:Commands.AddFolder" />
+                        </custom:AtLeastOneCommandProxy>
+                      </MenuItem.Command>
+                      <MenuItem Header="_New Item..." Command="custom:Commands.AddItem" />
+                      <MenuItem Header="New _Folder" Command="custom:Commands.AddFolder" />
+                    </MenuItem>
+                    <Separator Visibility="{Binding ElementName=ctxMenuAdd, Path=IsEnabled, Converter={StaticResource booleanToVisibilityConverter}}" />
+                    <MenuItem Command="ApplicationCommands.Open" Header="_Open">
+                      <MenuItem.Icon>
+                        <Image Source="Resources/OpenHS.png" MaxWidth="16" MaxHeight="16" />
+                      </MenuItem.Icon>
+                    </MenuItem>
+                    <MenuItem Command="custom:Commands.OpenInExplorer" Header="Show In _Explorer" />
+                    <Separator />
+                    <MenuItem Command="ApplicationCommands.Cut" Header="Cu_t">
+                      <MenuItem.Icon>
+                        <Image Source="Resources/CutHS.png" MaxWidth="16" MaxHeight="16" />
+                      </MenuItem.Icon>
+                    </MenuItem>
+                    <MenuItem Command="ApplicationCommands.Copy" Header="_Copy">
+                      <MenuItem.Icon>
+                        <Image Source="Resources/CopyHS.png" MaxWidth="16" MaxHeight="16" />
+                      </MenuItem.Icon>
+                    </MenuItem>
+                    <MenuItem Command="ApplicationCommands.Paste" Header="_Paste">
+                      <MenuItem.Icon>
+                        <Image Source="Resources/PasteHS.png" MaxWidth="16" MaxHeight="16" />
+                      </MenuItem.Icon>
+                    </MenuItem>
+                    <MenuItem Command="ApplicationCommands.Delete" Header="_Delete">
+                      <MenuItem.Icon>
+                        <Image Source="Resources/DeleteHS.png" MaxWidth="16" MaxHeight="16" />
+                      </MenuItem.Icon>
+                    </MenuItem>
+                    <MenuItem Command="custom:Commands.Rename" Header="_Rename" />
+                    <Separator Name="ctxAdditionalItemsSep" Visibility="Collapsed" />
+                    <Separator />
+                    <MenuItem Header="_Properties" Command="custom:Commands.Properties" />
+                  </x:ArrayExtension>
+                </FrameworkElement.Resources>
+              </ContextMenu>
+            </FrameworkElement.ContextMenu>
+            <UIElement.CommandBindings>
+              <CommandBinding Command="custom:Commands.AddItem" CanExecute="addItem_CanExecute" Executed="addItem_Executed" />
+              <CommandBinding Command="custom:Commands.AddFolder" CanExecute="addFolder_CanExecute" Executed="addFolder_Executed" />
+              <CommandBinding Command="custom:Commands.OpenInExplorer" CanExecute="openInExplorer_CanExecute" Executed="openInExplorer_Executed" />
+              <CommandBinding Command="custom:Commands.Rename" CanExecute="rename_CanExecute" Executed="rename_Executed" />
+              <CommandBinding Command="custom:Commands.Properties" CanExecute="properties_CanExecute" Executed="properties_Executed" />
+              <CommandBinding Command="ApplicationCommands.Open" CanExecute="open_CanExecute" Executed="open_Executed" />
+              <CommandBinding Command="ApplicationCommands.Cut" CanExecute="cut_CanExecute" Executed="cut_Executed" />
+              <CommandBinding Command="ApplicationCommands.Copy" CanExecute="copy_CanExecute" Executed="copy_Executed" />
+              <CommandBinding Command="ApplicationCommands.Paste" CanExecute="paste_CanExecute" Executed="paste_Executed" />
+              <CommandBinding Command="ApplicationCommands.Delete" CanExecute="delete_CanExecute" Executed="delete_Executed" />
+            </UIElement.CommandBindings>
+          </custom:DirectoryTreeView>
+        </ScrollViewer>
+      </HeaderedContentControl>
+    </Grid>
+    <StatusBar Name="statusBar" Grid.Row="2" Height="23" ItemContainerStyle="{StaticResource BPEStatusBarItemStyle}" SnapsToDevicePixels="True">
+      <StatusBarItem Name="statusBarText" Content="Ready" />
+      <StatusBarItem Name="progressStatusBarItem" VerticalContentAlignment="Stretch" Margin="0, 0, 20, 0" HorizontalContentAlignment="Right" Visibility="Collapsed">
+        <Grid>
+          <Grid.ColumnDefinitions>
+            <ColumnDefinition />
+            <ColumnDefinition />
+          </Grid.ColumnDefinitions>
+          <TextBlock Name="progressTaskText" Text="Exporting" Margin="0, 0, 4, 0" VerticalAlignment="Center" />
+          <ProgressBar Name="progressTaskBar" Grid.Column="1" Width="100" Height="14" VerticalAlignment="Center" Maximum="1" SmallChange="0.001" LargeChange="0.01" />
+        </Grid>
+      </StatusBarItem>
+      <UIElement.RenderTransform>
+        <ScaleTransform />
+      </UIElement.RenderTransform>
+      <UIElement.RenderTransformOrigin>
+        <Point X="1.0" Y="1.0" />
+      </UIElement.RenderTransformOrigin>
+      <Control.Background>
+        <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+          <GradientStop Color="#AC000000" Offset="0" />
+          <GradientStop Color="#76000000" Offset="1" />
+          <GradientStop Color="#5D000000" Offset="0.267" />
+        </LinearGradientBrush>
+      </Control.Background>
+    </StatusBar>
+  </Grid>
+  <FrameworkElement.Triggers>
+    <EventTrigger RoutedEvent="Window.Loaded">
+      <BeginStoryboard>
+        <Storyboard>
+          <DoubleAnimation From="0" To="1" SpeedRatio="2" Storyboard.TargetProperty="Opacity" Storyboard.TargetName="fullGrid" DecelerationRatio="1" />
+        </Storyboard>
+      </BeginStoryboard>
+    </EventTrigger>
+  </FrameworkElement.Triggers>
+  <UIElement.CommandBindings>
+    <CommandBinding Command="custom:Commands.SaveOutput" CanExecute="saveOutput_CanExecute" Executed="saveOutput_Executed" />
+    <CommandBinding Command="custom:Commands.ReloadBlueprintSchema" CanExecute="reloadBlueprintSchema_CanExecute" Executed="reloadBlueprintSchema_Executed" />
+    <CommandBinding Command="custom:Commands.RunScript" CanExecute="runScript_CanExecute" Executed="runScript_Executed" />
+  </UIElement.CommandBindings>
+</custom:CustomWindow>

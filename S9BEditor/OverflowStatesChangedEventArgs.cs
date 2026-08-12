@@ -1,14 +1,15 @@
 using System;
 using System.Collections;
 
-namespace S9BEditor;
-
-internal class OverflowStatesChangedEventArgs : EventArgs
+namespace S9BEditor
 {
-	public ICollection ChangedItems { get; private set; }
-
-	public OverflowStatesChangedEventArgs(ICollection changedItems)
+	public class OverflowStatesChangedEventArgs : EventArgs
 	{
-		ChangedItems = changedItems;
+		public ICollection ChangedItems { get; private set; }
+
+		public OverflowStatesChangedEventArgs(ICollection changedItems)
+		{
+			ChangedItems = changedItems;
+		}
 	}
 }

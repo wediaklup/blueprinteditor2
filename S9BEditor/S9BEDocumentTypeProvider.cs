@@ -2,27 +2,28 @@ using System;
 using System.IO;
 using TypeEdit.Interfaces.UI;
 
-namespace S9BEditor;
-
-internal class S9BEDocumentTypeProvider : IDocumentTypeProvider
+namespace S9BEditor
 {
-	private DocumentType<LuaScriptDocument> mLuaScriptDocumentType;
-
-	private DocumentType<TypeEditDocument> mTypeEditDocumentType;
-
-	public S9BEDocumentTypeProvider()
+	internal class S9BEDocumentTypeProvider : IDocumentTypeProvider
 	{
-		mLuaScriptDocumentType = new DocumentType<LuaScriptDocument>();
-		mTypeEditDocumentType = new DocumentType<TypeEditDocument>();
-	}
+		private DocumentType<LuaScriptDocument> mLuaScriptDocumentType;
 
-	public IDocumentType GetDocumentTypeForFile(string fileName)
-	{
-		string extension = Path.GetExtension(fileName);
-		if (!extension.Equals(".lua", StringComparison.OrdinalIgnoreCase) && extension.Equals(".xml", StringComparison.OrdinalIgnoreCase) && AppServices.TypeEditSchema.GetRootTypeFromFile(fileName) != null)
+		private DocumentType<TypeEditDocument> mTypeEditDocumentType;
+
+		public S9BEDocumentTypeProvider()
 		{
-			return mTypeEditDocumentType;
+			mLuaScriptDocumentType = new DocumentType<LuaScriptDocument>();
+			mTypeEditDocumentType = new DocumentType<TypeEditDocument>();
 		}
-		return null;
+
+		public IDocumentType GetDocumentTypeForFile(string fileName)
+		{
+			string extension = Path.GetExtension(fileName);
+			if (!extension.Equals(".lua", StringComparison.OrdinalIgnoreCase) && extension.Equals(".xml", StringComparison.OrdinalIgnoreCase) && AppServices.TypeEditSchema.GetRootTypeFromFile(fileName) != null)
+			{
+				return mTypeEditDocumentType;
+			}
+			return null;
+		}
 	}
 }

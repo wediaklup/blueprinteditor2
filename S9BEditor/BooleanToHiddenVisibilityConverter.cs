@@ -3,27 +3,28 @@ using System.Globalization;
 using System.Windows;
 using System.Windows.Data;
 
-namespace S9BEditor;
-
-internal class BooleanToHiddenVisibilityConverter : IValueConverter
+namespace S9BEditor
 {
-	public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+	public class BooleanToHiddenVisibilityConverter : IValueConverter
 	{
-		if ((string)parameter == "!")
+		public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
 		{
-			value = !(bool)value;
+			if ((string)parameter == "!")
+			{
+				value = !(bool)value;
+			}
+			return (bool)value ? Visibility.Hidden : Visibility.Visible;
 		}
-		return (object)(Visibility)(!(bool)value);
-	}
 
-	public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
-	{
-		//IL_002d: Unknown result type (might be due to invalid IL or missing references)
-		//IL_0013: Unknown result type (might be due to invalid IL or missing references)
-		if ((string)parameter == "!")
+		public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
 		{
-			value = (((int)(Visibility)value != 0) ? ((object)(Visibility)0) : ((object)(Visibility)1));
+			//IL_002d: Unknown result type (might be due to invalid IL or missing references)
+			//IL_0013: Unknown result type (might be due to invalid IL or missing references)
+			if ((string)parameter == "!")
+			{
+				value = (((int)(Visibility)value != 0) ? ((object)(Visibility)0) : ((object)(Visibility)1));
+			}
+			return (int)(Visibility)value == 0;
 		}
-		return (int)(Visibility)value == 0;
 	}
 }

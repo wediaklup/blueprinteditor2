@@ -4,42 +4,43 @@ using S9BEditor.Properties;
 using TypeEdit.Base;
 using TypeEdit.Interfaces.Data.Descriptors;
 
-namespace S9BEditor.ViewModels;
-
-internal class VMTypeSelectionItem : ViewModelBase
+namespace S9BEditor.ViewModels
 {
-	public string Name
+	internal class VMTypeSelectionItem : ViewModelBase
 	{
-		get
+		public string Name
 		{
-			if (Settings.Default.AdvancedDataEditorView)
+			get
 			{
-				return TypeDescriptor.Name;
+				if (Settings.Default.AdvancedDataEditorView)
+				{
+					return TypeDescriptor.Name;
+				}
+				return S9BEUtil.CamelCaseToNormal(S9BEUtil.RemoveNamespaces(TypeDescriptor.Name));
 			}
-			return S9BEUtil.CamelCaseToNormal(S9BEUtil.RemoveNamespaces(TypeDescriptor.Name));
 		}
-	}
 
-	public ITypeDescriptor TypeDescriptor { get; private set; }
+		public ITypeDescriptor TypeDescriptor { get; private set; }
 
-	internal VMTypeSelectionItem(ViewModelBase owner, ITypeDescriptor desc)
-		: base(owner)
-	{
-		TypeDescriptor = desc;
-		((ApplicationSettingsBase)Settings.Default).PropertyChanged += globalSettingsPropertyChanged;
-	}
-
-	private void globalSettingsPropertyChanged(object sender, PropertyChangedEventArgs e)
-	{
-		if (e.PropertyName == "AdvancedDataEditorView")
+		internal VMTypeSelectionItem(ViewModelBase owner, ITypeDescriptor desc)
+			: base(owner)
 		{
-			RaisePropertyChanged("Name");
+			TypeDescriptor = desc;
+			((ApplicationSettingsBase)Settings.Default).PropertyChanged += globalSettingsPropertyChanged;
 		}
-	}
 
-	public override void Dispose()
-	{
-		((ApplicationSettingsBase)Settings.Default).PropertyChanged -= globalSettingsPropertyChanged;
-		base.Dispose();
+		private void globalSettingsPropertyChanged(object sender, PropertyChangedEventArgs e)
+		{
+			if (e.PropertyName == "AdvancedDataEditorView")
+			{
+				RaisePropertyChanged("Name");
+			}
+		}
+
+		public override void Dispose()
+		{
+			((ApplicationSettingsBase)Settings.Default).PropertyChanged -= globalSettingsPropertyChanged;
+			base.Dispose();
+		}
 	}
 }

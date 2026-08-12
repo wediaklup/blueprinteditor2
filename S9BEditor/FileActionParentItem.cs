@@ -1,39 +1,40 @@
 using System.Collections.Generic;
 using TypeEdit.Interfaces.UI;
 
-namespace S9BEditor;
-
-internal class FileActionParentItem : IFileActionItem, IActionItem
+namespace S9BEditor
 {
-	IEnumerable<IFileActionItem> IFileActionItem.Items => Items.ToArray();
-
-	public List<IFileActionItem> Items { get; private set; }
-
-	public string DisplayText { get; set; }
-
-	public FileActionParentItem()
+	internal class FileActionParentItem : IFileActionItem, IActionItem
 	{
-		Items = new List<IFileActionItem>();
-	}
+		IEnumerable<IFileActionItem> IFileActionItem.Items => Items.ToArray();
 
-	string IFileActionItem.GetDisplayText(string sourceDirectory, string relativePath, bool isDirectory)
-	{
-		return DisplayText;
-	}
+		public List<IFileActionItem> Items { get; private set; }
 
-	bool IFileActionItem.CanPerformAction(string sourceDirectory, string relativePath, bool isDirectory)
-	{
-		foreach (IFileActionItem item in Items)
+		public string DisplayText { get; set; }
+
+		public FileActionParentItem()
 		{
-			if (item.CanPerformAction(sourceDirectory, relativePath, isDirectory))
-			{
-				return true;
-			}
+			Items = new List<IFileActionItem>();
 		}
-		return false;
-	}
 
-	void IFileActionItem.PerformAction(string sourceDirectory, string relativePath, bool isDirectory)
-	{
+		string IFileActionItem.GetDisplayText(string sourceDirectory, string relativePath, bool isDirectory)
+		{
+			return DisplayText;
+		}
+
+		bool IFileActionItem.CanPerformAction(string sourceDirectory, string relativePath, bool isDirectory)
+		{
+			foreach (IFileActionItem item in Items)
+			{
+				if (item.CanPerformAction(sourceDirectory, relativePath, isDirectory))
+				{
+					return true;
+				}
+			}
+			return false;
+		}
+
+		void IFileActionItem.PerformAction(string sourceDirectory, string relativePath, bool isDirectory)
+		{
+		}
 	}
 }

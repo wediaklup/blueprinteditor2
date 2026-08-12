@@ -4,43 +4,44 @@ using System.IO;
 using TypeEdit.Interfaces.Editing;
 using TypeEdit.Interfaces.UI;
 
-namespace S9BEditor;
-
-internal class DocumentActionParentItem : IDocumentActionItem, IActionItem
+namespace S9BEditor
 {
-	IEnumerable<IDocumentActionItem> IDocumentActionItem.Items => Items;
-
-	public List<IDocumentActionItem> Items { get; private set; }
-
-	public string DisplayText { get; set; }
-
-	public DocumentActionParentItem()
+	internal class DocumentActionParentItem : IDocumentActionItem, IActionItem
 	{
-		Items = new List<IDocumentActionItem>();
-	}
+		IEnumerable<IDocumentActionItem> IDocumentActionItem.Items => Items;
 
-	public string GetDisplayText(IDocument document)
-	{
-		if (document != null && DisplayText != null)
+		public List<IDocumentActionItem> Items { get; private set; }
+
+		public string DisplayText { get; set; }
+
+		public DocumentActionParentItem()
 		{
-			return string.Format(CultureInfo.CurrentCulture, DisplayText, new object[1] { Path.GetFileName(document.FileName) });
+			Items = new List<IDocumentActionItem>();
 		}
-		return string.Empty;
-	}
 
-	public bool CanPerformAction(IDocument document)
-	{
-		foreach (IDocumentActionItem item in Items)
+		public string GetDisplayText(IDocument document)
 		{
-			if (item.CanPerformAction(document))
+			if (document != null && DisplayText != null)
 			{
-				return true;
+				return string.Format(CultureInfo.CurrentCulture, DisplayText, new object[1] { Path.GetFileName(document.FileName) });
 			}
+			return string.Empty;
 		}
-		return false;
-	}
 
-	public void PerformAction(IDocument document)
-	{
+		public bool CanPerformAction(IDocument document)
+		{
+			foreach (IDocumentActionItem item in Items)
+			{
+				if (item.CanPerformAction(document))
+				{
+					return true;
+				}
+			}
+			return false;
+		}
+
+		public void PerformAction(IDocument document)
+		{
+		}
 	}
 }

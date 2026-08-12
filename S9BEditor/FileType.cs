@@ -1,17 +1,18 @@
 using TypeEdit.Interfaces.UI;
 
-namespace S9BEditor;
-
-public class FileType
+namespace S9BEditor
 {
-	public string Name => FileTypeInfo.Name;
-
-	public string DefaultFileName => FileTypeInfo.DefaultFileName;
-
-	public IEditableFileTypeInfo FileTypeInfo { get; private set; }
-
-	public FileType(IEditableFileTypeInfo fileType)
+	public class FileType
 	{
-		FileTypeInfo = fileType;
+		public string Name => FileTypeInfo.Name;
+
+		public string DefaultFileName => FileTypeInfo.DefaultFileName;
+
+		public IEditableFileTypeInfo FileTypeInfo { get; private set; }
+
+		public FileType(IEditableFileTypeInfo fileType)
+		{
+			FileTypeInfo = fileType;
+		}
 	}
 }

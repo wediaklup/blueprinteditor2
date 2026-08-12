@@ -4,159 +4,160 @@ using TypeEdit.Base;
 using TypeEdit.Interfaces.Data.Instancing;
 using TypeEdit.Interfaces.Editing;
 
-namespace S9BEditor.ViewModels;
-
-internal class VMReferenceItem : VMTypeEditComponent
+namespace S9BEditor.ViewModels
 {
-	private VMTypeDatumBase mReference;
-
-	private IDatumNameProvider mNameProvider;
-
-	private VMPrimitiveTypeDatum mNameDatum;
-
-	internal ITypeDatum TargetDatum
+	internal class VMReferenceItem : VMTypeEditComponent
 	{
-		get
+		private VMTypeDatumBase mReference;
+
+		private IDatumNameProvider mNameProvider;
+
+		private VMPrimitiveTypeDatum mNameDatum;
+
+		internal ITypeDatum TargetDatum
 		{
-			if (mReference != null)
+			get
 			{
-				return mReference.Datum;
+				if (mReference != null)
+				{
+					return mReference.Datum;
+				}
+				return null;
 			}
-			return null;
 		}
-	}
 
-	public bool HasName
-	{
-		get
+		public bool HasName
 		{
-			if (mNameDatum == null)
+			get
 			{
-				return mNameProvider != null;
+				if (mNameDatum == null)
+				{
+					return mNameProvider != null;
+				}
+				return true;
 			}
-			return true;
 		}
-	}
 
-	public string Name
-	{
-		get
+		public string Name
 		{
+			get
+			{
+				if (mNameProvider != null)
+				{
+					return mNameProvider.Name;
+				}
+				if (mNameDatum != null)
+				{
+					return mNameDatum.Value;
+				}
+				return "(unset)";
+			}
+		}
+
+		internal VMReferenceItem(ViewModelBase owner, VMTypeDatumBase reference)
+			: base(owner)
+		{
+			if (reference != null)
+			{
+				mReference = reference;
+				mReference.Reloaded += reference_Reloaded;
+			}
+			updateNameDatum();
+		}
+
+		private void reference_Reloaded(object sender, EventArgs e)
+		{
+			updateNameDatum();
+		}
+
+		private void updateNameDatum()
+		{
+			string text = "";
 			if (mNameProvider != null)
 			{
-				return mNameProvider.Name;
+				mNameProvider.NameChanged -= asNameProvider_NameChanged;
+				text = mNameProvider.Name;
+				mNameProvider = null;
 			}
-			if (mNameDatum != null)
+			else if (mNameDatum != null)
 			{
-				return mNameDatum.Value;
+				mNameDatum.PropertyChanged -= NameDatum_PropertyChanged;
+				text = mNameDatum.Value;
+				mNameDatum = null;
 			}
-			return "(unset)";
-		}
-	}
-
-	internal VMReferenceItem(ViewModelBase owner, VMTypeDatumBase reference)
-		: base(owner)
-	{
-		if (reference != null)
-		{
-			mReference = reference;
-			mReference.Reloaded += reference_Reloaded;
-		}
-		updateNameDatum();
-	}
-
-	private void reference_Reloaded(object sender, EventArgs e)
-	{
-		updateNameDatum();
-	}
-
-	private void updateNameDatum()
-	{
-		string text = "";
-		if (mNameProvider != null)
-		{
-			mNameProvider.NameChanged -= asNameProvider_NameChanged;
-			text = mNameProvider.Name;
-			mNameProvider = null;
-		}
-		else if (mNameDatum != null)
-		{
-			mNameDatum.PropertyChanged -= NameDatum_PropertyChanged;
-			text = mNameDatum.Value;
-			mNameDatum = null;
-		}
-		if (mReference is VMClassTypeDatum vMClassTypeDatum)
-		{
-			VMPrimitiveTypeDatum vMPrimitiveTypeDatum = null;
-			foreach (VMClassGroup group in vMClassTypeDatum.Groups)
+			if (mReference is VMClassTypeDatum vMClassTypeDatum)
 			{
-				foreach (VMProperty property in group.Properties)
+				VMPrimitiveTypeDatum vMPrimitiveTypeDatum = null;
+				foreach (VMClassGroup group in vMClassTypeDatum.Groups)
 				{
-					if (property.PropertyContent.Datum is IPrimitiveTypeDatum && property.Property.Descriptor.Name == "Name")
+					foreach (VMProperty property in group.Properties)
 					{
-						vMPrimitiveTypeDatum = property.PropertyContent as VMPrimitiveTypeDatum;
+						if (property.PropertyContent.Datum is IPrimitiveTypeDatum && property.Property.Descriptor.Name == "Name")
+						{
+							vMPrimitiveTypeDatum = property.PropertyContent as VMPrimitiveTypeDatum;
+							break;
+						}
+					}
+					if (vMPrimitiveTypeDatum != null)
+					{
 						break;
 					}
 				}
-				if (vMPrimitiveTypeDatum != null)
+				if (vMPrimitiveTypeDatum != null && mNameDatum != vMPrimitiveTypeDatum)
 				{
-					break;
+					mNameDatum = vMPrimitiveTypeDatum;
 				}
 			}
-			if (vMPrimitiveTypeDatum != null && mNameDatum != vMPrimitiveTypeDatum)
+			else if (mReference is VMCustomDatumEditor vmCustomDatumEditor && vmCustomDatumEditor.Editor is IDatumNameProvider editor)
 			{
-				mNameDatum = vMPrimitiveTypeDatum;
+				mNameProvider = editor;
+			}
+			string text2 = "";
+			if (mNameProvider != null)
+			{
+				text2 = mNameProvider.Name;
+				mNameProvider.NameChanged += asNameProvider_NameChanged;
+			}
+			else if (mNameDatum != null)
+			{
+				text2 = mNameDatum.Value;
+				mNameDatum.PropertyChanged += NameDatum_PropertyChanged;
+			}
+			if (text2 != text)
+			{
+				RaisePropertyChanged("Name");
+			}
+			RaisePropertyChanged("HasName");
+		}
+
+		private void asNameProvider_NameChanged(object sender, EventArgs e)
+		{
+			RaisePropertyChanged("Name");
+		}
+
+		private void NameDatum_PropertyChanged(object sender, PropertyChangedEventArgs e)
+		{
+			if (e.PropertyName == "Value")
+			{
+				RaisePropertyChanged("Name");
 			}
 		}
-		else if (mReference is VMCustomDatumEditor { Editor: IDatumNameProvider editor })
-		{
-			mNameProvider = editor;
-		}
-		string text2 = "";
-		if (mNameProvider != null)
-		{
-			text2 = mNameProvider.Name;
-			mNameProvider.NameChanged += asNameProvider_NameChanged;
-		}
-		else if (mNameDatum != null)
-		{
-			text2 = mNameDatum.Value;
-			mNameDatum.PropertyChanged += NameDatum_PropertyChanged;
-		}
-		if (text2 != text)
-		{
-			RaisePropertyChanged("Name");
-		}
-		RaisePropertyChanged("HasName");
-	}
 
-	private void asNameProvider_NameChanged(object sender, EventArgs e)
-	{
-		RaisePropertyChanged("Name");
-	}
-
-	private void NameDatum_PropertyChanged(object sender, PropertyChangedEventArgs e)
-	{
-		if (e.PropertyName == "Value")
+		public override void Dispose()
 		{
-			RaisePropertyChanged("Name");
+			if (mReference != null)
+			{
+				mReference.Reloaded -= reference_Reloaded;
+			}
+			if (mNameDatum != null)
+			{
+				mNameDatum.PropertyChanged -= NameDatum_PropertyChanged;
+			}
+			if (mNameProvider != null)
+			{
+				mNameProvider.NameChanged -= asNameProvider_NameChanged;
+			}
+			base.Dispose();
 		}
-	}
-
-	public override void Dispose()
-	{
-		if (mReference != null)
-		{
-			mReference.Reloaded -= reference_Reloaded;
-		}
-		if (mNameDatum != null)
-		{
-			mNameDatum.PropertyChanged -= NameDatum_PropertyChanged;
-		}
-		if (mNameProvider != null)
-		{
-			mNameProvider.NameChanged -= asNameProvider_NameChanged;
-		}
-		base.Dispose();
 	}
 }

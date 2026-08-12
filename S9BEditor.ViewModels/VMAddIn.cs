@@ -1,19 +1,20 @@
 using TypeEdit.Base;
 using TypeEdit.Interfaces.AddIns;
 
-namespace S9BEditor.ViewModels;
-
-internal class VMAddIn : ViewModelBase
+namespace S9BEditor.ViewModels
 {
-	private IAddIn mAddIn;
-
-	public string Name => mAddIn.Name;
-
-	public string Description => mAddIn.Description;
-
-	public VMAddIn(IAddIn addIn)
-		: base(null)
+	internal class VMAddIn : ViewModelBase
 	{
-		mAddIn = addIn;
+		private IAddIn mAddIn;
+
+		public string Name => mAddIn.Name;
+
+		public string Description => mAddIn.Description;
+
+		public VMAddIn(IAddIn addIn)
+			: base(null)
+		{
+			mAddIn = addIn;
+		}
 	}
 }

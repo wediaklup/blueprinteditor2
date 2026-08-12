@@ -1,16 +1,17 @@
 using System;
 
-namespace TypeEdit.Interfaces.Diagnostics;
-
-public class OutputReportedEventArgs : EventArgs
+namespace TypeEdit.Interfaces.Diagnostics
 {
-	public string Filter { get; private set; }
-
-	public string Line { get; private set; }
-
-	public OutputReportedEventArgs(string filter, string line)
+	public class OutputReportedEventArgs : EventArgs
 	{
-		Filter = filter;
-		Line = line;
+		public string Filter { get; private set; }
+
+		public string Line { get; private set; }
+
+		public OutputReportedEventArgs(string filter, string line)
+		{
+			Filter = filter;
+			Line = line;
+		}
 	}
 }
