@@ -6,7 +6,7 @@ using System.Windows.Input;
 
 namespace S9BEditor
 {
-	internal class CustomComboBox : Control
+	public class CustomComboBox : Control
 	{
 		public static readonly DependencyProperty ValueProperty;
 

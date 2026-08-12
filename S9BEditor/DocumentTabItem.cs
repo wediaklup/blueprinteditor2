@@ -68,7 +68,6 @@ namespace S9BEditor
 		public DocumentTabItem(IDocument document, IDocumentType documentType, string fileName)
 		{
 			mLastFocusedElement = new WeakReference(null);
-			PLogger.Write("DocumentTabItem() alternative constructor");
 			//IL_0045: Unknown result type (might be due to invalid IL or missing references)
 			//IL_004b: Expected O, but got Unknown
 			if (document != null)
@@ -130,49 +129,36 @@ namespace S9BEditor
 
 		public void FocusContent()
 		{
-			PLogger.Write("DocumentTabItem.FocusContent " + getContentPresenter());
 			//IL_0049: Unknown result type (might be due to invalid IL or missing references)
 			//IL_0053: Expected O, but got Unknown
 			ContentPresenter contentPresenter = getContentPresenter();
-			PLogger.Write("DocumentTabItem.FocusContent P1");
 			if (contentPresenter == null)
 			{
 				return;
 			}
-			PLogger.Write("DocumentTabItem.FocusContent P2");
 			base.UpdateLayout();
-			PLogger.Write("DocumentTabItem.FocusContent P2-1: " + (mLastFocusedElement == null));
 			object target = mLastFocusedElement.Target;
-			PLogger.Write("DocumentTabItem.FocusContent P2-2");
 			FrameworkElement val = (FrameworkElement)((target is FrameworkElement) ? target : null);
-			PLogger.Write("DocumentTabItem.FocusContent P3");
 			if (val != null)
 			{
-				PLogger.Write("DocumentTabItem.FocusContent P4 val!=null");
 				bool flag = false;
 				for (DependencyObject val2 = (DependencyObject)(object)val; val2 != null; val2 = VisualTreeHelper.GetParent(val2))
 				{
-					PLogger.Write("DocumentTabItem.FocusContent P5 forloop");
 					if ((object)val2 == contentPresenter)
 					{
-						PLogger.Write("DocumentTabItem.FocusContent P6 for if");
 						flag = true;
 						break;
 					}
-					PLogger.Write("DocumentTabItem.FocusContent P7 nobreak");
 				}
 				if (flag)
 				{
-					PLogger.Write("DocumentTabItem.FocusContent P8 if flag");
 					val.Focus();
 				}
 			}
 			else
 			{
-				PLogger.Write("DocumentTabItem.FocusContent P8 else");
 				((UIElement)contentPresenter).MoveFocus(new TraversalRequest((FocusNavigationDirection)2));
 			}
-			PLogger.Write("DocumentTabItem.FocusContent end (:");
 		}
 
 		private TabControl getParentTabControl()

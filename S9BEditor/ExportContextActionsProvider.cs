@@ -204,6 +204,17 @@ namespace S9BEditor
 				}
 				exportContext.SourceFileType = SourceFileType.Unknown;
 				exportContext.ToolsDirectory = AppServices.ResourceManager.DeploymentPath;
+				
+				// precompile textures because the internal call fails
+				String precompile_SourcePath = Path.GetDirectoryName(Path.Combine(exportContext.SourceDirectory, provider, product, relativePath));
+				String precompile_AssetsPath;
+				if (overrideTargetFileName != null) {
+					precompile_AssetsPath = Path.GetDirectoryName(Path.Combine(exportContext.AssetsDirectory, exportContext.TargetProvider, exportContext.TargetProduct, relativePath));
+				}
+				else {
+					precompile_AssetsPath = Path.GetDirectoryName(Path.Combine(exportContext.AssetsDirectory, provider, product, relativePath));
+				}
+				PDDSPrecompiler.PrecompileDirectory(precompile_SourcePath, precompile_AssetsPath);
 				PLogger.Write("ExportContextActionsProvider.AddSingleFileToExportQueue: AddFile(" + provider + ", " + product + ", " + exportContext + ", " + overrideTargetFileName + ")");
 				AppServices.Exporter.AddFile(provider, product, relativePath, exportContext, overrideTargetFileName);
 			}
