@@ -37,6 +37,9 @@ namespace S9BEditor
                 targetFile = targetFile.Remove(targetFile.Length - 3, 3) + "TgPcDx";
                 PLogger.Write("PPDSPrecompiler: target " + targetFile);
 
+                // Test ob Datei konvertiert werden muss
+                if (File.Exists(targetFile) && File.GetLastWriteTimeUtc(sourceFile) < File.GetLastWriteTimeUtc(targetFile)) continue;
+                
                 // Zielverzeichnis sicherstellen
                 String targetDirectory = Path.GetDirectoryName(targetFile);
                 if (!Directory.Exists(targetDirectory))
@@ -50,14 +53,14 @@ namespace S9BEditor
 
                 ProcessStartInfo processStartInfo = new ProcessStartInfo();
                 processStartInfo.FileName = utilityPath;
-                processStartInfo.Arguments = "-i \"" + relativeSourceFile + "\" -o \"" + relativeTargetFile + "\" -nowindow";
+                processStartInfo.Arguments = "-i \"" + relativeSourceFile + "\" -o \"" + relativeTargetFile + "\"";  // optional -nowindow
                 processStartInfo.UseShellExecute = false;
                 processStartInfo.CreateNoWindow = true;
 
                 try
                 {
                     Process process = Process.Start(processStartInfo);
-                    //process.WaitForExit();
+                    process.WaitForExit();
                     if (process.ExitCode != 0)
                     {
                         PLogger.Write("PPDSPrecompiler: Process endet with nonzero exit code " + process.ExitCode);
