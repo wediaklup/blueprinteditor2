@@ -1,5 +1,6 @@
 # BlueprintEditor2 – für Wine (Linux)
 BLUEPRINT EDITOR 2 FÜR LINUX. ES FUNKTIONIERT.
+(Diese ReadMe ist auf deutsch und sollte nur als Ergänzugn der englischen Haupt-ReadMe verstanden werden.)
 
 # Building
 Die folgenden Buildhinweise sind für das Builden unter Linux:
